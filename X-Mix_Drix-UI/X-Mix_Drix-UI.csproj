@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E2477B74-8906-4751-85A6-D19AAE768704}</ProjectGuid>
+    <ProjectGuid>{8B594EC9-9A86-45BA-8A49-4DB837895350}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Ex02</RootNamespace>
-    <AssemblyName>Ex02</AssemblyName>
+    <RootNamespace>X_Mix_Drix_UI</RootNamespace>
+    <AssemblyName>X_Mix_Drix_UI</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -32,14 +32,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="eBoardCellValue.cs" />
-    <Compile Include="GameBoard.cs" />
-    <Compile Include="Program.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="Ex02.ConsoleUtils">
       <HintPath>..\..\..\..\..\temp\Ex02.ConsoleUtils.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BoardPrinter.cs" />
+    <Compile Include="Menu.cs" />
+    <Compile Include="Program.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ex02\Ex02.csproj">
+      <Project>{e2477b74-8906-4751-85a6-d19aae768704}</Project>
+      <Name>Ex02</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
