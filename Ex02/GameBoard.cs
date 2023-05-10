@@ -18,7 +18,6 @@ namespace Ex02
             initializeEmptyBoard();
         }
 
-
         private struct Cell
         {
             public eBoardCellValue Value { get; set; }
@@ -42,14 +41,13 @@ namespace Ex02
             ushort countValueStrike = 0;
             bool isHaveStrike = false;
 
-            for (int row = 0; row < r_BoardSize && !isHaveStrike; row++)
+            for (int col = 0; col < r_BoardSize && !isHaveStrike; col++)
             {
-                for (int col = 0; col < r_BoardSize && !isHaveStrike; row++)
+                for (int row = 0; row < r_BoardSize; row++)
                 {
                     if(m_BoardMatrixCells[row, col].Value == i_ValueToCheck)
                         countValueStrike++;
                 }
-
                 isHaveStrike = countValueStrike == r_BoardSize;
             }
 
@@ -79,7 +77,7 @@ namespace Ex02
 
             for(int row = 0; row < r_BoardSize; row++)
             {
-                for(int col = 0; col < r_BoardSize; row++)
+                for(int col = 0; col < r_BoardSize; col++)
                 {
                     currentBoard[row, col] = m_BoardMatrixCells[row, col].Value;
                 }
