@@ -1,0 +1,2 @@
+C:\src\github.com\yoavsc129\X-Mix-Drix-EX2\Ex02\obj\Debug\Ex02.csprojAssemblyReference.cache
+C:\src\github.com\yoavsc129\X-Mix-Drix-EX2\Ex02\obj\Debug\Ex02.csproj.CoreCompileInputs.cache

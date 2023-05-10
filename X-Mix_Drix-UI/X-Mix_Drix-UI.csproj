@@ -31,5 +31,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Ex02.ConsoleUtils">
+      <HintPath>..\..\..\..\..\temp\Ex02.ConsoleUtils.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BoardPrinter.cs" />
+    <Compile Include="Menu.cs" />
+    <Compile Include="Program.cs" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

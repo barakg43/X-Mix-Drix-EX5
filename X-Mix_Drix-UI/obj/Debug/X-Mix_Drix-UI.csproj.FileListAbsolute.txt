@@ -1,0 +1,8 @@
+C:\src\github.com\yoavsc129\X-Mix-Drix-EX2\X-Mix_Drix-UI\bin\Debug\X_Mix_Drix_UI.exe
+C:\src\github.com\yoavsc129\X-Mix-Drix-EX2\X-Mix_Drix-UI\bin\Debug\X_Mix_Drix_UI.pdb
+C:\src\github.com\yoavsc129\X-Mix-Drix-EX2\X-Mix_Drix-UI\bin\Debug\Ex02.ConsoleUtils.dll
+C:\src\github.com\yoavsc129\X-Mix-Drix-EX2\X-Mix_Drix-UI\obj\Debug\X-Mix_Drix-UI.csprojAssemblyReference.cache
+C:\src\github.com\yoavsc129\X-Mix-Drix-EX2\X-Mix_Drix-UI\obj\Debug\X-Mix_Drix-UI.csproj.CoreCompileInputs.cache
+C:\src\github.com\yoavsc129\X-Mix-Drix-EX2\X-Mix_Drix-UI\obj\Debug\X-Mix_Drix-UI.csproj.CopyComplete
+C:\src\github.com\yoavsc129\X-Mix-Drix-EX2\X-Mix_Drix-UI\obj\Debug\X_Mix_Drix_UI.exe
+C:\src\github.com\yoavsc129\X-Mix-Drix-EX2\X-Mix_Drix-UI\obj\Debug\X_Mix_Drix_UI.pdb
