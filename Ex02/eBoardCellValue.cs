@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Ex02
 {
-    enum eBoardCellValue
+    public enum eBoardCellValue
     {
         Empty,
         X,

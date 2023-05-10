@@ -11,7 +11,7 @@ namespace X_Mix_Drix_UI
         public static void Main()
         {
             char[,] board = { { ' ', ' ', ' ' }, { ' ', ' ', ' ' }, { ' ', ' ', ' ' } };
-            BoardPrinter printer = new BoardPrinter(3, board);
+            BoardPrinter printer = new BoardPrinter(3);
             printer.PrintGameBoard();
         }
     }

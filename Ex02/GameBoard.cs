@@ -7,7 +7,7 @@ namespace Ex02
 {
 
    
-    class GameBoard
+    public class GameBoard
     {
         private readonly ushort r_BoardSize;
         private Cell[,] m_BoardMatrixCells;
@@ -30,7 +30,7 @@ namespace Ex02
 
             for (int row = 0; row < r_BoardSize; row++)
             {
-                for(int col = 0; col < r_BoardSize; row++)
+                for(int col = 0; col < r_BoardSize; col++)
                 {
                     m_BoardMatrixCells[row, col].Value = eBoardCellValue.Empty;
                 }
@@ -79,7 +79,7 @@ namespace Ex02
 
             for(int row = 0; row < r_BoardSize; row++)
             {
-                for(int col = 0; col < r_BoardSize; row++)
+                for(int col = 0; col < r_BoardSize; col++)
                 {
                     currentBoard[row, col] = m_BoardMatrixCells[row, col].Value;
                 }
@@ -87,6 +87,21 @@ namespace Ex02
             }
 
             return currentBoard;
+        }
+
+        public string GetBoardCellValue(int i, int j)
+        {
+            string value;
+            if(m_BoardMatrixCells[i, j].Value == eBoardCellValue.Empty)
+            {
+                value = " ";
+            }
+            else
+            {
+                value = m_BoardMatrixCells[i, j].Value.ToString();
+            }
+
+            return value;
         }
 
         public int BoardSize
