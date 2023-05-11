@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Ex02
 {
-    enum eBoardSizeError
+    public enum eBoardSizeError
     {
         Valid,
         MinSize=3,

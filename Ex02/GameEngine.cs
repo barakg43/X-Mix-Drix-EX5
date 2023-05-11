@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Ex02
 {
-    class GameEngine
+    public class GameEngine
     {
         private GameBoard m_GameBoard=null;
         private bool m_IsStillPlaying ;
@@ -15,7 +15,7 @@ namespace Ex02
             m_IsStillPlaying = true;
         }
 
-        public void Create2Players(ePlayerName i_FirstPlayerName, ePlayerName i_SecondPlayerName)
+        public void Create2Players(ePlayerName i_FirstPlayerName = ePlayerName.Player1, ePlayerName i_SecondPlayerName = ePlayerName.Player2)
         {
             m_FirstPlayer = new Player(i_FirstPlayerName);
             m_SecondPlayer = new Player(i_SecondPlayerName);
@@ -40,6 +40,11 @@ namespace Ex02
             }
 
             return sizeStatus;
+        }
+
+        public GameBoard.Cell[,] GetBoard()
+        {
+            return m_GameBoard.GetBoard();
         }
 
         public ePlayerName GetCurrentTurnPlayerName()

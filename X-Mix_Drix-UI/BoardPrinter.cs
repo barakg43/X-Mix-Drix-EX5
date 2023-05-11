@@ -9,24 +9,23 @@ namespace X_Mix_Drix_UI
     {
         private readonly ushort m_BoardSize;
 
-        private GameBoard m_GameBoard;
 
         public BoardPrinter(ushort boardSize)
         {
             m_BoardSize = boardSize;
-            m_GameBoard = new GameBoard(boardSize);
         }
 
-        public void PrintGameBoard()
+        public void PrintGameBoard(GameBoard.Cell[,] i_Board)
         {
             StringBuilder boardAsString = new StringBuilder(getFirstRow());
+            //int boardSize = i_Board.GetLength(0);
 
             for(int i = 0; i < m_BoardSize; i++)
             {
                 boardAsString.Append(i + 1).Append('|');
                 for(int j = 0; j < m_BoardSize; j++)
                 {
-                    boardAsString.Append(string.Format(" {0} |", m_GameBoard.GetBoardCellValue(i, j)));
+                    boardAsString.Append(string.Format(" {0} |", readCellValue(i_Board[i, j].Value)));
                 }
                 boardAsString.Append('\n');
                 boardAsString.Append(getRowSeperator());
@@ -55,6 +54,21 @@ namespace X_Mix_Drix_UI
                 res += "   ";
             }
             return res + "\n";
+        }
+
+        private string readCellValue(eBoardCellValue i_Value)
+        {
+            string value;
+            if (i_Value == eBoardCellValue.Empty)
+            {
+                value = " ";
+            }
+            else
+            {
+                value = i_Value.ToString();
+            }
+
+            return value;
         }
     }
 }

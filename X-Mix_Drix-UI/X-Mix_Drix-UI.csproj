@@ -38,6 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BoardPrinter.cs" />
+    <Compile Include="GameManager.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>
