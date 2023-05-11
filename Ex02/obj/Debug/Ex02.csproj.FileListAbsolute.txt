@@ -1,8 +1,0 @@
-C:\src\github.com\yoavsc129\X-Mix-Drix-EX2\Ex02\obj\Debug\Ex02.csprojAssemblyReference.cache
-C:\src\github.com\yoavsc129\X-Mix-Drix-EX2\Ex02\obj\Debug\Ex02.csproj.CoreCompileInputs.cache
-C:\src\github.com\yoavsc129\X-Mix-Drix-EX2\Ex02\bin\Debug\Ex02.exe
-C:\src\github.com\yoavsc129\X-Mix-Drix-EX2\Ex02\bin\Debug\Ex02.pdb
-C:\src\github.com\yoavsc129\X-Mix-Drix-EX2\Ex02\bin\Debug\Ex02.ConsoleUtils.dll
-C:\src\github.com\yoavsc129\X-Mix-Drix-EX2\Ex02\obj\Debug\Ex02.csproj.CopyComplete
-C:\src\github.com\yoavsc129\X-Mix-Drix-EX2\Ex02\obj\Debug\Ex02.exe
-C:\src\github.com\yoavsc129\X-Mix-Drix-EX2\Ex02\obj\Debug\Ex02.pdb
