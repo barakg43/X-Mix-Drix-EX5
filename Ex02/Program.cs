@@ -1,7 +1,5 @@
 ﻿
-using Ex02.ConsoleUtils;
-
-namespace Ex02
+namespace Engine
 {
     class Program
     {

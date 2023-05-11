@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Ex02;
 
-namespace Ex02
+namespace Engine
 {
-    class GameEngine
+    public class GameEngine
     {
         private GameBoard m_GameBoard=null;
         private bool m_IsStillPlaying;
@@ -61,25 +59,61 @@ namespace Ex02
         {
             return m_GameBoard.GetCurrentBoardState();
         }
-        public eStartingGameStatus Start()
+
+        private void switchCurrentPlayerToOtherPlayer()
         {
-            eStartingGameStatus gameInitilaztionStatus;
-     
-            if (m_FirstPlayer == null || m_SecondPlayer == null)
+            if(m_CurrentTurnPlayer == m_FirstPlayer)
             {
-                gameInitilaztionStatus = eStartingGameStatus.NotChooseTwoPlayerForTheGame;
-            }
-            else if(m_GameBoard == null)
-            {
-                gameInitilaztionStatus = eStartingGameStatus.NotChooseGameBoard;
+                m_CurrentTurnPlayer = m_SecondPlayer;
             }
             else
             {
-                gameInitilaztionStatus = eStartingGameStatus.StartSuccessfully;
+                m_CurrentTurnPlayer = m_FirstPlayer;
+            }
+        }
+
+        private void checkIfaPlayerWinSession()
+        {
+            bool isPlayerWinSession= m_GameBoard.IsBoardHaveAnyRowColumnDiagonalFilled(m_CurrentTurnPlayer.GameSymbol);
+
+            switchCurrentPlayerToOtherPlayer();
+            if(isPlayerWinSession)
+            {
+                m_CurrentTurnPlayer.incrementGameSessionsScore();
+            }
+        }
+        public bool MakeValidGameMoveForCurrentPlayer(int i_Row,int i_Column)
+        {
+            MoveData currentMoveData = new MoveData((ushort)i_Row, (ushort)i_Column, m_CurrentTurnPlayer.GameSymbol);
+            bool isValidMove = IsValidMoveInTurn(currentMoveData);
+
+            if (isValidMove)
+            {
+                m_GameBoard.ChangeValueIfEmptyCell(currentMoveData);
+                checkIfaPlayerWinSession();
+            }
+
+            return isValidMove;
+        }
+        public eStartingGameStatus ValidateInitializationGameParameters()
+        {
+            eStartingGameStatus gameInitializationStatus;
+     
+            if (m_FirstPlayer == null || m_SecondPlayer == null)
+            {
+                gameInitializationStatus = eStartingGameStatus.NotChooseTwoPlayerForTheGame;
+            }
+            else if(m_GameBoard == null)
+            {
+                gameInitializationStatus = eStartingGameStatus.NotChooseGameBoard;
+            }
+            else
+            {
+                gameInitializationStatus = eStartingGameStatus.StartSuccessfully;
             }
             m_CurrentTurnPlayer = m_FirstPlayer;
 
-            return gameInitilaztionStatus;
+            return gameInitializationStatus;
         }
 
     }

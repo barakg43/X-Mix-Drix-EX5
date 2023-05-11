@@ -5,9 +5,9 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E2477B74-8906-4751-85A6-D19AAE768704}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>Ex02</RootNamespace>
-    <AssemblyName>Ex02</AssemblyName>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Engine</RootNamespace>
+    <AssemblyName>X-Mix_Drix-Engine</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -30,6 +30,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="eBoardCellValue.cs" />
