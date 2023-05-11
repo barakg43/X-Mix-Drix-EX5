@@ -5,10 +5,10 @@ using System.Text;
 
 namespace Ex02
 {
-    public enum eBoardCellValue
+    enum eBoardSizeError
     {
-        Empty,
-        X,
-        O
+        Valid,
+        MinSize=3,
+        MaxSize=9
     }
 }

@@ -5,10 +5,10 @@ using System.Text;
 
 namespace Ex02
 {
-    public enum eBoardCellValue
+    public enum ePlayerName
     {
-        Empty,
-        X,
-        O
+        Player1,
+        Player2,
+        Computer
     }
 }

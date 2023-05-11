@@ -5,10 +5,7 @@ using System.Text;
 
 namespace Ex02
 {
-    public enum eBoardCellValue
+    class eStartingGameStatus
     {
-        Empty,
-        X,
-        O
     }
 }
