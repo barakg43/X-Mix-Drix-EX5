@@ -55,8 +55,39 @@ Select an option by entering its number"));
             }
             return (eMenuOptions)userInput;
         }
+        public MoveData GetAndCheckUserInputForTurnDataMove()
+        {
+            bool inputIsInvalid = true;
+            string[] rowColRawData;
+            string inputData;
+            ushort selectRow=0;
+            ushort selectedColumn=0;
 
-        public int GetAndCheckUserInputForBoardSize()
+            const string k_InvalidInputMsg = "The input you entered is invalid. Please try again.";//set as member?
+            const string k_InputMsg = @"please enter board coordination to place your mark. 
+enter two number in <row> <column> format with space between the number ";
+
+            string currentMsgToUser= k_InputMsg;
+            do
+            {
+                Console.WriteLine(currentMsgToUser);
+                inputData = Console.ReadLine();
+                rowColRawData = inputData.Split();
+                inputIsInvalid = rowColRawData.Length != 2 || ushort.TryParse(rowColRawData[0], out selectRow)
+                                                           || ushort.TryParse(rowColRawData[1], out selectedColumn);
+                if(inputIsInvalid)
+                {
+
+                    currentMsgToUser = k_InvalidInputMsg;
+                }
+            }
+            while(inputIsInvalid);
+
+            return new MoveData(selectRow,selectedColumn,eBoardCellValue.Empty);
+        }
+    
+
+    public int GetAndCheckUserInputForBoardSize()
         {
             bool inputIsInvalid = true;
             const string k_InvalidInputMsg = "The input you entered is invalid. Please try again.";//set as member?
