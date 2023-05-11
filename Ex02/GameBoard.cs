@@ -107,6 +107,25 @@ namespace Ex02
         }
 
 
+        public bool ChangeValueIfEmptyCell(MoveData i_MoveData)
+        {
+            bool cellIsEmpty = m_BoardMatrixCells[i_MoveData.SelectedRow, i_MoveData.SelectedRow].Value == eBoardCellValue.Empty;
+
+            if(cellIsEmpty)
+            {
+                m_BoardMatrixCells[i_MoveData.SelectedRow, i_MoveData.SelectedRow].Value=i_MoveData.CellValue;
+            }
+
+            return cellIsEmpty;
+        }
+
+        public bool IsValidAndEmptyCell(ushort i_Row, ushort i_Column)
+        {
+            return i_Row < r_BoardSize &&
+                   i_Column < r_BoardSize &&
+                   m_BoardMatrixCells[i_Row, i_Column].Value == eBoardCellValue.Empty;
+        }
+
         public eBoardCellValue[,] GetCurrnetBoardState()
         {
             eBoardCellValue[,] currentBoard = new eBoardCellValue[r_BoardSize, r_BoardSize];

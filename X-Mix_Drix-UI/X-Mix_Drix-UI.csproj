@@ -42,9 +42,9 @@
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Ex02\Ex02.csproj">
+    <ProjectReference Include="..\Ex02\X-Mix_Drix-Engine.csproj">
       <Project>{e2477b74-8906-4751-85a6-d19aae768704}</Project>
-      <Name>Ex02</Name>
+      <Name>X-Mix_Drix-Engine</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
