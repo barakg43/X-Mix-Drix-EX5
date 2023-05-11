@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32407.337
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ex02", "Ex02\Ex02.csproj", "{E2477B74-8906-4751-85A6-D19AAE768704}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "X-Mix_Drix-Engine", "Ex02\X-Mix_Drix-Engine.csproj", "{E2477B74-8906-4751-85A6-D19AAE768704}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "X-Mix_Drix-UI", "X-Mix_Drix-UI\X-Mix_Drix-UI.csproj", "{8B594EC9-9A86-45BA-8A49-4DB837895350}"
 EndProject
