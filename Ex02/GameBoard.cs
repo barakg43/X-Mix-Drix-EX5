@@ -159,5 +159,10 @@ namespace Engine
                 return r_BoardSize;
             }
         }
+
+        public void InitializeEmptyBoard()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

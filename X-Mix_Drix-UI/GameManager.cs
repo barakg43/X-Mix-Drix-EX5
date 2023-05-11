@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Engine;
 using Ex02;
 
 namespace X_Mix_Drix_UI
@@ -89,9 +90,19 @@ namespace X_Mix_Drix_UI
             throw new NotImplementedException();
         }
 
+
+
         private bool makePlayerMove()
         {
-            throw new NotImplementedException();
+            MoveData turnData;
+
+            do
+            {
+                turnData = m_Menu.GetAndCheckUserInputForTurnDataMove();
+            }
+            while(!m_Engine.MakeValidGameMoveForCurrentPlayer(turnData.SelectedRow, turnData.SelectedColumn));
+
+            return true; //need to add quit user request to GetAndCheckUserInputForTurnDataMove
         }
     }
 
