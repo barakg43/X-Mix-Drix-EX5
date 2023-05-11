@@ -10,9 +10,9 @@ namespace X_Mix_Drix_UI
     {
         public static void Main()
         {
-            char[,] board = { { ' ', ' ', ' ' }, { ' ', ' ', ' ' }, { ' ', ' ', ' ' } };
-            BoardPrinter printer = new BoardPrinter(3);
-            printer.PrintGameBoard();
+            Menu menu = new Menu();
+            menu.PrintMainMenu();
+            menu.GetAndCheckUserInputForMenuItem();
         }
     }
 }
