@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Ex02;
 
-namespace Ex02
+namespace Engine
 {
 
    
@@ -36,7 +33,7 @@ namespace Ex02
             }
         }
 
-        public bool IsBoardHaveRowFilledWithValue(eBoardCellValue i_ValueToCheck)
+        private bool isBoardHaveRowFilledWithValue(eBoardCellValue i_ValueToCheck)
         {
             ushort countValueInRow = 0;
             bool isOneRowFilledWithSingleValue = false;
@@ -53,7 +50,7 @@ namespace Ex02
 
             return isOneRowFilledWithSingleValue;
         }
-        public bool IsBoardHaveColumnFilledWithValue(eBoardCellValue i_ValueToCheck)
+        private bool isBoardHaveColumnFilledWithValue(eBoardCellValue i_ValueToCheck)
         {
             ushort countValueInColumn = 0;
             bool isOneColFilledWithSingleValue = false;
@@ -70,7 +67,7 @@ namespace Ex02
             return isOneColFilledWithSingleValue;
         }
 
-        public bool IsBoardHaveDiagonalFilledWithValue(eBoardCellValue i_ValueToCheck)
+        private bool isBoardHaveDiagonalFilledWithValue(eBoardCellValue i_ValueToCheck)
         {
             ushort countValueInDiagonal = 0, countValueInAntiDiagonal=0;
              
@@ -83,6 +80,14 @@ namespace Ex02
             return countValueInDiagonal == r_BoardSize || countValueInAntiDiagonal == r_BoardSize;
         }
 
+        public bool IsBoardHaveAnyRowColumnDiagonalFilled(eBoardCellValue i_ValueToCheck)
+        {
+
+            return isBoardHaveRowFilledWithValue(i_ValueToCheck)
+                   || isBoardHaveColumnFilledWithValue(i_ValueToCheck) 
+                   || isBoardHaveDiagonalFilledWithValue(i_ValueToCheck);
+
+        }
         private void increaseCounterIfCellContainValue(ushort i_Row, ushort i_Column, eBoardCellValue i_ValueToCheck, ref ushort i_ValueCounter)
         {
             if (m_BoardMatrixCells[i_Row, i_Column].Value == i_ValueToCheck)
@@ -126,7 +131,7 @@ namespace Ex02
                    m_BoardMatrixCells[i_Row, i_Column].Value == eBoardCellValue.Empty;
         }
 
-        public eBoardCellValue[,] GetCurrnetBoardState()
+        public eBoardCellValue[,] GetCurrentBoardState()
         {
             eBoardCellValue[,] currentBoard = new eBoardCellValue[r_BoardSize, r_BoardSize];
 
