@@ -9,9 +9,10 @@ namespace Ex02
     {
         private int m_Score;
 
-        public Player(ePlayerName i_Name)
+        public Player(ePlayerName i_Name, eBoardCellValue i_GameSymbol)
         {
             Name = i_Name;
+            GameSymbol = i_GameSymbol;
             m_Score = 0;
         }
 
@@ -20,9 +21,14 @@ namespace Ex02
             get;
         }
 
-        public void incrementGamesScore()
+        public void incrementGameSessionsScore()
         {
             m_Score++;
+        }
+
+        public eBoardCellValue GameSymbol
+        {
+            get;
         }
 
         public int Score

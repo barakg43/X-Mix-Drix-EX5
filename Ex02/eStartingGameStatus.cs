@@ -5,7 +5,10 @@ using System.Text;
 
 namespace Ex02
 {
-    class eStartingGameStatus
+    enum eStartingGameStatus
     {
+        NotChooseTwoPlayerForTheGame,
+        NotChooseGameBoard,
+        StartSuccessfully
     }
 }

@@ -126,7 +126,7 @@ namespace Ex02
                    m_BoardMatrixCells[i_Row, i_Column].Value == eBoardCellValue.Empty;
         }
 
-        public eBoardCellValue[,] GetCurrnetBoardState()
+        public eBoardCellValue[,] GetCurrentBoardState()
         {
             eBoardCellValue[,] currentBoard = new eBoardCellValue[r_BoardSize, r_BoardSize];
 
