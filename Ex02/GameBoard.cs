@@ -15,7 +15,7 @@ namespace Engine
             initializeEmptyBoard();
         }
 
-        private struct Cell
+        public struct Cell
         {
             public eBoardCellValue Value { get; set; }
         } 
@@ -147,19 +147,9 @@ namespace Engine
             return currentBoard;
         }
 
-        public string GetBoardCellValue(int i, int j)
+        public Cell[,] GetBoard()
         {
-            string value;
-            if(m_BoardMatrixCells[i, j].Value == eBoardCellValue.Empty)
-            {
-                value = " ";
-            }
-            else
-            {
-                value = m_BoardMatrixCells[i, j].Value.ToString();
-            }
-
-            return value;
+            return m_BoardMatrixCells;
         }
 
         public int BoardSize

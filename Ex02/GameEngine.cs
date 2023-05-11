@@ -16,7 +16,7 @@ namespace Engine
             m_RandomNumberGenerator = new Random();
         }
 
-        public void Create2Players(ePlayerName i_FirstPlayerName, ePlayerName i_SecondPlayerName)
+        public void Create2Players(ePlayerName i_FirstPlayerName = ePlayerName.Player1, ePlayerName i_SecondPlayerName = ePlayerName.Player2)
         {
             m_FirstPlayer = new Player(i_FirstPlayerName,eBoardCellValue.X);
             m_SecondPlayer = new Player(i_SecondPlayerName,eBoardCellValue.O);
@@ -42,6 +42,11 @@ namespace Engine
             }
 
             return sizeStatus;
+        }
+
+        public GameBoard.Cell[,] GetBoard()
+        {
+            return m_GameBoard.GetBoard();
         }
 
         public ePlayerName GetCurrentTurnPlayerName()
