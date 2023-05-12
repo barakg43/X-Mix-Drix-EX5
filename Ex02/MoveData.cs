@@ -4,14 +4,20 @@
     {
         public MoveData(ushort i_SelectedColumn, ushort i_SelectedRow, eBoardCellValue i_CellValue)
         {
-            SelectedColumn = i_SelectedColumn;
-            SelectedRow = i_SelectedRow;
+            CellCoordinate = new CellBoardCoordinate(i_SelectedColumn, i_SelectedRow);
             CellValue = i_CellValue;
         }
 
-        public ushort SelectedColumn { get; }
+        public MoveData(CellBoardCoordinate i_CellCoordinate, eBoardCellValue i_CellValue)
+        {
+            CellCoordinate = i_CellCoordinate;
+            CellValue = i_CellValue;
+        }
 
-        public ushort SelectedRow { get; }
+        public CellBoardCoordinate CellCoordinate
+        {
+            get;
+        }
 
         public eBoardCellValue CellValue { get; }
     }

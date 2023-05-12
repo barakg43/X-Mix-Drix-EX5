@@ -90,9 +90,9 @@ namespace Engine
                 m_CurrentTurnPlayer.incrementGameSessionsScore();
             }
         }
-        public bool MakeValidGameMoveForCurrentPlayer(int i_Row,int i_Column)
+        public bool MakeValidGameMoveForCurrentPlayer(CellBoardCoordinate i_BoardCoordinate)
         {
-            MoveData currentMoveData = new MoveData((ushort)i_Row, (ushort)i_Column, m_CurrentTurnPlayer.GameSymbol);
+            MoveData currentMoveData = new MoveData(i_BoardCoordinate, m_CurrentTurnPlayer.GameSymbol);
             bool isValidMove = isValidMoveInTurn(currentMoveData);
 
             if (isValidMove)
