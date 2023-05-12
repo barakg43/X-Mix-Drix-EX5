@@ -55,7 +55,7 @@ Select an option by entering its number"));
             }
             return (eMenuOptions)userInput;
         }
-        public MoveData GetAndCheckUserInputForTurnDataMove()
+        public CellBoardCoordinate GetAndCheckUserInputForTurnDataMove()
         {
             bool inputIsInvalid = true;
             string[] rowColRawData;
@@ -83,7 +83,7 @@ enter two number in <row> <column> format with space between the number ";
             }
             while(inputIsInvalid);
 
-            return new MoveData(selectRow,selectedColumn,eBoardCellValue.Empty);
+            return new CellBoardCoordinate(selectRow,selectedColumn);
         }
     
 
