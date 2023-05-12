@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Engine;
 using Ex02;
 
 namespace X_Mix_Drix_UI
@@ -61,7 +62,7 @@ namespace X_Mix_Drix_UI
                 Ex02.ConsoleUtils.Screen.Clear();
                 m_BoardPrinter.PrintGameBoard(m_Engine.GetBoard());
                 currentPlayerName = m_Engine.GetCurrentTurnPlayerName();
-                playerWantsToQuit = makePlayerMove();
+                makePlayerMove(ref playerWantsToQuit);
                 if(playerWantsToQuit || gameIsOver())
                 {
                     printResults();
@@ -89,9 +90,18 @@ namespace X_Mix_Drix_UI
             throw new NotImplementedException();
         }
 
-        private bool makePlayerMove()
+
+
+        private void makePlayerMove(ref bool r_PlayerWantsToQuit)
         {
-            throw new NotImplementedException();
+            MoveData turnData;
+
+            do
+            {
+                turnData = m_Menu.GetAndCheckUserInputForTurnDataMove(ref r_PlayerWantsToQuit);
+            }
+            while(!m_Engine.MakeValidGameMoveForCurrentPlayer(turnData.SelectedRow, turnData.SelectedColumn) && turnData.SelectedRow != 0);
+
         }
     }
 

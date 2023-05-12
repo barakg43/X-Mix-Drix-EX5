@@ -10,6 +10,7 @@ namespace Engine
         private Player m_FirstPlayer = null, m_SecondPlayer = null, m_CurrentTurnPlayer;
         private Random m_RandomNumberGenerator;
         private bool m_IsGameStarted;
+        private ushort m_BoardSize;
         public GameEngine()
         {
             m_IsStillPlaying = true;
@@ -36,6 +37,7 @@ namespace Engine
             }
             else
             {
+                
                 sizeStatus = eBoardSizeError.Valid;
                 m_GameBoard = new GameBoard(i_BoardSize);
                 m_IsGameStarted = false;
@@ -54,7 +56,7 @@ namespace Engine
             return m_CurrentTurnPlayer.Name;
         }
 
-        public bool IsValidMoveInTurn(MoveData i_Data)
+        private bool isValidMoveInTurn(MoveData i_Data)
         {
             return m_GameBoard.IsValidAndEmptyCell(i_Data.SelectedRow, i_Data.SelectedRow)
                    && i_Data.CellValue != eBoardCellValue.Empty;
@@ -84,13 +86,14 @@ namespace Engine
             switchCurrentPlayerToOtherPlayer();
             if(isPlayerWinSession)
             {
+                CreateNewEmptyGameBoard(m_BoardSize);// should be in different place
                 m_CurrentTurnPlayer.incrementGameSessionsScore();
             }
         }
         public bool MakeValidGameMoveForCurrentPlayer(int i_Row,int i_Column)
         {
             MoveData currentMoveData = new MoveData((ushort)i_Row, (ushort)i_Column, m_CurrentTurnPlayer.GameSymbol);
-            bool isValidMove = IsValidMoveInTurn(currentMoveData);
+            bool isValidMove = isValidMoveInTurn(currentMoveData);
 
             if (isValidMove)
             {
@@ -100,6 +103,8 @@ namespace Engine
 
             return isValidMove;
         }
+
+        
         public eStartingGameStatus ValidateInitializationGameParameters()
         {
             eStartingGameStatus gameInitializationStatus;

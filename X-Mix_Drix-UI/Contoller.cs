@@ -16,7 +16,7 @@ namespace X_Mix_Drix_UI
             m_GameMenu = new Menu();
         }
 
-        public void StartGame()
+        /*public void StartGame()
         {
             gameInitialization();
 
@@ -24,9 +24,9 @@ namespace X_Mix_Drix_UI
 
 
 
-        }
+        }*/
 
-        private getUserInputFromConsole()
+        /*private getUserInputFromConsole()
         private void gameInitialization()
         {
             eMenuOptions selectedOption= m_GameMenu.getValidMenuOptionFromUser();
@@ -49,7 +49,7 @@ namespace X_Mix_Drix_UI
                 printErrorInputMassage = true;
                 selectedBoardSize = m_GameMenu.GetGameBoardSizeFromUser(printErrorInputMassage);
             }
-        }
+        }*/
        
     }
 }

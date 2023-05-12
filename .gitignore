@@ -16,7 +16,12 @@
 # Mono auto generated files
 mono_crash.*
 
+
 # Build results
+Ex02/bin
+Ex02/obj
+X-Mix_Drix-UI/bin
+X-Mix_Drix-UI/obj
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
