@@ -114,11 +114,11 @@ namespace Engine
 
         public bool ChangeValueIfEmptyCell(MoveData i_MoveData)
         {
-            bool cellIsEmpty = m_BoardMatrixCells[i_MoveData.SelectedRow, i_MoveData.SelectedRow].Value == eBoardCellValue.Empty;
+            bool cellIsEmpty = m_BoardMatrixCells[i_MoveData.CellCoordinate.SelectedRow, i_MoveData.CellCoordinate.SelectedColumn].Value == eBoardCellValue.Empty;
 
             if(cellIsEmpty)
             {
-                m_BoardMatrixCells[i_MoveData.SelectedRow, i_MoveData.SelectedRow].Value=i_MoveData.CellValue;
+                m_BoardMatrixCells[i_MoveData.CellCoordinate.SelectedRow, i_MoveData.CellCoordinate.SelectedColumn].Value=i_MoveData.CellValue;
             }
 
             return cellIsEmpty;

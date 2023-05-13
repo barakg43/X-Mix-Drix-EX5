@@ -94,13 +94,13 @@ namespace X_Mix_Drix_UI
 
         private bool makePlayerMove()
         {
-            MoveData turnData;
+            CellBoardCoordinate turnData;
 
             do
             {
                 turnData = m_Menu.GetAndCheckUserInputForTurnDataMove();
             }
-            while(!m_Engine.MakeValidGameMoveForCurrentPlayer(turnData.SelectedRow, turnData.SelectedColumn));
+            while(!m_Engine.MakeValidGameMoveForCurrentPlayer(turnData));
 
             return true; //need to add quit user request to GetAndCheckUserInputForTurnDataMove
         }

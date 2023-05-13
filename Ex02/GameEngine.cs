@@ -56,10 +56,10 @@ namespace Engine
             return m_CurrentTurnPlayer.Name;
         }
 
-        private bool isValidMoveInTurn(MoveData i_Data)
+        private bool isValidMoveInTurn(MoveData i_MoveData)
         {
-            return m_GameBoard.IsValidAndEmptyCell(i_Data.SelectedRow, i_Data.SelectedRow)
-                   && i_Data.CellValue != eBoardCellValue.Empty;
+            return m_GameBoard.IsValidAndEmptyCell(i_MoveData.CellCoordinate.SelectedRow, i_MoveData.CellCoordinate.SelectedColumn)
+                   && i_MoveData.CellValue != eBoardCellValue.Empty;
         }
 
         public eBoardCellValue[,] GetCurrentBoardState()
