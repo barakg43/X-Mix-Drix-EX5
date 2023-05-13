@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Engine;
 using Ex02;
 
 namespace X_Mix_Drix_UI
@@ -29,8 +30,8 @@ namespace X_Mix_Drix_UI
                 switch (m_Menu.GetAndCheckUserInputForMenuItem())
                 {
                     case Menu.eMenuOptions.StartGameAgainstPC:
-                        m_Menu.PrintSizeSelect();
-                        size = m_Menu.GetAndCheckUserInputForBoardSize();
+                        //m_Menu.PrintSizeSelect();
+                        size = m_Menu.GetAndCheckUserInputForBoardSize(m_Engine.GetMinBoardSize(), m_Engine.GetMaxBoardSize());
                         m_BoardPrinter = new BoardPrinter((ushort)size);
                         m_Engine.CreateNewEmptyGameBoard((ushort)size);
 
@@ -38,12 +39,11 @@ namespace X_Mix_Drix_UI
 
                     case Menu.eMenuOptions.StartGameAgaintsPlayer:
                         m_Engine.Create2Players();
-                        m_Menu.PrintSizeSelect();
-                        size = m_Menu.GetAndCheckUserInputForBoardSize();
+                        //m_Menu.PrintSizeSelect();
+                        size = m_Menu.GetAndCheckUserInputForBoardSize(m_Engine.GetMinBoardSize(), m_Engine.GetMaxBoardSize());
                         m_BoardPrinter = new BoardPrinter((ushort)size);
                         m_Engine.CreateNewEmptyGameBoard((ushort)size);
-
-
+                        runGame();
                         break;
 
                     case Menu.eMenuOptions.Quit:
@@ -52,22 +52,24 @@ namespace X_Mix_Drix_UI
             }
         }
 
-        public void RunGame()
+        private void runGame()
         {
-            ePlayerName currentPlayerName;
-            bool playerWantsToQuit = false;
             while (true)
             {
                 Ex02.ConsoleUtils.Screen.Clear();
                 m_BoardPrinter.PrintGameBoard(m_Engine.GetBoard());
-                currentPlayerName = m_Engine.GetCurrentTurnPlayerName();
-                playerWantsToQuit = makePlayerMove();
-                if(playerWantsToQuit || gameIsOver())
+                m_Menu.PrintCurrentPlayerTurn(m_Engine.GetCurrentTurnPlayerName().ToString());
+                makePlayerMove();
+                if(m_Engine.GameIsOver)
                 {
                     printResults();
-                    if (getEndOfGameInput())
+                    if (m_Menu.GetEndOfGameInput())
                     {
                         return;
+                    }
+                    else
+                    {
+                        m_Engine.CreateNewEmptyGameBoard(m_Engine.GetCurrentBoardSize());
                     }
                 }
 
@@ -81,17 +83,40 @@ namespace X_Mix_Drix_UI
 
         private void printResults()
         {
-            throw new NotImplementedException();
+            Player[] players = m_Engine.GetPlayers();
+            Console.WriteLine(string.Format(
+@"The winner is {0}!
+
+Score Balance: {1} - {2}
+               {3} - {4}",
+m_Engine.GetCurrentTurnPlayerName(),
+players[0].Name, players[0].Score,
+players[1].Name, players[1].Score));
         }
 
-        private bool gameIsOver()
-        {
-            throw new NotImplementedException();
-        }
 
-        private bool makePlayerMove()
+
+
+
+        private void makePlayerMove()
         {
-            throw new NotImplementedException();
+            CellBoardCoordinate turnData;
+            bool currentPlayerWantsToQuit = false;
+            eCellError cellError = eCellError.NoError;
+            if(m_Engine.GetCurrentTurnPlayerName() == ePlayerName.Computer)
+            {
+                //generate move
+            }
+            else
+            {
+                do
+                {
+                    turnData = m_Menu.GetAndCheckUserInputForTurnDataMove(ref currentPlayerWantsToQuit, cellError);
+                }
+                while (!m_Engine.MakeValidGameMoveForCurrentPlayer(turnData, currentPlayerWantsToQuit, ref cellError));
+
+            }
+            
         }
     }
 
