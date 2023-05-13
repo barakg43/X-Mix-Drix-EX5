@@ -11,6 +11,7 @@ namespace Engine
         private Random m_RandomNumberGenerator;
         private bool m_IsGameStarted;
         private ushort m_BoardSize;
+        private ComputerPlayer m_ComputerPlayer=null;
         public GameEngine()
         {
             m_IsStillPlaying = true;
@@ -37,10 +38,13 @@ namespace Engine
             }
             else
             {
-                
                 sizeStatus = eBoardSizeError.Valid;
                 m_GameBoard = new GameBoard(i_BoardSize);
                 m_IsGameStarted = false;
+                if (m_FirstPlayer.Name == ePlayerName.Computer || m_SecondPlayer.Name == ePlayerName.Computer)
+                {
+                    m_ComputerPlayer = new ComputerPlayer(i_BoardSize);
+                }
             }
 
             return sizeStatus;
@@ -86,7 +90,7 @@ namespace Engine
             switchCurrentPlayerToOtherPlayer();
             if(isPlayerWinSession)
             {
-                m_GameBoard.InitializeEmptyBoard();
+             
                 m_CurrentTurnPlayer.incrementGameSessionsScore();
             }
         }
@@ -104,7 +108,16 @@ namespace Engine
             return isValidMove;
         }
 
-        
+        private void startNewGameSession()
+        {
+            if(m_FirstPlayer.Name == ePlayerName.Computer || m_SecondPlayer.Name == ePlayerName.Computer)
+            {
+
+
+            }
+
+            m_GameBoard.InitializeEmptyBoard();
+        }
         public eStartingGameStatus ValidateInitializationGameParameters()
         {
             eStartingGameStatus gameInitializationStatus;
