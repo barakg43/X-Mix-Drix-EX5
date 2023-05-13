@@ -8,7 +8,6 @@ namespace X_Mix_Drix_UI
 {
     class Menu
     {
-        const char k_Quit = 'Q';
         public enum eMenuOptions
         {
             StartGameAgainstPC = 1,
@@ -45,34 +44,28 @@ Select an option by entering its number"));
             while (inputIsInvalid)
             {
                 int.TryParse(Console.ReadLine(), out userInput);// check if number
-                /*if (Enum.IsDefined(typeof(eMenuOptions), userInput))
+                if (Enum.IsDefined(typeof(eMenuOptions), userInput))
                 {
                     inputIsInvalid = false;
                 }
                 else
                 {
                     Console.WriteLine(k_InvalidInputMsg);
-                }*/
-                if (inputIsInvalid = !Enum.IsDefined(typeof(eMenuOptions), userInput))
-                {
-                    Console.WriteLine(k_InvalidInputMsg);
                 }
             }
             return (eMenuOptions)userInput;
         }
-        public MoveData GetAndCheckUserInputForTurnDataMove(ref bool r_PlayerWantsToQuit)// either return move data or q
+        public CellBoardCoordinate GetAndCheckUserInputForTurnDataMove()
         {
-            bool inputIsInvalid;
+            bool inputIsInvalid = true;
             string[] rowColRawData;
             string inputData;
-            char singleLetterInput;
             ushort selectRow=0;
             ushort selectedColumn=0;
-            
 
             const string k_InvalidInputMsg = "The input you entered is invalid. Please try again.";//set as member?
             const string k_InputMsg = @"please enter board coordination to place your mark. 
-enter two number in <row> <column> format with space between the numbers ";
+enter two number in <row> <column> format with space between the number ";
 
             string currentMsgToUser= k_InputMsg;
             do
@@ -80,18 +73,8 @@ enter two number in <row> <column> format with space between the numbers ";
                 Console.WriteLine(currentMsgToUser);
                 inputData = Console.ReadLine();
                 rowColRawData = inputData.Split();
-                if(rowColRawData.Length == 1)
-                {
-                    char.TryParse(rowColRawData[0], out singleLetterInput);
-                    inputIsInvalid = char.ToUpper(singleLetterInput) != k_Quit;
-                    r_PlayerWantsToQuit = !inputIsInvalid;
-                }
-                else
-                {
-                    inputIsInvalid = rowColRawData.Length != 2 || !ushort.TryParse(rowColRawData[0], out selectRow)
-                                                           || !ushort.TryParse(rowColRawData[1], out selectedColumn);
-                }
-
+                inputIsInvalid = rowColRawData.Length != 2 || ushort.TryParse(rowColRawData[0], out selectRow)
+                                                           || ushort.TryParse(rowColRawData[1], out selectedColumn);
                 if(inputIsInvalid)
                 {
 
@@ -100,7 +83,7 @@ enter two number in <row> <column> format with space between the numbers ";
             }
             while(inputIsInvalid);
 
-            return new MoveData(selectRow,selectedColumn,eBoardCellValue.Empty);
+            return new CellBoardCoordinate(selectRow,selectedColumn);
         }
     
 
@@ -111,20 +94,15 @@ enter two number in <row> <column> format with space between the numbers ";
             int userInput = 0;
             while (inputIsInvalid)
             {
-                int.TryParse(Console.ReadLine(), out userInput);
-                /*if (userInput >= 3 && userInput <= 9)
+                int.TryParse(Console.ReadLine(), out userInput);// check if number
+                if (userInput >= 3 && userInput <= 9)
                 {
                     inputIsInvalid = false;
                 }
                 else
                 {
                     Console.WriteLine(k_InvalidInputMsg);
-                }*/
-                if(inputIsInvalid = !(userInput >= 3 && userInput <= 9))
-                {
-                    Console.WriteLine(k_InvalidInputMsg);
                 }
-                
             }
             return userInput;
         }

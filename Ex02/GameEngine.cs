@@ -56,10 +56,10 @@ namespace Engine
             return m_CurrentTurnPlayer.Name;
         }
 
-        private bool isValidMoveInTurn(MoveData i_Data)
+        private bool isValidMoveInTurn(MoveData i_MoveData)
         {
-            return m_GameBoard.IsValidAndEmptyCell(i_Data.SelectedRow, i_Data.SelectedRow)
-                   && i_Data.CellValue != eBoardCellValue.Empty;
+            return m_GameBoard.IsValidAndEmptyCell(i_MoveData.CellCoordinate.SelectedRow, i_MoveData.CellCoordinate.SelectedColumn)
+                   && i_MoveData.CellValue != eBoardCellValue.Empty;
         }
 
         public eBoardCellValue[,] GetCurrentBoardState()
@@ -90,9 +90,9 @@ namespace Engine
                 m_CurrentTurnPlayer.incrementGameSessionsScore();
             }
         }
-        public bool MakeValidGameMoveForCurrentPlayer(int i_Row,int i_Column)
+        public bool MakeValidGameMoveForCurrentPlayer(CellBoardCoordinate i_BoardCoordinate)
         {
-            MoveData currentMoveData = new MoveData((ushort)i_Row, (ushort)i_Column, m_CurrentTurnPlayer.GameSymbol);
+            MoveData currentMoveData = new MoveData(i_BoardCoordinate, m_CurrentTurnPlayer.GameSymbol);
             bool isValidMove = isValidMoveInTurn(currentMoveData);
 
             if (isValidMove)

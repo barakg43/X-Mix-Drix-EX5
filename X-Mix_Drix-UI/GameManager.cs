@@ -62,7 +62,7 @@ namespace X_Mix_Drix_UI
                 Ex02.ConsoleUtils.Screen.Clear();
                 m_BoardPrinter.PrintGameBoard(m_Engine.GetBoard());
                 currentPlayerName = m_Engine.GetCurrentTurnPlayerName();
-                makePlayerMove(ref playerWantsToQuit);
+                playerWantsToQuit = makePlayerMove();
                 if(playerWantsToQuit || gameIsOver())
                 {
                     printResults();
@@ -92,16 +92,17 @@ namespace X_Mix_Drix_UI
 
 
 
-        private void makePlayerMove(ref bool r_PlayerWantsToQuit)
+        private bool makePlayerMove()
         {
-            MoveData turnData;
+            CellBoardCoordinate turnData;
 
             do
             {
-                turnData = m_Menu.GetAndCheckUserInputForTurnDataMove(ref r_PlayerWantsToQuit);
+                turnData = m_Menu.GetAndCheckUserInputForTurnDataMove();
             }
-            while(!m_Engine.MakeValidGameMoveForCurrentPlayer(turnData.SelectedRow, turnData.SelectedColumn) && turnData.SelectedRow != 0);
+            while(!m_Engine.MakeValidGameMoveForCurrentPlayer(turnData));
 
+            return true; //need to add quit user request to GetAndCheckUserInputForTurnDataMove
         }
     }
 
