@@ -1,4 +1,6 @@
-﻿namespace Engine
+﻿using System;
+
+namespace Engine
 {
         public struct MoveData
     {
@@ -25,5 +27,6 @@
         { 
             get { return m_CellValue; }
         }
+
     }
 }

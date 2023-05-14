@@ -120,7 +120,7 @@ enter two number in <row> <column> format with space between the number ";
         {
             bool inputIsInvalid = true;
             int userInput = 0;
-            Console.WriteLine(string.Format("Please select a board size from {0}-{1}", i_MinSize, i_MaxSize));
+            Console.WriteLine(string.Format("Please select a board size between {0} and {1}", i_MinSize, i_MaxSize));
             while (inputIsInvalid)
             {
                 int.TryParse(Console.ReadLine(), out userInput);// check if number
@@ -167,9 +167,13 @@ Select an option by entering its number"));
             {
                 res = "Cell is not empty";
             }
-            else
+            else if(cellError == eCellError.CellOutOfRange)
             {
                 res = "Cell is out of range";
+            }
+            else
+            {
+                res = "Cant erase used cell";
             }
             return res;
         }

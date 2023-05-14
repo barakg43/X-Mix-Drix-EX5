@@ -9,7 +9,7 @@ namespace Engine
         private bool m_IsStillPlaying;
         private Player m_FirstPlayer = null, m_SecondPlayer = null, m_CurrentTurnPlayer;
         private Random m_RandomNumberGenerator;
-        private bool m_IsGameStarted;
+     //   private bool m_IsGameStarted;
         private bool m_IsGameOver = false;
         private ushort m_BoardSize;
         private ComputerPlayer m_ComputerPlayer=null;
@@ -22,7 +22,7 @@ namespace Engine
         {
             get { return m_IsGameOver; }
         }
-        public void Create2Players(ePlayerName i_FirstPlayerName = ePlayerName.Player1, ePlayerName i_SecondPlayerName = ePlayerName.Player2)
+        public void Create2Players(ePlayerName i_FirstPlayerName, ePlayerName i_SecondPlayerName)
         {
             m_FirstPlayer = new Player(i_FirstPlayerName,eBoardCellValue.X);
             m_SecondPlayer = new Player(i_SecondPlayerName,eBoardCellValue.O);
@@ -45,7 +45,7 @@ namespace Engine
             {
                 sizeStatus = eBoardSizeError.Valid;
                 m_GameBoard = new GameBoard(i_BoardSize);
-                m_IsGameStarted = false;
+           //     m_IsGameStarted = false;
                 m_IsGameOver = false;
                 if (m_FirstPlayer.Name == ePlayerName.Computer || m_SecondPlayer.Name == ePlayerName.Computer)
                 {
@@ -83,8 +83,7 @@ namespace Engine
 
         private bool isValidMoveInTurn(MoveData i_MoveData, ref eCellError i_CellError)
         {
-            return m_GameBoard.IsValidAndEmptyCell(i_MoveData.CellCoordinate.SelectedRow, i_MoveData.CellCoordinate.SelectedColumn, ref i_CellError)
-                   && i_MoveData.CellValue != eBoardCellValue.Empty;
+            return m_GameBoard.IsValidAndEmptyCell(i_MoveData, ref i_CellError);
         }
 
         public eBoardCellValue[,] GetCurrentBoardState()
@@ -104,51 +103,65 @@ namespace Engine
             }
         }
 
-        private void checkIfaPlayerWinSession()
+        private void checkIfCurrentPlayerLooseInSession()
         {
-            //bool isPlayerWinSession= m_GameBoard.IsBoardHaveAnyRowColumnDiagonalFilled(m_CurrentTurnPlayer.GameSymbol);
-            //switchCurrentPlayerToOtherPlayer();
-            if(m_GameBoard.IsBoardHaveAnyRowColumnDiagonalFilled(m_CurrentTurnPlayer.GameSymbol))
+            bool isPreviousPlayerLooseSession = m_GameBoard.IsBoardHaveAnyRowColumnDiagonalFilled(m_CurrentTurnPlayer.GameSymbol);
+            switchCurrentPlayerToOtherPlayer();
+            if (isPreviousPlayerLooseSession)
             {
-                /*CreateNewEmptyGameBoard(m_BoardSize);// should be in different place
-                m_CurrentTurnPlayer.incrementGameSessionsScore();*/
                 otherPlayerWon();
             }
         }
         public bool MakeValidGameMoveForCurrentPlayer(CellBoardCoordinate i_BoardCoordinate, bool i_CurrentPlayerWantsToQuit, ref eCellError i_CellError)
         {
             MoveData currentMoveData = new MoveData(i_BoardCoordinate, m_CurrentTurnPlayer.GameSymbol);
+
             bool isValidMove = isValidMoveInTurn(currentMoveData, ref i_CellError);
-            if (i_CurrentPlayerWantsToQuit || isValidMove)
+            if(isValidMove)
+            {
+                m_GameBoard.ChangeValueIfEmptyCell(currentMoveData);
+                checkIfCurrentPlayerLooseInSession();
+            }
+            else if(i_CurrentPlayerWantsToQuit)
             {
                 switchCurrentPlayerToOtherPlayer();
-                if (i_CurrentPlayerWantsToQuit)
-                {
-                    otherPlayerWon();
-                }
-                else
-                {
-                    m_GameBoard.ChangeValueIfEmptyCell(currentMoveData);
-                    checkIfaPlayerWinSession();
-                }
-
+                otherPlayerWon();
             }
-            
+            makeComputerMoveIfNeed();
+
             return i_CurrentPlayerWantsToQuit || isValidMove;
         }
 
+        private void makeComputerMoveIfNeed()
+        {
+            CellBoardCoordinate? selectedComputerPlayerCell;
+            bool isComputerPlayerQuit = true;
+
+            if (m_CurrentTurnPlayer.Name == ePlayerName.Computer)
+            {
+                selectedComputerPlayerCell = m_ComputerPlayer.GetValidRandomEmptyCellBoardCoordinate();
+                if (selectedComputerPlayerCell.HasValue)
+                {
+
+                    m_GameBoard.ChangeValueIfEmptyCell(
+                        new MoveData(selectedComputerPlayerCell.Value, m_CurrentTurnPlayer.GameSymbol));
+                   
+                }
+                checkIfCurrentPlayerLooseInSession();
+               
+            }
+        }
         private void otherPlayerWon()
         {
             m_CurrentTurnPlayer.incrementGameSessionsScore();
             m_IsGameOver = true;
         }
 
-        private void startNewGameSession()
+        public void StartNewGameSession()
         {
             if(m_FirstPlayer.Name == ePlayerName.Computer || m_SecondPlayer.Name == ePlayerName.Computer)
             {
-
-
+                m_ComputerPlayer.MakeAllCellBoardUnselected();
             }
 
             m_GameBoard.InitializeEmptyBoard();

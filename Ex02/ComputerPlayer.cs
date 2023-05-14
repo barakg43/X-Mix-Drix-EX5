@@ -23,9 +23,9 @@ namespace Engine
         {
             CellBoardCoordinate currentBoardCoordinate;
 
-            for (ushort row = 0; row < r_BoardSize; row++)
+            for (ushort row = 1; row <= r_BoardSize; row++)
             {
-                for (ushort col = 0; col < r_BoardSize; col++)
+                for (ushort col = 1; col <= r_BoardSize; col++)
                 {
                     currentBoardCoordinate = new CellBoardCoordinate(row, col);
                     m_EmptyCellsList.Add(currentBoardCoordinate);

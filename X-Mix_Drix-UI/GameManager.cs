@@ -31,14 +31,15 @@ namespace X_Mix_Drix_UI
                 {
                     case Menu.eMenuOptions.StartGameAgainstPC:
                         //m_Menu.PrintSizeSelect();
+                        m_Engine.Create2Players(ePlayerName.Player1, ePlayerName.Computer);
                         size = m_Menu.GetAndCheckUserInputForBoardSize(m_Engine.GetMinBoardSize(), m_Engine.GetMaxBoardSize());
                         m_BoardPrinter = new BoardPrinter((ushort)size);
                         m_Engine.CreateNewEmptyGameBoard((ushort)size);
-
+                        runGame();
                         break;
 
                     case Menu.eMenuOptions.StartGameAgaintsPlayer:
-                        m_Engine.Create2Players();
+                        m_Engine.Create2Players(ePlayerName.Player1,ePlayerName.Player2);
                         //m_Menu.PrintSizeSelect();
                         size = m_Menu.GetAndCheckUserInputForBoardSize(m_Engine.GetMinBoardSize(), m_Engine.GetMaxBoardSize());
                         m_BoardPrinter = new BoardPrinter((ushort)size);
@@ -52,27 +53,30 @@ namespace X_Mix_Drix_UI
             }
         }
 
+        private void displayBoardOnConsole()
+        {
+            Ex02.ConsoleUtils.Screen.Clear();
+            m_BoardPrinter.PrintGameBoard(m_Engine.GetBoard());
+        }
         private void runGame()
         {
-            while (true)
+            bool isPlayerWantToQuit = false;
+
+            while(!isPlayerWantToQuit)
             {
-                Ex02.ConsoleUtils.Screen.Clear();
-                m_BoardPrinter.PrintGameBoard(m_Engine.GetBoard());
+                displayBoardOnConsole();
                 m_Menu.PrintCurrentPlayerTurn(m_Engine.GetCurrentTurnPlayerName().ToString());
                 makePlayerMove();
                 if(m_Engine.GameIsOver)
                 {
+                    displayBoardOnConsole();
                     printResults();
-                    if (m_Menu.GetEndOfGameInput())
+                    isPlayerWantToQuit = m_Menu.GetEndOfGameInput();
+                    if(!isPlayerWantToQuit)
                     {
-                        return;
-                    }
-                    else
-                    {
-                        m_Engine.CreateNewEmptyGameBoard(m_Engine.GetCurrentBoardSize());
+                        m_Engine.StartNewGameSession();
                     }
                 }
-
             }
         }
 
@@ -103,7 +107,7 @@ players[1].Name, players[1].Score));
             CellBoardCoordinate turnData;
             bool currentPlayerWantsToQuit = false;
             eCellError cellError = eCellError.NoError;
-            if(m_Engine.GetCurrentTurnPlayerName() == ePlayerName.Computer)
+            if(false && m_Engine.GetCurrentTurnPlayerName() == ePlayerName.Computer)
             {
                 //generate move
             }
