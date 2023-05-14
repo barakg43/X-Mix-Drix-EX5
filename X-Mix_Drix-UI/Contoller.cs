@@ -24,9 +24,9 @@ namespace X_Mix_Drix_UI
 
 
 
-        }
+        }*/
 
-        private getUserInputFromConsole()
+        /*private getUserInputFromConsole()
         private void gameInitialization()
         {
             eMenuOptions selectedOption= m_GameMenu.getValidMenuOptionFromUser();

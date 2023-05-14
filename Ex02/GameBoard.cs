@@ -18,7 +18,7 @@ namespace Engine
         public struct Cell
         {
             public eBoardCellValue Value { get; set; }
-        } 
+        }
 
         private void initializeEmptyBoard()
         {
@@ -74,7 +74,7 @@ namespace Engine
             for (ushort i = 0; i < r_BoardSize ; i++)
             {
                 increaseCounterIfCellContainValue(i, i, i_ValueToCheck, ref countValueInDiagonal);
-                increaseCounterIfCellContainValue(i, (ushort)(r_BoardSize - i), i_ValueToCheck, ref countValueInAntiDiagonal);
+                increaseCounterIfCellContainValue(i, (ushort)(r_BoardSize - i - 1), i_ValueToCheck, ref countValueInAntiDiagonal);
             }
 
             return countValueInDiagonal == r_BoardSize || countValueInAntiDiagonal == r_BoardSize;
@@ -114,21 +114,33 @@ namespace Engine
 
         public bool ChangeValueIfEmptyCell(MoveData i_MoveData)
         {
-            bool cellIsEmpty = m_BoardMatrixCells[i_MoveData.CellCoordinate.SelectedRow, i_MoveData.CellCoordinate.SelectedColumn].Value == eBoardCellValue.Empty;
+            bool cellIsEmpty = m_BoardMatrixCells[i_MoveData.CellCoordinate.SelectedRow - 1, i_MoveData.CellCoordinate.SelectedColumn - 1].Value == eBoardCellValue.Empty;
 
             if(cellIsEmpty)
             {
-                m_BoardMatrixCells[i_MoveData.CellCoordinate.SelectedRow, i_MoveData.CellCoordinate.SelectedColumn].Value=i_MoveData.CellValue;
+                m_BoardMatrixCells[i_MoveData.CellCoordinate.SelectedRow - 1, i_MoveData.CellCoordinate.SelectedColumn - 1].Value=i_MoveData.CellValue;
             }
 
             return cellIsEmpty;
         }
 
-        public bool IsValidAndEmptyCell(ushort i_Row, ushort i_Column)
+        public bool IsValidAndEmptyCell(ushort i_Row, ushort i_Column, ref eCellError i_CellError)
         {
-            return i_Row < r_BoardSize &&
-                   i_Column < r_BoardSize &&
-                   m_BoardMatrixCells[i_Row, i_Column].Value == eBoardCellValue.Empty;
+            bool cellIsValid = false;
+            if (!(i_Row <= r_BoardSize && i_Column <= r_BoardSize && i_Row > 0 && i_Column > 0))
+            {
+                i_CellError = eCellError.CellOutOfRange;
+            }
+            else if(m_BoardMatrixCells[i_Row - 1, i_Column - 1].Value != eBoardCellValue.Empty)
+            {
+                i_CellError = eCellError.CellNotEmpty;
+            }
+            else
+            {
+                cellIsValid = true;
+            }
+
+            return cellIsValid;
         }
 
         public eBoardCellValue[,] GetCurrentBoardState()
@@ -152,7 +164,7 @@ namespace Engine
             return m_BoardMatrixCells;
         }
 
-        public int BoardSize
+        public ushort BoardSize
         {
             get
             {

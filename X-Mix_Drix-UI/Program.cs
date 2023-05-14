@@ -10,9 +10,8 @@ namespace X_Mix_Drix_UI
     {
         public static void Main()
         {
-            Menu menu = new Menu();
-            menu.PrintMainMenu();
-            menu.GetAndCheckUserInputForMenuItem();
+            GameManager gameManager = new GameManager();
+            gameManager.RunMenu();
         }
     }
 }

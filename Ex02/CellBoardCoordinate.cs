@@ -7,10 +7,10 @@ namespace Engine
 {
     public struct CellBoardCoordinate
     {
-        public CellBoardCoordinate(ushort i_SelectedColumn, ushort i_SelectedRow)
+        public CellBoardCoordinate(ushort i_SelectedRow, ushort i_SelectedColumn)
         {
-            SelectedColumn = i_SelectedColumn;
             SelectedRow = i_SelectedRow;
+            SelectedColumn = i_SelectedColumn;
         }
 
         public ushort SelectedColumn { get; }
