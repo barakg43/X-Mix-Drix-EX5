@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -64,12 +64,12 @@ namespace X_Mix_Drix_UI
 
             while(!isPlayerWantToQuit)
             {
-                displayBoardOnConsole();
+                clearScreenAndPrintBoard();
                 m_Menu.PrintCurrentPlayerTurn(m_Engine.GetCurrentTurnPlayerName().ToString());
                 makePlayerMove();
                 if(m_Engine.GameIsOver)
                 {
-                    displayBoardOnConsole();
+                    clearScreenAndPrintBoard();
                     printResults();
                     isPlayerWantToQuit = m_Menu.GetEndOfGameInput();
                     if(!isPlayerWantToQuit)
@@ -121,6 +121,12 @@ players[1].Name, players[1].Score));
 
             }
             
+        }
+
+        private void clearScreenAndPrintBoard()
+        {
+            Ex02.ConsoleUtils.Screen.Clear();
+            m_BoardPrinter.PrintGameBoard(m_Engine.GetBoard());
         }
     }
 

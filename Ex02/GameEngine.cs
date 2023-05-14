@@ -108,9 +108,18 @@ namespace Engine
             bool isPreviousPlayerLooseSession = m_GameBoard.IsBoardHaveAnyRowColumnDiagonalFilled(m_CurrentTurnPlayer.GameSymbol);
             switchCurrentPlayerToOtherPlayer();
             if (isPreviousPlayerLooseSession)
+            //bool isPlayerWinSession= m_GameBoard.IsBoardHaveAnyRowColumnDiagonalFilled(m_CurrentTurnPlayer.GameSymbol);
+            //switchCurrentPlayerToOtherPlayer();
+            if(m_GameBoard.IsBoardHaveAnyRowColumnDiagonalFilled(getOtherPlayerSymbol()))
             {
                 otherPlayerWon();
             }
+        }
+
+        private eBoardCellValue getOtherPlayerSymbol()
+        {
+            eBoardCellValue currentPlayerSymbol = m_CurrentTurnPlayer.GameSymbol;
+            return (eBoardCellValue)(2 * (int)currentPlayerSymbol % 3);
         }
         public bool MakeValidGameMoveForCurrentPlayer(CellBoardCoordinate i_BoardCoordinate, bool i_CurrentPlayerWantsToQuit, ref eCellError i_CellError)
         {
