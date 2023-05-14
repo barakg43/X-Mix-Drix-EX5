@@ -9,20 +9,32 @@ namespace Engine
         private Player m_FirstPlayer = null, m_SecondPlayer = null, m_CurrentTurnPlayer;
         private Random m_RandomNumberGenerator;
      //   private bool m_IsGameStarted;
-        private bool m_IsGameOver = false;
-        private ushort m_BoardSize;
+        private bool m_IsSessionOver = false;
         private ComputerPlayer m_ComputerPlayer=null;
         public GameEngine()
         {
             m_RandomNumberGenerator = new Random();
         }
-        public bool SessionIsOver
+
+        public bool IsSessionFinishInTie
         {
             get
             {
-                return m_IsGameOver || m_GameBoard.IsAllBoardFilled();
+                return !IsSessionHaveWinner && m_GameBoard != null && m_GameBoard.IsAllBoardFilled();
             }
         }
+        public bool IsSessionOver
+        {
+            get
+            {
+                return IsSessionFinishInTie || IsSessionHaveWinner;
+            }
+        }
+        public bool IsSessionHaveWinner
+        {
+            get; private set;
+        }
+
         public void Create2Players(ePlayerName i_FirstPlayerName, ePlayerName i_SecondPlayerName)
         {
             m_FirstPlayer = new Player(i_FirstPlayerName,eBoardCellValue.X);
@@ -47,7 +59,7 @@ namespace Engine
                 sizeStatus = eBoardSizeError.Valid;
                 m_GameBoard = new GameBoard(i_BoardSize);
            //     m_IsGameStarted = false;
-                m_IsGameOver = false;
+                m_IsSessionOver = false;
                 if (m_FirstPlayer.Name == ePlayerName.Computer || m_SecondPlayer.Name == ePlayerName.Computer)
                 {
                     m_ComputerPlayer = new ComputerPlayer(i_BoardSize);
@@ -112,6 +124,7 @@ namespace Engine
             {
                 otherPlayerWon();
             }
+
                 //bool isPlayerWinSession= m_GameBoard.IsBoardHaveAnyRowColumnDiagonalFilled(m_CurrentTurnPlayer.GameSymbol);
         //switchCurrentPlayerToOtherPlayer();
         // if(m_GameBoard.IsBoardHaveAnyRowColumnDiagonalFilled(getOtherPlayerSymbol()))
@@ -129,10 +142,15 @@ namespace Engine
         {
             MoveData currentMoveData = new MoveData(i_BoardCoordinate, m_CurrentTurnPlayer.GameSymbol);
 
+            // makeComputerMoveIfNeed();
             bool isValidMove = isValidMoveInTurn(currentMoveData, ref i_CellError);
             if(isValidMove)
             {
                 m_GameBoard.ChangeValueIfEmptyCell(currentMoveData);
+                if(m_ComputerPlayer != null)
+                {
+                    m_ComputerPlayer.RemoveCoordinateFromAvailableList(currentMoveData.CellCoordinate);
+                }
                 checkIfCurrentPlayerLooseInSession();
             }
             else if(i_CurrentPlayerWantsToQuit)
@@ -140,16 +158,16 @@ namespace Engine
                 switchCurrentPlayerToOtherPlayer();
                 otherPlayerWon();
             }
-            makeComputerMoveIfNeed();
+         
 
             return i_CurrentPlayerWantsToQuit || isValidMove;
         }
 
-        private void makeComputerMoveIfNeed()
+        public void MakeComputerMoveInHisTurn()
         {
             CellBoardCoordinate? selectedComputerPlayerCell;
             
-            if (m_CurrentTurnPlayer.Name == ePlayerName.Computer)
+            if (m_CurrentTurnPlayer.Name == ePlayerName.Computer && !m_IsSessionOver)
             {
                 selectedComputerPlayerCell = m_ComputerPlayer.GetValidRandomEmptyCellBoardCoordinate();
                 if (selectedComputerPlayerCell.HasValue)
@@ -165,17 +183,17 @@ namespace Engine
         private void otherPlayerWon()
         {
             m_CurrentTurnPlayer.incrementGameSessionsScore();
-            m_IsGameOver = true;
+            IsSessionHaveWinner = true;
         }
 
         public void StartNewGameSession()
         {
-            if(m_FirstPlayer.Name == ePlayerName.Computer || m_SecondPlayer.Name == ePlayerName.Computer)
+            IsSessionHaveWinner = false;
+            m_GameBoard.InitializeEmptyBoard();
+            if (m_FirstPlayer.Name == ePlayerName.Computer || m_SecondPlayer.Name == ePlayerName.Computer)
             {
                 m_ComputerPlayer.MakeAllCellBoardUnselected();
             }
-
-            m_GameBoard.InitializeEmptyBoard();
         }
         public eStartingGameStatus ValidateInitializationGameParameters()
         {

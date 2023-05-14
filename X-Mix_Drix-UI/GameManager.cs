@@ -13,8 +13,10 @@ namespace X_Mix_Drix_UI
     {
         private Menu m_Menu;
         private BoardPrinter m_BoardPrinter;
-        GameEngine m_Engine;
-
+        private GameEngine m_Engine;
+        private const string k_WinnerSessionStringFormat = @"The winner is {0}!";
+        private const string k_ScoreDisplayStringFormat = @"Score Balance: {0} - {1}
+         {2} - {3}";
         public GameManager()
         {
             m_Menu = new Menu();
@@ -31,33 +33,25 @@ namespace X_Mix_Drix_UI
                 switch (m_Menu.GetAndCheckUserInputForMenuItem())
                 {
                     case Menu.eMenuOptions.StartGameAgainstPC:
-                        //m_Menu.PrintSizeSelect();
                         m_Engine.Create2Players(ePlayerName.Player1, ePlayerName.Computer);
-                        size = m_Menu.GetAndCheckUserInputForBoardSize(m_Engine.GetMinBoardSize(), m_Engine.GetMaxBoardSize());
-                        m_BoardPrinter = new BoardPrinter((ushort)size);
-                        m_Engine.CreateNewEmptyGameBoard((ushort)size);
-                        runGame();
-                        break;
-
+                    break;
                     case Menu.eMenuOptions.StartGameAgaintsPlayer:
                         m_Engine.Create2Players(ePlayerName.Player1,ePlayerName.Player2);
-                        //m_Menu.PrintSizeSelect();
-                   
                         break;
-
                     case Menu.eMenuOptions.Quit:
                         isUsersWantToPlay = false;
                         break;
                 }
-
+                if(isUsersWantToPlay)
+                {
+                    size = m_Menu.GetAndCheckUserInputForBoardSize(m_Engine.GetMinBoardSize(), m_Engine.GetMaxBoardSize());
+                    m_BoardPrinter = new BoardPrinter((ushort)size);
+                    m_Engine.CreateNewEmptyGameBoard((ushort)size);
+                    runGame();
+                }
             }
         }
 
-        private void displayBoardOnConsole()
-        {
-            Ex02.ConsoleUtils.Screen.Clear();
-            m_BoardPrinter.PrintGameBoard(m_Engine.GetBoard());
-        }
         private void runGame()
         {
             bool isPlayerWantToQuit = false;
@@ -67,10 +61,10 @@ namespace X_Mix_Drix_UI
                 clearScreenAndPrintBoard();
                 m_Menu.PrintCurrentPlayerTurn(m_Engine.GetCurrentTurnPlayerName().ToString());
                 makePlayerMove();
-                if(m_Engine.SessionIsOver)
+                if(m_Engine.IsSessionOver)
                 {
                     clearScreenAndPrintBoard();
-                    printResults();
+                    printResults(m_Engine.IsSessionHaveWinner);
                     isPlayerWantToQuit = m_Menu.GetEndOfGameInput();
                     if(!isPlayerWantToQuit)
                     {
@@ -85,31 +79,25 @@ namespace X_Mix_Drix_UI
             throw new NotImplementedException();
         }
 
-        private void printResults()
+        private void printResults(bool i_IsSessionHasPlayerWon)
         {
             Player[] players = m_Engine.GetPlayers();
-            Console.WriteLine(string.Format(
-@"The winner is {0}!
+            if(i_IsSessionHasPlayerWon)
+            {
 
-Score Balance: {1} - {2}
-               {3} - {4}",
-m_Engine.GetCurrentTurnPlayerName(),
-players[0].Name, players[0].Score,
-players[1].Name, players[1].Score));
+                Console.WriteLine(string.Format(k_WinnerSessionStringFormat, m_Engine.GetCurrentTurnPlayerName()));
+            }
+
+            Console.WriteLine(string.Format(k_ScoreDisplayStringFormat, players[0].Name, players[0].Score, players[1].Name, players[1].Score));
         }
-
-
-
-
-
         private void makePlayerMove()
         {
             CellBoardCoordinate turnData;
             bool currentPlayerWantsToQuit = false;
             eCellError cellError = eCellError.NoError;
-            if(false && m_Engine.GetCurrentTurnPlayerName() == ePlayerName.Computer)
+            if( m_Engine.GetCurrentTurnPlayerName() == ePlayerName.Computer)
             {
-                //generate move
+                m_Engine.MakeComputerMoveInHisTurn();  
             }
             else
             {
@@ -125,7 +113,7 @@ players[1].Name, players[1].Score));
 
         private void clearScreenAndPrintBoard()
         {
-            Ex02.ConsoleUtils.Screen.Clear();
+        //    Ex02.ConsoleUtils.Screen.Clear(); //TODO: need to uncomment
             m_BoardPrinter.PrintGameBoard(m_Engine.GetBoard());
         }
     }

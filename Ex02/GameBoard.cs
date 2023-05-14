@@ -111,22 +111,8 @@ namespace Engine
 
         public bool ChangeValueIfEmptyCell(MoveData i_MoveData)
         {
-            bool cellIsEmpty = false;
-            try
-            {
-                cellIsEmpty =
-                    m_BoardMatrixCells[i_MoveData.CellCoordinate.SelectedRow - 1,
-                        i_MoveData.CellCoordinate.SelectedColumn - 1].Value == eBoardCellValue.Empty;
-
-            }
-            catch(IndexOutOfRangeException e)
-            { 
-                
-                Console.WriteLine($"row :{i_MoveData.CellCoordinate.SelectedRow} col {i_MoveData.CellCoordinate.SelectedRow} Symbol {i_MoveData.CellValue}");
-              Console.WriteLine(e.StackTrace); 
-              Console.WriteLine();
-            }
-           
+            bool cellIsEmpty = m_BoardMatrixCells[i_MoveData.CellCoordinate.SelectedRow - 1,
+                                   i_MoveData.CellCoordinate.SelectedColumn - 1].Value == eBoardCellValue.Empty;
 
             if(cellIsEmpty)
             {

@@ -38,11 +38,7 @@ namespace Engine
             m_EmptyCellsList.Remove(i_CellCoordinate);
         }
 
-        private int calculateMapKey(CellBoardCoordinate i_CellCoordinate)
-        {
-            return i_CellCoordinate.SelectedRow * r_BoardSize + i_CellCoordinate.SelectedColumn;
-        }
-
+   
         public CellBoardCoordinate? GetValidRandomEmptyCellBoardCoordinate()
         {
             CellBoardCoordinate? boardCoordinate=null;
@@ -55,6 +51,10 @@ namespace Engine
                 RemoveCoordinateFromAvailableList(boardCoordinate.Value);
             }
 
+            if(boardCoordinate != null)
+            {
+                Console.WriteLine($@"({boardCoordinate.Value.SelectedRow},{boardCoordinate.Value.SelectedColumn}");
+            }
             return boardCoordinate;
         }
     }
