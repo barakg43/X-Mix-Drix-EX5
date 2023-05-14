@@ -56,12 +56,12 @@ namespace X_Mix_Drix_UI
         {
             while (true)
             {
-                Ex02.ConsoleUtils.Screen.Clear();
-                m_BoardPrinter.PrintGameBoard(m_Engine.GetBoard());
+                clearScreenAndPrintBoard();
                 m_Menu.PrintCurrentPlayerTurn(m_Engine.GetCurrentTurnPlayerName().ToString());
                 makePlayerMove();
                 if(m_Engine.GameIsOver)
                 {
+                    clearScreenAndPrintBoard();
                     printResults();
                     if (m_Menu.GetEndOfGameInput())
                     {
@@ -117,6 +117,12 @@ players[1].Name, players[1].Score));
 
             }
             
+        }
+
+        private void clearScreenAndPrintBoard()
+        {
+            Ex02.ConsoleUtils.Screen.Clear();
+            m_BoardPrinter.PrintGameBoard(m_Engine.GetBoard());
         }
     }
 
