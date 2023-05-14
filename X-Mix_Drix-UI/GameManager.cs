@@ -24,7 +24,8 @@ namespace X_Mix_Drix_UI
         public void RunMenu()
         {
             int size;
-            while (true)
+            bool isUsersWantToPlay = true;
+            while (isUsersWantToPlay)
             {
                 m_Menu.PrintMainMenu();
                 switch (m_Menu.GetAndCheckUserInputForMenuItem())
@@ -41,15 +42,14 @@ namespace X_Mix_Drix_UI
                     case Menu.eMenuOptions.StartGameAgaintsPlayer:
                         m_Engine.Create2Players(ePlayerName.Player1,ePlayerName.Player2);
                         //m_Menu.PrintSizeSelect();
-                        size = m_Menu.GetAndCheckUserInputForBoardSize(m_Engine.GetMinBoardSize(), m_Engine.GetMaxBoardSize());
-                        m_BoardPrinter = new BoardPrinter((ushort)size);
-                        m_Engine.CreateNewEmptyGameBoard((ushort)size);
-                        runGame();
+                   
                         break;
 
                     case Menu.eMenuOptions.Quit:
-                        return;
+                        isUsersWantToPlay = false;
+                        break;
                 }
+
             }
         }
 
@@ -67,7 +67,7 @@ namespace X_Mix_Drix_UI
                 clearScreenAndPrintBoard();
                 m_Menu.PrintCurrentPlayerTurn(m_Engine.GetCurrentTurnPlayerName().ToString());
                 makePlayerMove();
-                if(m_Engine.GameIsOver)
+                if(m_Engine.SessionIsOver)
                 {
                     clearScreenAndPrintBoard();
                     printResults();

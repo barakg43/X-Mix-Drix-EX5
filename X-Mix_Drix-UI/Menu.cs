@@ -106,7 +106,6 @@ enter two number in <row> <column> format with space between the number ";
 
                 if (inputIsInvalid)
                 {
-
                     currentMsgToUser = k_InvalidInputMsg;
                 }
             }

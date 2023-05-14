@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Eventing.Reader;
 using Ex02;
 
 namespace Engine
@@ -15,7 +16,7 @@ namespace Engine
         public GameBoard(ushort i_BoardSize)
         {
             r_BoardSize = i_BoardSize;
-            initializeEmptyBoard();
+            InitializeEmptyBoard();
         }
 
         public struct Cell
@@ -23,7 +24,7 @@ namespace Engine
             public eBoardCellValue Value { get; set; }
         }
 
-        private void initializeEmptyBoard()
+        public void InitializeEmptyBoard()
         {
             m_BoardMatrixCells = new Cell[r_BoardSize, r_BoardSize];
             m_FilledCellAmount = 0;
@@ -38,11 +39,12 @@ namespace Engine
 
         private bool isBoardHaveRowFilledWithValue(eBoardCellValue i_ValueToCheck)
         {
-            ushort countValueInRow = 0;
+            ushort countValueInRow;
             bool isOneRowFilledWithSingleValue = false;
 
             for (ushort col = 0; col < r_BoardSize && !isOneRowFilledWithSingleValue; col++)
             {
+                countValueInRow = 0;
                 for (ushort row = 0; row < r_BoardSize; row++)
                 {
                     increaseCounterIfCellContainValue(row, col, i_ValueToCheck, ref countValueInRow);
@@ -55,11 +57,12 @@ namespace Engine
         }
         private bool isBoardHaveColumnFilledWithValue(eBoardCellValue i_ValueToCheck)
         {
-            ushort countValueInColumn = 0;
+            ushort countValueInColumn;
             bool isOneColFilledWithSingleValue = false;
 
             for (ushort row = 0; row < r_BoardSize && !isOneColFilledWithSingleValue; row++)
             {
+                countValueInColumn = 0;
                 for (ushort col = 0; col < r_BoardSize; col++)
                 {
                     increaseCounterIfCellContainValue(row, col, i_ValueToCheck, ref countValueInColumn);
@@ -72,7 +75,7 @@ namespace Engine
 
         private bool isBoardHaveDiagonalFilledWithValue(eBoardCellValue i_ValueToCheck)
         {
-            ushort countValueInDiagonal = 0, countValueInAntiDiagonal=0;
+            ushort countValueInDiagonal = 0, countValueInAntiDiagonal = 0;
              
             for (ushort i = 0; i < r_BoardSize ; i++)
             {
@@ -85,7 +88,9 @@ namespace Engine
 
         public bool IsBoardHaveAnyRowColumnDiagonalFilled(eBoardCellValue i_ValueToCheck)
         {
-
+            bool isTrue= isBoardHaveRowFilledWithValue(i_ValueToCheck)
+                         || isBoardHaveColumnFilledWithValue(i_ValueToCheck)
+                         || isBoardHaveDiagonalFilledWithValue(i_ValueToCheck);
             return isBoardHaveRowFilledWithValue(i_ValueToCheck)
                    || isBoardHaveColumnFilledWithValue(i_ValueToCheck) 
                    || isBoardHaveDiagonalFilledWithValue(i_ValueToCheck);
@@ -185,9 +190,5 @@ namespace Engine
             }
         }
 
-        public void InitializeEmptyBoard()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

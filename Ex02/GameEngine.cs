@@ -6,7 +6,6 @@ namespace Engine
     public class GameEngine
     {
         private GameBoard m_GameBoard=null;
-        private bool m_IsStillPlaying;
         private Player m_FirstPlayer = null, m_SecondPlayer = null, m_CurrentTurnPlayer;
         private Random m_RandomNumberGenerator;
      //   private bool m_IsGameStarted;
@@ -15,12 +14,14 @@ namespace Engine
         private ComputerPlayer m_ComputerPlayer=null;
         public GameEngine()
         {
-            m_IsStillPlaying = true;
             m_RandomNumberGenerator = new Random();
         }
-        public bool GameIsOver
+        public bool SessionIsOver
         {
-            get { return m_IsGameOver; }
+            get
+            {
+                return m_IsGameOver || m_GameBoard.IsAllBoardFilled();
+            }
         }
         public void Create2Players(ePlayerName i_FirstPlayerName, ePlayerName i_SecondPlayerName)
         {
@@ -107,13 +108,16 @@ namespace Engine
         {
             bool isPreviousPlayerLooseSession = m_GameBoard.IsBoardHaveAnyRowColumnDiagonalFilled(m_CurrentTurnPlayer.GameSymbol);
             switchCurrentPlayerToOtherPlayer();
-            if (isPreviousPlayerLooseSession)
-            //bool isPlayerWinSession= m_GameBoard.IsBoardHaveAnyRowColumnDiagonalFilled(m_CurrentTurnPlayer.GameSymbol);
-            //switchCurrentPlayerToOtherPlayer();
-            if(m_GameBoard.IsBoardHaveAnyRowColumnDiagonalFilled(getOtherPlayerSymbol()))
+            if(isPreviousPlayerLooseSession)
             {
                 otherPlayerWon();
             }
+                //bool isPlayerWinSession= m_GameBoard.IsBoardHaveAnyRowColumnDiagonalFilled(m_CurrentTurnPlayer.GameSymbol);
+        //switchCurrentPlayerToOtherPlayer();
+        // if(m_GameBoard.IsBoardHaveAnyRowColumnDiagonalFilled(getOtherPlayerSymbol()))
+        //     {
+        //        
+        //     }
         }
 
         private eBoardCellValue getOtherPlayerSymbol()
@@ -144,8 +148,7 @@ namespace Engine
         private void makeComputerMoveIfNeed()
         {
             CellBoardCoordinate? selectedComputerPlayerCell;
-            bool isComputerPlayerQuit = true;
-
+            
             if (m_CurrentTurnPlayer.Name == ePlayerName.Computer)
             {
                 selectedComputerPlayerCell = m_ComputerPlayer.GetValidRandomEmptyCellBoardCoordinate();
@@ -157,7 +160,6 @@ namespace Engine
                    
                 }
                 checkIfCurrentPlayerLooseInSession();
-               
             }
         }
         private void otherPlayerWon()
