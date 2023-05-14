@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Ex02;
 
 namespace Engine
@@ -12,6 +12,7 @@ namespace Engine
         private bool m_IsGameStarted;
         private bool m_IsGameOver = false;
         private ushort m_BoardSize;
+        private ComputerPlayer m_ComputerPlayer=null;
         public GameEngine()
         {
             m_IsStillPlaying = true;
@@ -42,11 +43,14 @@ namespace Engine
             }
             else
             {
-                
                 sizeStatus = eBoardSizeError.Valid;
                 m_GameBoard = new GameBoard(i_BoardSize);
                 m_IsGameStarted = false;
                 m_IsGameOver = false;
+                if (m_FirstPlayer.Name == ePlayerName.Computer || m_SecondPlayer.Name == ePlayerName.Computer)
+                {
+                    m_ComputerPlayer = new ComputerPlayer(i_BoardSize);
+                }
             }
 
             return sizeStatus;
@@ -145,6 +149,16 @@ namespace Engine
             m_IsGameOver = true;
         }
 
+        private void startNewGameSession()
+        {
+            if(m_FirstPlayer.Name == ePlayerName.Computer || m_SecondPlayer.Name == ePlayerName.Computer)
+            {
+
+
+            }
+
+            m_GameBoard.InitializeEmptyBoard();
+        }
         public eStartingGameStatus ValidateInitializationGameParameters()
         {
             eStartingGameStatus gameInitializationStatus;
