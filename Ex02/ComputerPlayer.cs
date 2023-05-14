@@ -8,14 +8,13 @@ namespace Engine
     class ComputerPlayer
     {
         private readonly ushort r_BoardSize;
-        private List<CellBoardCoordinate> m_EmptyCellsList;
-        private Random m_RandomIndexGenerator;
-        //private Dictionary<int, int> m_MapIndex;
+        private readonly List<CellBoardCoordinate> r_EmptyCellsList;
+        private readonly Random r_RandomIndexGenerator;
         public ComputerPlayer(ushort i_BoardSize)
         {
             r_BoardSize = i_BoardSize;
-            m_EmptyCellsList = new List<CellBoardCoordinate>(r_BoardSize* r_BoardSize);
-            m_RandomIndexGenerator = new Random();
+            r_EmptyCellsList = new List<CellBoardCoordinate>(r_BoardSize* r_BoardSize);
+            r_RandomIndexGenerator = new Random();
             MakeAllCellBoardUnselected();
         }
 
@@ -28,14 +27,14 @@ namespace Engine
                 for (ushort col = 1; col <= r_BoardSize; col++)
                 {
                     currentBoardCoordinate = new CellBoardCoordinate(row, col);
-                    m_EmptyCellsList.Add(currentBoardCoordinate);
+                    r_EmptyCellsList.Add(currentBoardCoordinate);
                 }
             }
         }
 
         public void RemoveCoordinateFromAvailableList(CellBoardCoordinate i_CellCoordinate)
         {
-            m_EmptyCellsList.Remove(i_CellCoordinate);
+            r_EmptyCellsList.Remove(i_CellCoordinate);
         }
 
    
@@ -44,10 +43,10 @@ namespace Engine
             CellBoardCoordinate? boardCoordinate=null;
             int randomIndex;
 
-            if(m_EmptyCellsList.Count > 0)
+            if(r_EmptyCellsList.Count > 0)
             {
-                randomIndex = m_RandomIndexGenerator.Next(m_EmptyCellsList.Count);
-                boardCoordinate= m_EmptyCellsList[randomIndex];
+                randomIndex = r_RandomIndexGenerator.Next(r_EmptyCellsList.Count);
+                boardCoordinate= r_EmptyCellsList[randomIndex];
                 RemoveCoordinateFromAvailableList(boardCoordinate.Value);
             }
 

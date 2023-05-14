@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Ignore Spelling: Drix
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,14 +31,14 @@ namespace X_Mix_Drix_UI
                     boardAsString.Append(string.Format(" {0} |", readCellValue(i_Board[i, j].Value)));
                 }
                 boardAsString.Append('\n');
-                boardAsString.Append(getRowSeperator());
+                boardAsString.Append(getRowSeparator());
 
             }
 
             Console.WriteLine(boardAsString.ToString());
         }
 
-        private string getRowSeperator()
+        private string getRowSeparator()
         {
             string res = " ";
             for(int i = 0; i < 4*m_BoardSize + 1; i++)
