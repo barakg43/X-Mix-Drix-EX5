@@ -11,6 +11,5 @@ namespace Engine
         CantEraseCell,
         CellNotEmpty,
         CellOutOfRange
-
     }
 }
