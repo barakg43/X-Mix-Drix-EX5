@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Metadata;
 using System.Text;
 
 namespace Engine
 {
-    class ComputerPlayer
+    public class ComputerPlayer
     {
         private readonly ushort r_BoardSize;
         private readonly List<CellBoardCoordinate> r_EmptyCellsList;
@@ -37,26 +38,32 @@ namespace Engine
             r_EmptyCellsList.Remove(i_CellCoordinate);
         }
 
-   
         public CellBoardCoordinate? GetValidRandomEmptyCellBoardCoordinate()
         {
-            CellBoardCoordinate? boardCoordinate=null;
+            CellBoardCoordinate? boardCoordinate = null;
             int randomIndex;
 
             if(r_EmptyCellsList.Count > 0)
             {
                 randomIndex = r_RandomIndexGenerator.Next(r_EmptyCellsList.Count);
-                boardCoordinate= r_EmptyCellsList[randomIndex];
+                boardCoordinate = r_EmptyCellsList[randomIndex];
                 RemoveCoordinateFromAvailableList(boardCoordinate.Value);
             }
 
-            if(boardCoordinate != null)
-            {
-                Console.WriteLine($@"({boardCoordinate.Value.SelectedRow},{boardCoordinate.Value.SelectedColumn}");
-            }
             return boardCoordinate;
         }
+
+        private void printCoordinateList()
+        {
+            foreach (CellBoardCoordinate coordinate in r_EmptyCellsList)
+            {
+                Console.Write(string.Format("({0},{1}) #",coordinate.SelectedRow,coordinate.SelectedColumn));
+
+            }
+            Console.WriteLine();
+        }
     }
+
 
 
 }

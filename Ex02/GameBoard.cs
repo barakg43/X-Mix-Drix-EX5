@@ -22,6 +22,7 @@ namespace Engine
         public struct Cell
         {
             public eBoardCellValue Value { get; set; }
+
         }
 
         public void InitializeEmptyBoard()
