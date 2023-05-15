@@ -11,10 +11,11 @@ namespace Engine
         private readonly ushort r_BoardSize;
         private readonly List<CellBoardCoordinate> r_EmptyCellsList;
         private readonly Random r_RandomIndexGenerator;
+
         public ComputerPlayer(ushort i_BoardSize)
         {
             r_BoardSize = i_BoardSize;
-            r_EmptyCellsList = new List<CellBoardCoordinate>(r_BoardSize* r_BoardSize);
+            r_EmptyCellsList = new List<CellBoardCoordinate>(r_BoardSize * r_BoardSize);
             r_RandomIndexGenerator = new Random();
             MakeAllCellBoardUnselected();
         }
@@ -57,13 +58,10 @@ namespace Engine
         {
             foreach (CellBoardCoordinate coordinate in r_EmptyCellsList)
             {
-                Console.Write(string.Format("({0},{1}) #",coordinate.SelectedRow,coordinate.SelectedColumn));
-
+                Console.Write(string.Format("({0},{1}) #", coordinate.SelectedRow, coordinate.SelectedColumn));
             }
+
             Console.WriteLine();
         }
     }
-
-
-
 }

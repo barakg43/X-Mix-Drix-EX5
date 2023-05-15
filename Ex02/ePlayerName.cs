@@ -4,7 +4,6 @@
     {
         Player1,
         Player2,
-        Computer,
-        None
+        Computer
     }
 }

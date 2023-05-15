@@ -47,10 +47,5 @@
     <Compile Include="MoveData.cs" />
     <Compile Include="eStartingGameStatus.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Ex02.ConsoleUtils">
-      <HintPath>..\..\..\..\..\temp\Ex02.ConsoleUtils.dll</HintPath>
-    </Reference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

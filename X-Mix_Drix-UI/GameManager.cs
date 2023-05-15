@@ -32,10 +32,10 @@ namespace X_Mix_Drix_UI
                 r_Menu.PrintMainMenu();
                 switch (r_Menu.GetAndCheckUserInputForMenuItem())
                 {
-                    case Menu.eMenuOptions.StartGameAgainstPC:
+                    case Menu.eMenuOptions.StartGameAgainstPc:
                         r_Engine.Create2Players(ePlayerName.Player1, ePlayerName.Computer);
                     break;
-                    case Menu.eMenuOptions.StartGameAgaintsPlayer:
+                    case Menu.eMenuOptions.StartGameAgainstPlayer:
                         r_Engine.Create2Players(ePlayerName.Player1,ePlayerName.Player2);
                         break;
                     case Menu.eMenuOptions.Quit:
@@ -99,6 +99,7 @@ namespace X_Mix_Drix_UI
             CellBoardCoordinate turnData;
             bool currentPlayerWantsToQuit = false;
             eCellError cellError = eCellError.NoError;
+
             if( r_Engine.GetCurrentTurnPlayerName() == ePlayerName.Computer)
             {
                 r_Engine.MakeComputerMoveInHisTurn();  
@@ -109,7 +110,7 @@ namespace X_Mix_Drix_UI
                 {
                     turnData = r_Menu.GetAndCheckUserInputForTurnDataMove(ref currentPlayerWantsToQuit, cellError);
                 }
-                while (!r_Engine.MakeValidGameMoveForCurrentPlayer(turnData, currentPlayerWantsToQuit, ref cellError));
+                while (!r_Engine.MakeValidGameMoveForCurrentPlayer(turnData, currentPlayerWantsToQuit, out cellError));
 
             }
             

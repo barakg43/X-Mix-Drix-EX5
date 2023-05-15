@@ -12,8 +12,8 @@ namespace X_Mix_Drix_UI
         private const string k_InvalidInputMsg = "The input you entered is invalid. Please try again.";
         public enum eMenuOptions
         {
-            StartGameAgainstPC = 1,
-            StartGameAgaintsPlayer,
+            StartGameAgainstPc = 1,
+            StartGameAgainstPlayer,
             Quit,
         }
 

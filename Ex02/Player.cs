@@ -16,7 +16,7 @@
             get;
         }
 
-        public void incrementGameSessionsScore()
+        public void IncrementGameSessionsScore()
         {
             m_Score++;
         }
@@ -33,6 +33,5 @@
                 return m_Score;
             }
         }
-
     }
 }
