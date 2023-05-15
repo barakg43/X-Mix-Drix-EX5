@@ -1,15 +1,15 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Engine;
 
 namespace X_Mix_Drix_UI
 {
-    class Menu
+    public class Menu
     {
-        const char k_Quit = 'Q';
+        private const char k_Quit = 'Q';
         private const string k_InvalidInputMsg = "The input you entered is invalid. Please try again.";
+        private const string k_EnterBoardCoordMsg = @"please enter board coordination to place your mark. 
+enter two number in <row> <column> format with space between the number ";
+
         public enum eMenuOptions
         {
             StartGameAgainstPc = 1,
@@ -21,7 +21,6 @@ namespace X_Mix_Drix_UI
         {
             Continue = 1,
             Finish
-
         }
 
         public void PrintMainMenu()
@@ -55,9 +54,10 @@ Select an option by entering its number"));
         {
             bool inputIsInvalid = true;
             int userInput = 0;
+
             while (inputIsInvalid)
             {
-                int.TryParse(Console.ReadLine(), out userInput);// check if number
+                int.TryParse(Console.ReadLine(), out userInput);
                 if (Enum.IsDefined(typeof(eMenuOptions), userInput))
                 {
                     inputIsInvalid = false;
@@ -67,26 +67,24 @@ Select an option by entering its number"));
                     Console.WriteLine(k_InvalidInputMsg);
                 }
             }
+
             return (eMenuOptions)userInput;
         }
+
         public CellBoardCoordinate GetAndCheckUserInputForTurnDataMove(ref bool i_CurrentPlayerWantsToQuit, eCellError cellError)
         {
             string[] rowColRawData;
             string inputData;
-            ushort selectRow=0;
-            ushort selectedColumn=0;
-            char singleLetterInput;//might cause runtime error
+            ushort selectRow = 0;
+            ushort selectedColumn = 0;
+            string currentMsgToUser = k_EnterBoardCoordMsg;
+            bool inputIsInvalid;
 
-            const string k_InputMsg = @"please enter board coordination to place your mark. 
-enter two number in <row> <column> format with space between the number ";
-
-            string currentMsgToUser= k_InputMsg;
-            if(cellError != eCellError.NoError)
+            if (cellError != eCellError.NoError)
             {
                 currentMsgToUser = checkCellError(cellError);
             }
 
-            bool inputIsInvalid;
             do
             {
                 Console.WriteLine(currentMsgToUser);
@@ -94,7 +92,7 @@ enter two number in <row> <column> format with space between the number ";
                 rowColRawData = inputData.Split();
                 if (rowColRawData.Length == 1)
                 {
-                    char.TryParse(rowColRawData[0], out singleLetterInput);
+                    char.TryParse(rowColRawData[0], out char singleLetterInput);
                     inputIsInvalid = char.ToUpper(singleLetterInput) != k_Quit;
                     i_CurrentPlayerWantsToQuit = !inputIsInvalid;
                 }
@@ -111,10 +109,9 @@ enter two number in <row> <column> format with space between the number ";
             }
             while (inputIsInvalid);
 
-            return new CellBoardCoordinate(selectRow,selectedColumn);
+            return new CellBoardCoordinate(selectRow, selectedColumn);
         }
     
-
         public int GetAndCheckUserInputForBoardSize(int i_MinSize, int i_MaxSize)
         {
             bool inputIsInvalid = true;
@@ -122,7 +119,7 @@ enter two number in <row> <column> format with space between the number ";
             Console.WriteLine(string.Format("Please select a board size between {0} and {1}", i_MinSize, i_MaxSize));
             while (inputIsInvalid)
             {
-                int.TryParse(Console.ReadLine(), out userInput);// check if number
+                int.TryParse(Console.ReadLine(), out userInput);
                 if (userInput >= i_MinSize && userInput <= i_MaxSize)
                 {
                     inputIsInvalid = false;
@@ -132,8 +129,10 @@ enter two number in <row> <column> format with space between the number ";
                     Console.WriteLine(k_InvalidInputMsg);
                 }
             }
+
             return userInput;
         }
+
         public bool GetEndOfGameInput()
         {
             bool inputIsInvalid = true;
@@ -145,7 +144,7 @@ enter two number in <row> <column> format with space between the number ";
 Select an option by entering its number"));
             while (inputIsInvalid)
             {
-                int.TryParse(Console.ReadLine(), out userInput);// check if number
+                int.TryParse(Console.ReadLine(), out userInput);
                 if (Enum.IsDefined(typeof(eEndOfGameOptions), userInput))
                 {
                     inputIsInvalid = false;
@@ -155,8 +154,8 @@ Select an option by entering its number"));
                     Console.WriteLine(k_InvalidInputMsg);
                 }
             }
-            return (eEndOfGameOptions)userInput == eEndOfGameOptions.Finish;
 
+            return (eEndOfGameOptions)userInput == eEndOfGameOptions.Finish;
         }
 
         private string checkCellError(eCellError cellError)
@@ -174,6 +173,7 @@ Select an option by entering its number"));
             {
                 res = "Cant erase used cell";
             }
+
             return res;
         }
     }
