@@ -87,6 +87,10 @@ namespace X_Mix_Drix_UI
 
                 Console.WriteLine(string.Format(k_WinnerSessionStringFormat, r_Engine.GetCurrentTurnPlayerName()));
             }
+            else
+            {
+                Console.WriteLine("It's a tie");
+            }
 
             Console.WriteLine(string.Format(k_ScoreDisplayStringFormat, players[0].Name, players[0].Score, players[1].Name, players[1].Score));
         }
