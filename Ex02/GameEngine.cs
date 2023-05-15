@@ -9,8 +9,7 @@ namespace Engine
         private Player m_FirstPlayer = null, m_SecondPlayer = null, m_CurrentTurnPlayer;
         private Random m_RandomNumberGenerator;
      //   private bool m_IsGameStarted;
-        private bool m_IsSessionOver = false;
-        private ComputerPlayer m_ComputerPlayer=null;
+     private ComputerPlayer m_ComputerPlayer=null;
         public GameEngine()
         {
             m_RandomNumberGenerator = new Random();
@@ -58,8 +57,7 @@ namespace Engine
             {
                 sizeStatus = eBoardSizeError.Valid;
                 m_GameBoard = new GameBoard(i_BoardSize);
-           //     m_IsGameStarted = false;
-                m_IsSessionOver = false;
+                 IsSessionHaveWinner = false;
                 if (m_FirstPlayer.Name == ePlayerName.Computer || m_SecondPlayer.Name == ePlayerName.Computer)
                 {
                     m_ComputerPlayer = new ComputerPlayer(i_BoardSize);
@@ -167,7 +165,7 @@ namespace Engine
         {
             CellBoardCoordinate? selectedComputerPlayerCell;
             
-            if (m_CurrentTurnPlayer.Name == ePlayerName.Computer && !m_IsSessionOver)
+            if (m_CurrentTurnPlayer.Name == ePlayerName.Computer && !IsSessionOver)
             {
                 selectedComputerPlayerCell = m_ComputerPlayer.GetValidRandomEmptyCellBoardCoordinate();
                 if (selectedComputerPlayerCell.HasValue)

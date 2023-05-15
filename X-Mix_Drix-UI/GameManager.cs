@@ -16,7 +16,7 @@ namespace X_Mix_Drix_UI
         private readonly GameEngine r_Engine;
         private const string k_WinnerSessionStringFormat = @"The winner is {0}!";
         private const string k_ScoreDisplayStringFormat = @"Score Balance: {0} - {1}
-         {2} - {3}";
+              {2} - {3}";
         public GameManager()
         {
             r_Menu = new Menu();
@@ -113,7 +113,7 @@ namespace X_Mix_Drix_UI
 
         private void clearScreenAndPrintBoard()
         {
-        //    Ex02.ConsoleUtils.Screen.Clear(); //TODO: need to uncomment
+            Ex02.ConsoleUtils.Screen.Clear(); 
             m_BoardPrinter.PrintGameBoard(r_Engine.GetBoard());
         }
     }
