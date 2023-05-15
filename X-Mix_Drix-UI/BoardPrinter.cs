@@ -1,17 +1,14 @@
 ﻿// Ignore Spelling: Drix
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Engine;
-using Ex02;
+
 namespace X_Mix_Drix_UI
 {
     public class BoardPrinter
     {
         private readonly ushort m_BoardSize;
-
 
         public BoardPrinter(ushort boardSize)
         {
@@ -21,7 +18,6 @@ namespace X_Mix_Drix_UI
         public void PrintGameBoard(GameBoard.Cell[,] i_Board)
         {
             StringBuilder boardAsString = new StringBuilder(getFirstRow());
-            //int boardSize = i_Board.GetLength(0);
 
             for(int i = 0; i < m_BoardSize; i++)
             {
@@ -30,9 +26,9 @@ namespace X_Mix_Drix_UI
                 {
                     boardAsString.Append(string.Format(" {0} |", readCellValue(i_Board[i, j].Value)));
                 }
+
                 boardAsString.Append('\n');
                 boardAsString.Append(getRowSeparator());
-
             }
 
             Console.WriteLine(boardAsString.ToString());
@@ -41,10 +37,11 @@ namespace X_Mix_Drix_UI
         private string getRowSeparator()
         {
             string res = " ";
-            for(int i = 0; i < 4*m_BoardSize + 1; i++)
+            for(int i = 0; i < (4 * m_BoardSize) + 1; i++)
             {
                 res += "=";
             }
+
             return res + "\n";
         }
 
@@ -56,6 +53,7 @@ namespace X_Mix_Drix_UI
                 res += i + 1;
                 res += "   ";
             }
+
             return res + "\n";
         }
 
