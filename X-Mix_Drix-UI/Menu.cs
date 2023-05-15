@@ -116,6 +116,7 @@ Select an option by entering its number"));
         {
             bool inputIsInvalid = true;
             int userInput = 0;
+
             Console.WriteLine(string.Format("Please select a board size between {0} and {1}", i_MinSize, i_MaxSize));
             while (inputIsInvalid)
             {
@@ -137,6 +138,7 @@ Select an option by entering its number"));
         {
             bool inputIsInvalid = true;
             int userInput = 0;
+
             Console.WriteLine(string.Format(
 @"1. Start another match
 2. Finish game
@@ -161,6 +163,7 @@ Select an option by entering its number"));
         private string checkCellError(eCellError cellError)
         {
             string res;
+
             if(cellError == eCellError.CellNotEmpty)
             {
                 res = "Cell is not empty";

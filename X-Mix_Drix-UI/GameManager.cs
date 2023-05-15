@@ -12,12 +12,9 @@ namespace X_Mix_Drix_UI
         private const string k_WinnerSessionStringFormat = @"The winner is {0}!";
         private const string k_ScoreDisplayStringFormat = @"Score Balance: {0} - {1}
               {2} - {3}";
-
         private const string k_TieMsg = "Its a tie";
-
         private readonly GameEngine r_Engine;
         private readonly Menu r_Menu;
-        
         private BoardPrinter m_BoardPrinter;
         
         public GameManager()
@@ -82,6 +79,7 @@ namespace X_Mix_Drix_UI
         private void printResults(bool i_IsSessionHasPlayerWon)
         {
             Player[] players = r_Engine.GetPlayers();
+
             if(i_IsSessionHasPlayerWon)
             {
                 Console.WriteLine(string.Format(k_WinnerSessionStringFormat, r_Engine.GetCurrentTurnPlayerName()));
