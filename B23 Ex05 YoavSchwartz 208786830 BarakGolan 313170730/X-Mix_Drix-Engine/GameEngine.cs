@@ -5,7 +5,9 @@ namespace Engine
     public class GameEngine
     {
         private GameBoard m_GameBoard = null;
-        private Player m_FirstPlayer = null, m_SecondPlayer = null, m_CurrentTurnPlayer;
+        private Player m_FirstPlayer = null;
+        private Player m_SecondPlayer = null;
+        private Player m_CurrentTurnPlayer;
         private ComputerPlayer m_ComputerPlayer = null;
 
         public bool IsSessionFinishInTie
