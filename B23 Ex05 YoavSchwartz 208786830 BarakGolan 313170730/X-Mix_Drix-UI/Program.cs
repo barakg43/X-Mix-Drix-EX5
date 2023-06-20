@@ -7,7 +7,7 @@ namespace X_Mix_Drix_UI
         public static void Main()
         {
             Application.EnableVisualStyles();
-            GameDisplay gameSettingForm = new GameDisplay("player1","player2",4);
+            GameDisplay gameSettingForm = new GameDisplay("player1","player2",10);
             gameSettingForm.ShowDialog();
             //GameManager gameManager = new GameManager();
             //gameManager.RunMenu();

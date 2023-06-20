@@ -11,12 +11,12 @@ namespace X_Mix_Drix_UI
    {
        public event Action<CellBoardCoordinate> CellBoardClicked;
        private readonly ushort r_BoardSize;
-        private FlowLayoutPanel flowLayoutPanel1;
         private List<CellBoardButton> CellBoardButtons;
         public GameBoardPanel(ushort i_BoardSize)
         {
             r_BoardSize = i_BoardSize;
             initializeEmptyBoard();
+            initializeProperties();
             CellBoardButtons = new List<CellBoardButton>(i_BoardSize * i_BoardSize);
         }
 
@@ -33,7 +33,13 @@ namespace X_Mix_Drix_UI
                 }
             }
         }
+        private void initializeProperties()
+        {
+            ushort buttonSize = CellBoardButton.GetButtonSize();
 
+            Height = buttonSize * r_BoardSize;
+            Width = buttonSize * r_BoardSize;
+        }
 
         public void ClearAllBoardCell()
         {
@@ -47,35 +53,6 @@ namespace X_Mix_Drix_UI
             CellBoardClicked?.Invoke(i_CellCoordinate);
         }
 
-        private void InitializeComponent()
-        {
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.SuspendLayout();
-            // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(200, 100);
-            this.flowLayoutPanel1.TabIndex = 0;
-            this.flowLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint);
-            // 
-            // GameBoardPanel
-            // 
-            this.Name = "panel1";
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
-            this.ResumeLayout(false);
 
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
     }
 }

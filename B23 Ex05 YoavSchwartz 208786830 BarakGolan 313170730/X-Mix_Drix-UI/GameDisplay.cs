@@ -24,12 +24,11 @@ namespace X_Mix_Drix_UI
         {
             m_ScoreDisplay = new ScoreDisplay(i_Player1Name, i_Player2Name);
             m_GameBoardPanel = new GameBoardPanel(i_BoardSize);
-            this.flowLayoutPanel1.Controls.Add(new CellBoardButton(new CellBoardCoordinate(5,6)));
-            this.flowLayoutPanel1.Controls.Add(new CellBoardButton(new CellBoardCoordinate(5, 6)));
+
            // this.flowLayoutPanel1.Visible = false;
             m_ScoreDisplay.Top = 100;
             m_ScoreDisplay.Left = 10;
-         //   this.Controls.Add(m_GameBoardPanel);
+            this.Controls.Add(m_GameBoardPanel);
             this.Controls.Add(m_ScoreDisplay);
         }
     }
