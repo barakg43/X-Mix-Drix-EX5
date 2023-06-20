@@ -10,6 +10,7 @@ namespace Engine
         private Player m_CurrentTurnPlayer;
         private ComputerPlayer m_ComputerPlayer = null;
 
+        public event Action<MoveData> ValidMoveTurnNotifer;
         public bool IsSessionFinishInTie
         {
             get
@@ -166,7 +167,7 @@ namespace Engine
             {
                 m_ComputerPlayer.RemoveCoordinateFromAvailableList(currentMoveData.CellCoordinate);
             }
-
+            ValidMoveTurnNotifer?.Invoke(currentMoveData);
             checkIfCurrentPlayerLooseInSession();
         }
     
