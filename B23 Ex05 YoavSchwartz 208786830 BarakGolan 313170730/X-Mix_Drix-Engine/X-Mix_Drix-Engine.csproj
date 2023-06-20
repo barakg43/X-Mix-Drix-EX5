@@ -46,6 +46,7 @@
     <Compile Include="Player.cs" />
     <Compile Include="MoveData.cs" />
     <Compile Include="eStartingGameStatus.cs" />
+    <Compile Include="PlayerNew.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

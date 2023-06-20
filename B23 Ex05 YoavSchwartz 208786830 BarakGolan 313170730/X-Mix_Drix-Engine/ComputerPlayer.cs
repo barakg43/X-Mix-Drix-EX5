@@ -6,13 +6,13 @@ using System.Text;
 
 namespace Engine
 {
-    public class ComputerPlayer
+    public class ComputerPlayer : PlayerNew
     {
         private readonly ushort r_BoardSize;
         private readonly List<CellBoardCoordinate> r_EmptyCellsList;
         private readonly Random r_RandomIndexGenerator;
 
-        public ComputerPlayer(ushort i_BoardSize)
+        public ComputerPlayer(ushort i_BoardSize, eBoardCellValue i_GameSymbol) : base(i_GameSymbol)
         {
             r_BoardSize = i_BoardSize;
             r_EmptyCellsList = new List<CellBoardCoordinate>(r_BoardSize * r_BoardSize);

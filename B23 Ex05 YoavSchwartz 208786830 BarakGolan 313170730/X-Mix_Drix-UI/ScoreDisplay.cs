@@ -49,5 +49,13 @@ namespace X_Mix_Drix_UI
                 scorePlayer2Label.Text = m_ScorePlayer2.ToString();
             }
         }
+
+        public void UpdateScore(ushort i_ScorePlayer1, ushort i_ScorePlayer2)
+        {
+            m_ScorePlayer1 = i_ScorePlayer1;
+            m_ScorePlayer2 = i_ScorePlayer2;
+            scorePlayer1Label.Text = m_ScorePlayer1.ToString();
+            scorePlayer2Label.Text = m_ScorePlayer2.ToString();
+        }
     }
 }

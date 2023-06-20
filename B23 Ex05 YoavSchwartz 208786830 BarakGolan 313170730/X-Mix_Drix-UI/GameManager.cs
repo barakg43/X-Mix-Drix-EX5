@@ -16,13 +16,13 @@ namespace X_Mix_Drix_UI
         private BoardPrinter m_BoardPrinter;
 
         private GameDisplay m_GameBoardDisplay;
-        private GameSetting m_GameSetting;
+        private readonly GameSetting r_GameSetting;
 
         public GameManager()
         {
             r_Menu = new Menu();
             r_Engine = new GameEngine();
-            m_GameSetting = new GameSetting();
+            r_GameSetting = new GameSetting();
         }
 
         public void RunMenu()
@@ -59,7 +59,7 @@ namespace X_Mix_Drix_UI
 
         public void RunGame()
         { 
-            DialogResult gameSettingDialogResult =  m_GameSetting.ShowDialog();
+            DialogResult gameSettingDialogResult =  r_GameSetting.ShowDialog();
 
            if (gameSettingDialogResult == DialogResult.OK)
            {
@@ -90,26 +90,39 @@ namespace X_Mix_Drix_UI
 
         private void setupGameEngineSetting()
         {
-            if(m_GameSetting.IsPlayingVsComputer)
+            if(r_GameSetting.IsPlayingVsComputer)
             {
                 r_Engine.Create2Players(ePlayerName.Player1, ePlayerName.Computer);
+                r_Engine.Create1PlayerGame(r_GameSetting.Player1Name, r_GameSetting.BoardSize);//new
             }
             else
             {
                 r_Engine.Create2Players(ePlayerName.Player1, ePlayerName.Player2);
+                r_Engine.Create2PlayersGame(r_GameSetting.Player1Name, r_GameSetting.Player2Name);//new
             }
-            r_Engine.CreateNewEmptyGameBoard(m_GameSetting.BoardSize);
+            r_Engine.CreateNewEmptyGameBoard(r_GameSetting.BoardSize);
+            r_Engine.GameOverNotifier += gameOver;
             r_Engine.ValidMoveTurnNotifer += markPlayerMoveInGameBoard;
         }
         
         private void startGameSession()
         {
             m_GameBoardDisplay = new GameDisplay(
-                m_GameSetting.Player1Name,
-                m_GameSetting.Player2Name,
-                m_GameSetting.BoardSize);
-       m_GameBoardDisplay.RegisterForCellBoardClickedEvent(r_Engine.MakeValidGameMoveForCurrentPlayer);
+                r_GameSetting.Player1Name,
+                r_GameSetting.Player2Name,
+                r_GameSetting.BoardSize);
+            m_GameBoardDisplay.RegisterForCellBoardClickedEvent(r_Engine.MakeValidGameMoveForCurrentPlayer);
             m_GameBoardDisplay.ShowDialog();
+        }
+
+        private void gameOver()
+        {
+            m_GameBoardDisplay.UpdateScore(r_Engine.FirstPlayerScore, r_Engine.SecondPlayerScore);
+            if(r_Engine.IsSessionHaveWinner)
+            {
+                //TODO: Winner dialogue
+            }
+            //TODO: Tie dialogue
         }
 
         private void markPlayerMoveInGameBoard(MoveData i_TurnData)

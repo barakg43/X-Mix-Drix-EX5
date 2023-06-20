@@ -15,7 +15,7 @@ namespace X_Mix_Drix_UI
 
         private void numericUpDownRowsCols_ValueChanged(object sender, EventArgs e)
         {
-            NumericUpDown senderObject=sender as NumericUpDown;
+            NumericUpDown senderObject = sender as NumericUpDown;
 
             numericUpDownRows.Value = senderObject.Value;
             numericUpDownCols.Value = senderObject.Value;
@@ -24,14 +24,7 @@ namespace X_Mix_Drix_UI
 
         private void checkBoxPlayer2_CheckedChanged(object sender, EventArgs e)
         {
-            if (textBoxPlayer2Name.Enabled)
-            {
-                textBoxPlayer2Name.Text = k_DefaultPlayer2Name;
-            }
-            else
-            {
-                textBoxPlayer2Name.Text = "";
-            }
+            textBoxPlayer2Name.Text = textBoxPlayer2Name.Enabled ? k_DefaultPlayer2Name : "";
 
             textBoxPlayer2Name.Enabled = checkBoxPlayer2.Checked;
         }
@@ -86,5 +79,14 @@ namespace X_Mix_Drix_UI
             }
         }
 
+        private void textBoxPlayer2Name_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void GameSetting_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
