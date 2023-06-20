@@ -24,7 +24,6 @@ namespace X_Mix_Drix_UI
         //TODO :need to be fix the arrage on the board and score location
         private void initializeGameSetting(string i_Player1Name, string i_Player2Name, ushort i_BoardSize)
         {
-            
             m_ScoreDisplay = new ScoreDisplay(i_Player1Name, i_Player2Name);
             m_GameBoardPanel = new GameBoardPanel(i_BoardSize);
             this.ClientSize = new Size(
@@ -39,8 +38,8 @@ namespace X_Mix_Drix_UI
             m_ScoreDisplay.Location = caluateCenterPositionInForm(
                 m_ScoreDisplay, 
                 120);
-            this.Controls.Add(m_GameBoardPanel);
-            this.Controls.Add(m_ScoreDisplay);
+            Controls.Add(m_GameBoardPanel);
+            Controls.Add(m_ScoreDisplay);
       
 
 
@@ -65,6 +64,16 @@ namespace X_Mix_Drix_UI
         public void IncrementScoreForPlayer(bool i_IsPlayer1)
         {
             m_ScoreDisplay.IncrementScoreForPlayer(i_IsPlayer1);
+        }
+
+        private void GameDisplay_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        public void UpdateScore(ushort i_ScorePlayer1, ushort i_ScorePlayer2)
+        {
+            m_ScoreDisplay.UpdateScore(i_ScorePlayer1, i_ScorePlayer2);
         }
     }
 }

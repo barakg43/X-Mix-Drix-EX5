@@ -10,7 +10,7 @@ using Engine;
 namespace X_Mix_Drix_UI
 {
 
-    class CellBoardButton:Button
+    class CellBoardButton : Button
     {
         private readonly CellBoardCoordinate r_ButtonBoardCoordinate;
         public event Action<CellBoardCoordinate> CellClicked;

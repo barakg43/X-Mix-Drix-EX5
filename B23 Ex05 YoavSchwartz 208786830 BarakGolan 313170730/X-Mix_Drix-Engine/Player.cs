@@ -4,6 +4,8 @@
     {
         private int m_Score;
 
+        private bool m_IsComputer = false;
+
         public Player(ePlayerName i_Name, eBoardCellValue i_GameSymbol)
         {
             Name = i_Name;
