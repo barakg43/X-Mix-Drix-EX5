@@ -74,7 +74,7 @@ namespace X_Mix_Drix_UI
             //{
             //    clearScreenAndPrintBoard();
             //    r_Menu.PrintCurrentPlayerTurn(r_Engine.GetCurrentTurnPlayerName().ToString());
-            //    makePlayerMove();
+            //    markPlayerMoveInGameBoard();
             //    if(r_Engine.IsSessionOver)
             //    {
             //        clearScreenAndPrintBoard();
@@ -99,6 +99,7 @@ namespace X_Mix_Drix_UI
                 r_Engine.Create2Players(ePlayerName.Player1, ePlayerName.Player2);
             }
             r_Engine.CreateNewEmptyGameBoard(m_GameSetting.BoardSize);
+            r_Engine.ValidMoveTurnNotifer += markPlayerMoveInGameBoard;
         }
         
         private void startGameSession()
@@ -111,10 +112,10 @@ namespace X_Mix_Drix_UI
             m_GameBoardDisplay.ShowDialog();
         }
 
-        private void makePlayerMove(CellBoardCoordinate i_ChossenCoordinate)
+        private void markPlayerMoveInGameBoard(MoveData i_TurnData)
         {
-
-
+            Console.WriteLine("test");
+            //TODO: mark the cell with the symbol
         }
         private void printResults(bool i_IsSessionHasPlayerWon)
         {
@@ -137,7 +138,7 @@ namespace X_Mix_Drix_UI
                 players[1].Score);
         }
 
-        private void makePlayerMove()
+        private void markPlayerMoveInGameBoard()
         {
             CellBoardCoordinate turnData;
             bool currentPlayerWantsToQuit = false;
