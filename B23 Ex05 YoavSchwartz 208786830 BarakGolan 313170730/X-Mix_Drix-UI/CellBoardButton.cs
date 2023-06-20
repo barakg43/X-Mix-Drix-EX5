@@ -14,15 +14,23 @@ namespace X_Mix_Drix_UI
         private readonly CellBoardCoordinate r_ButtonBoardCoordinate;
         public event Action<CellBoardCoordinate> CellClicked;
 
-        public CellBoardButton(CellBoardCoordinate i_ButtonBoardCoordinate):base()
+        private const ushort k_ButtonSize = 30;
+        public CellBoardButton(CellBoardCoordinate i_ButtonBoardCoordinate)
         {
             r_ButtonBoardCoordinate = i_ButtonBoardCoordinate;
-            ChangeCellValue(eBoardCellValue.Empty);
+            initializeProperties();
         }
 
+        private void initializeProperties()
+        {
+            Height = k_ButtonSize;
+            Width = k_ButtonSize;
+            Text = readCellValue(eBoardCellValue.Empty);
+        }
         public void ChangeCellValue(eBoardCellValue i_CellValue)
         {
             this.Text = readCellValue(i_CellValue);
+            this.Enabled = false;
         }
 
         private string readCellValue(eBoardCellValue i_Value)

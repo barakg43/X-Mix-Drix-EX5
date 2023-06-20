@@ -7,11 +7,12 @@ using Engine;
 
 namespace X_Mix_Drix_UI
 {
-   internal class GameBoardPanel:Panel
+   internal class GameBoardPanel:FlowLayoutPanel
    {
        public event Action<CellBoardCoordinate> CellBoardClicked;
        private readonly ushort r_BoardSize;
-       private List<CellBoardButton> CellBoardButtons;
+        private FlowLayoutPanel flowLayoutPanel1;
+        private List<CellBoardButton> CellBoardButtons;
         public GameBoardPanel(ushort i_BoardSize)
         {
             r_BoardSize = i_BoardSize;
@@ -48,20 +49,31 @@ namespace X_Mix_Drix_UI
 
         private void InitializeComponent()
         {
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.SuspendLayout();
             // 
-            // panel1
+            // flowLayoutPanel1
             // 
-            this.Location = new System.Drawing.Point(0, 0);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(200, 100);
+            this.flowLayoutPanel1.TabIndex = 0;
+            this.flowLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint);
+            // 
+            // GameBoardPanel
+            // 
             this.Name = "panel1";
-            this.Size = new System.Drawing.Size(200, 100);
-            this.TabIndex = 0;
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             this.ResumeLayout(false);
 
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
 
         }
