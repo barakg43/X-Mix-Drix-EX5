@@ -10,13 +10,13 @@ using Engine;
 namespace X_Mix_Drix_UI
 {
 
-    class CellBoardButton : Button
+    internal class CellBoardButton : Button
     {
         private readonly CellBoardCoordinate r_ButtonBoardCoordinate;
         public event Action<CellBoardCoordinate> CellClicked;
-
         private const ushort k_ButtonSize = 40;
         private const ushort k_MarginSize = 3;
+
         public CellBoardButton(CellBoardCoordinate i_ButtonBoardCoordinate)
         {
             r_ButtonBoardCoordinate = i_ButtonBoardCoordinate;
@@ -58,7 +58,6 @@ namespace X_Mix_Drix_UI
 
         protected override void OnClick(EventArgs e)
         {
-
             base.OnClick(e);
             CellClicked?.Invoke(r_ButtonBoardCoordinate);
         }

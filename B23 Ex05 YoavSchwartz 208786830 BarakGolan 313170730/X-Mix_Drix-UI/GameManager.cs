@@ -127,8 +127,7 @@ namespace X_Mix_Drix_UI
 
         private void markPlayerMoveInGameBoard(MoveData i_TurnData)
         {
-            Console.WriteLine("test");
-            //TODO: mark the cell with the symbol
+            m_GameBoardDisplay.ChangeCellBoardValue(i_TurnData);
         }
         private void printResults(bool i_IsSessionHasPlayerWon)
         {

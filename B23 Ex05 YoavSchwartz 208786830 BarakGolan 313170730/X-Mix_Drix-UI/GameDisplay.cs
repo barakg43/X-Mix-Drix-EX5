@@ -40,11 +40,15 @@ namespace X_Mix_Drix_UI
                 120);
             Controls.Add(m_GameBoardPanel);
             Controls.Add(m_ScoreDisplay);
-      
 
+           
 
         }
 
+        public void ChangeCellBoardValue(MoveData i_CellToChangeData)
+        {
+            m_GameBoardPanel.ChangeCellBoardValue(i_CellToChangeData);
+        }
         private Point caluateCenterPositionInForm(Control i_Control,int i_TopOffset)
         {
             int topPosition = i_TopOffset + (ClientSize.Height - i_Control.Height) / 2 ;
