@@ -1,9 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Engine;
-using Ex02;
+using Ex02.ConsoleUtils;
 
 namespace X_Mix_Drix_UI
 {
@@ -16,7 +13,7 @@ namespace X_Mix_Drix_UI
         private readonly GameEngine r_Engine;
         private readonly Menu r_Menu;
         private BoardPrinter m_BoardPrinter;
-        
+
         public GameManager()
         {
             r_Menu = new Menu();
@@ -28,14 +25,14 @@ namespace X_Mix_Drix_UI
             int size;
             bool isUsersWantToPlay = true;
 
-            while (isUsersWantToPlay)
+            while(isUsersWantToPlay)
             {
                 r_Menu.PrintMainMenu();
-                switch (r_Menu.GetAndCheckUserInputForMenuItem())
+                switch(r_Menu.GetAndCheckUserInputForMenuItem())
                 {
                     case Menu.eMenuOptions.StartGameAgainstPc:
                         r_Engine.Create2Players(ePlayerName.Player1, ePlayerName.Computer);
-                    break;
+                        break;
                     case Menu.eMenuOptions.StartGameAgainstPlayer:
                         r_Engine.Create2Players(ePlayerName.Player1, ePlayerName.Player2);
                         break;
@@ -46,7 +43,9 @@ namespace X_Mix_Drix_UI
 
                 if(isUsersWantToPlay)
                 {
-                    size = r_Menu.GetAndCheckUserInputForBoardSize(r_Engine.GetMinBoardSize(), r_Engine.GetMaxBoardSize());
+                    size = r_Menu.GetAndCheckUserInputForBoardSize(
+                        r_Engine.GetMinBoardSize(),
+                        r_Engine.GetMaxBoardSize());
                     m_BoardPrinter = new BoardPrinter((ushort)size);
                     r_Engine.CreateNewEmptyGameBoard((ushort)size);
                     runGame();
@@ -82,14 +81,19 @@ namespace X_Mix_Drix_UI
 
             if(i_IsSessionHasPlayerWon)
             {
-                Console.WriteLine(string.Format(k_WinnerSessionStringFormat, r_Engine.GetCurrentTurnPlayerName()));
+                Console.WriteLine(k_WinnerSessionStringFormat, r_Engine.GetCurrentTurnPlayerName());
             }
             else
             {
                 Console.WriteLine(k_TieMsg);
             }
 
-            Console.WriteLine(string.Format(k_ScoreDisplayStringFormat, players[0].Name, players[0].Score, players[1].Name, players[1].Score));
+            Console.WriteLine(
+                k_ScoreDisplayStringFormat,
+                players[0].Name,
+                players[0].Score,
+                players[1].Name,
+                players[1].Score);
         }
 
         private void makePlayerMove()
@@ -100,7 +104,7 @@ namespace X_Mix_Drix_UI
 
             if(r_Engine.GetCurrentTurnPlayerName() == ePlayerName.Computer)
             {
-                r_Engine.MakeComputerMoveInHisTurn();  
+                r_Engine.MakeComputerMoveInHisTurn();
             }
             else
             {
@@ -108,13 +112,13 @@ namespace X_Mix_Drix_UI
                 {
                     turnData = r_Menu.GetAndCheckUserInputForTurnDataMove(ref currentPlayerWantsToQuit, cellError);
                 }
-                while (!r_Engine.MakeValidGameMoveForCurrentPlayer(turnData, currentPlayerWantsToQuit, out cellError));
+                while(!r_Engine.MakeValidGameMoveForCurrentPlayer(turnData, currentPlayerWantsToQuit, out cellError));
             }
         }
 
         private void clearScreenAndPrintBoard()
         {
-            Ex02.ConsoleUtils.Screen.Clear(); 
+            Screen.Clear();
             m_BoardPrinter.PrintGameBoard(r_Engine.GetBoard());
         }
     }
