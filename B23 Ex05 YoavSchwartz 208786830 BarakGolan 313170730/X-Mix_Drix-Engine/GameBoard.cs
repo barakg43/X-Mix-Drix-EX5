@@ -1,4 +1,6 @@
-﻿namespace Engine
+﻿using System;
+
+namespace Engine
 {
     public class GameBoard
     {
@@ -120,29 +122,22 @@
             return cellIsEmpty;
         }
 
-        public bool IsValidAndEmptyCell(MoveData i_Data, out eCellError o_CellError)
+        public void CheckIfValidAndEmptyCell(MoveData i_Data)
         {
-            bool cellIsValid = false;
-
-            o_CellError = eCellError.NoError;
             if (!(i_Data.CellCoordinate.SelectedRow <= r_BoardSize && i_Data.CellCoordinate.SelectedColumn <= r_BoardSize && i_Data.CellCoordinate.SelectedRow > 0 && i_Data.CellCoordinate.SelectedColumn > 0))
             {
-                o_CellError = eCellError.CellOutOfRange;
-            }
-            else if(m_BoardMatrixCells[i_Data.CellCoordinate.SelectedRow - 1, i_Data.CellCoordinate.SelectedColumn - 1].Value != eBoardCellValue.Empty)
-            {
-                o_CellError = eCellError.CellNotEmpty;
-            } 
-            else if(i_Data.CellValue == eBoardCellValue.Empty)
-            {
-                o_CellError = eCellError.CantEraseCell;
-            }
-            else
-            {
-                cellIsValid = true;
+                throw new IndexOutOfRangeException("Selected coordidate is out of board range");
             }
 
-            return cellIsValid;
+            if(m_BoardMatrixCells[i_Data.CellCoordinate.SelectedRow - 1, i_Data.CellCoordinate.SelectedColumn - 1].Value != eBoardCellValue.Empty)
+            {
+                throw new InvalidOperationException("Cell is not empty");
+            }
+
+            if(i_Data.CellValue == eBoardCellValue.Empty)
+            {
+                throw new InvalidOperationException("cannot erase not empty Cell");
+            }
         }
 
         public eBoardCellValue[,] GetCurrentBoardState()

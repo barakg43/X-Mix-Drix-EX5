@@ -5,7 +5,9 @@ namespace Engine
     public class GameEngine
     {
         private GameBoard m_GameBoard = null;
-        private Player m_FirstPlayer = null, m_SecondPlayer = null, m_CurrentTurnPlayer;
+        private Player m_FirstPlayer = null;
+        private Player m_SecondPlayer = null;
+        private Player m_CurrentTurnPlayer;
         private ComputerPlayer m_ComputerPlayer = null;
 
         public bool IsSessionFinishInTie
@@ -38,21 +40,20 @@ namespace Engine
             m_CurrentTurnPlayer = m_FirstPlayer;
         }
 
-        public eBoardSizeError CreateNewEmptyGameBoard(ushort i_BoardSize)
+        public void CreateNewEmptyGameBoard(ushort i_BoardSize)
         {
             eBoardSizeError sizeStatus;
 
             if(i_BoardSize < (ushort)eBoardSizeError.MinSize)
             {
-                sizeStatus = eBoardSizeError.MinSize;
+                throw new ArgumentOutOfRangeException("i_BoardSize", $"board size is too small,min allow is {(ushort)eBoardSizeError.MinSize}");
             }
             else if(i_BoardSize > (ushort)eBoardSizeError.MaxSize)
             {
-                sizeStatus = eBoardSizeError.MaxSize;
+                throw new ArgumentOutOfRangeException("i_BoardSize", $"board size is too big,max allow is {(ushort)eBoardSizeError.MaxSize}");
             }
             else
             {
-                sizeStatus = eBoardSizeError.Valid;
                 m_GameBoard = new GameBoard(i_BoardSize);
                  IsSessionHaveWinner = false;
                 if (m_FirstPlayer.Name == ePlayerName.Computer || m_SecondPlayer.Name == ePlayerName.Computer)
@@ -60,8 +61,6 @@ namespace Engine
                     m_ComputerPlayer = new ComputerPlayer(i_BoardSize);
                 }
             }
-
-            return sizeStatus;
         }
 
         public GameBoard.Cell[,] GetBoard()
@@ -89,9 +88,9 @@ namespace Engine
             return m_GameBoard.BoardSize;
         }
 
-        private bool isValidMoveInTurn(MoveData i_MoveData, out eCellError i_CellError)
+        private void checkIfValidMoveInTurn(MoveData i_MoveData)
         {
-            return m_GameBoard.IsValidAndEmptyCell(i_MoveData, out i_CellError);
+             m_GameBoard.CheckIfValidAndEmptyCell(i_MoveData);
         }
 
         public eBoardCellValue[,] GetCurrentBoardState()
@@ -122,33 +121,55 @@ namespace Engine
             }
         }
 
-        public bool MakeValidGameMoveForCurrentPlayer(
-            CellBoardCoordinate i_BoardCoordinate,
-            bool i_CurrentPlayerWantsToQuit,
-            out eCellError i_CellError)
+        //public bool MakeValidGameMoveForCurrentPlayer(
+        //    CellBoardCoordinate i_BoardCoordinate,
+        //    bool i_CurrentPlayerWantsToQuit,
+        //    out eCellError i_CellError)
+        //{
+        //    MoveData currentMoveData = new MoveData(i_BoardCoordinate, m_CurrentTurnPlayer.GameSymbol);
+        //    bool isValidMove = true;
+        //    i_CellError = eCellError.NoError;
+        //    try
+        //    {
+        //        checkIfValidMoveInTurn(currentMoveData);
+        //    }
+        //    catch(Exception e)
+        //    {
+        //        isValidMove = false;
+        //        i_CellError = eCellError.CellNotEmpty;
+        //    }
+
+        //    if (isValidMove)
+        //    {
+        //        m_GameBoard.ChangeValueIfEmptyCell(currentMoveData);
+        //        if(m_ComputerPlayer != null)
+        //        {
+        //            m_ComputerPlayer.RemoveCoordinateFromAvailableList(currentMoveData.CellCoordinate);
+        //        }
+
+        //        checkIfCurrentPlayerLooseInSession();
+        //    }
+        //    else if(i_CurrentPlayerWantsToQuit)
+        //    {
+        //        switchCurrentPlayerToOtherPlayer();
+        //        currentPlayerWonInTheGameSession();
+        //    }
+            
+        //    return i_CurrentPlayerWantsToQuit || isValidMove;
+        //}
+        public void MakeValidGameMoveForCurrentPlayer(CellBoardCoordinate i_BoardCoordinate)
         {
             MoveData currentMoveData = new MoveData(i_BoardCoordinate, m_CurrentTurnPlayer.GameSymbol);
-            bool isValidMove = isValidMoveInTurn(currentMoveData, out i_CellError);
-
-            if(isValidMove)
+            checkIfValidMoveInTurn(currentMoveData);
+            m_GameBoard.ChangeValueIfEmptyCell(currentMoveData);
+            if (m_ComputerPlayer != null)
             {
-                m_GameBoard.ChangeValueIfEmptyCell(currentMoveData);
-                if(m_ComputerPlayer != null)
-                {
-                    m_ComputerPlayer.RemoveCoordinateFromAvailableList(currentMoveData.CellCoordinate);
-                }
+                m_ComputerPlayer.RemoveCoordinateFromAvailableList(currentMoveData.CellCoordinate);
+            }
 
-                checkIfCurrentPlayerLooseInSession();
-            }
-            else if(i_CurrentPlayerWantsToQuit)
-            {
-                switchCurrentPlayerToOtherPlayer();
-                currentPlayerWonInTheGameSession();
-            }
-            
-            return i_CurrentPlayerWantsToQuit || isValidMove;
+            checkIfCurrentPlayerLooseInSession();
         }
-
+    
         public void MakeComputerMoveInHisTurn()
         {
             CellBoardCoordinate? selectedComputerPlayerCell;

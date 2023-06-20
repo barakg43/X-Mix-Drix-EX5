@@ -37,7 +37,7 @@ namespace X_Mix_Drix_UI
         private string getRowSeparator()
         {
             string res = " ";
-            for(int i = 0; i < (4 * m_BoardSize) + 1; i++)
+            for(int i = 0; i < 4 * m_BoardSize + 1; i++)
             {
                 res += "=";
             }
@@ -48,7 +48,7 @@ namespace X_Mix_Drix_UI
         private string getFirstRow()
         {
             string res = "  ";
-            for (int i = 0; i < m_BoardSize; i++)
+            for(int i = 0; i < m_BoardSize; i++)
             {
                 res += i + 1;
                 res += "   ";
@@ -60,7 +60,7 @@ namespace X_Mix_Drix_UI
         private string readCellValue(eBoardCellValue i_Value)
         {
             string value;
-            if (i_Value == eBoardCellValue.Empty)
+            if(i_Value == eBoardCellValue.Empty)
             {
                 value = " ";
             }

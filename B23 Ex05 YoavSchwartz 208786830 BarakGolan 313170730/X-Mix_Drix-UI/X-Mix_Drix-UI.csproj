@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{8B594EC9-9A86-45BA-8A49-4DB837895350}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>X_Mix_Drix_UI</RootNamespace>
     <AssemblyName>X_Mix_Drix_UI</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
@@ -46,25 +46,51 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Ex02.ConsoleUtils">
       <HintPath>..\..\..\..\..\temp\Ex02.ConsoleUtils.dll</HintPath>
     </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BoardPrinter.cs" />
     <Compile Include="eMenuOptions.cs" />
+    <Compile Include="GameBoardPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CellBoardButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GameDisplay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GameDisplay.Designer.cs">
+      <DependentUpon>GameDisplay.cs</DependentUpon>
+    </Compile>
     <Compile Include="GameManager.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="GameSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GameSetting.Designer.cs">
+      <DependentUpon>GameSetting.cs</DependentUpon>
+    </Compile>
     <Compile Include="Menu.cs" />
     <Compile Include="Program.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Ex02\X-Mix_Drix-Engine.csproj">
-      <Project>{e2477b74-8906-4751-85a6-d19aae768704}</Project>
-      <Name>X-Mix_Drix-Engine</Name>
-    </ProjectReference>
+    <Compile Include="ScoreDisplay.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ScoreDisplay.Designer.cs">
+      <DependentUpon>ScoreDisplay.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
@@ -72,6 +98,23 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\X-Mix_Drix-Engine\X-Mix_Drix-Engine.csproj">
+      <Project>{e2477b74-8906-4751-85a6-d19aae768704}</Project>
+      <Name>X-Mix_Drix-Engine</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="GameDisplay.resx">
+      <DependentUpon>GameDisplay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GameSetting.resx">
+      <DependentUpon>GameSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScoreDisplay.resx">
+      <DependentUpon>ScoreDisplay.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,33 +1,34 @@
 using System;
 using Engine;
+using Ex02.ConsoleUtils;
 
 namespace X_Mix_Drix_UI
 {
     public class Menu
     {
-        private const char k_Quit = 'Q';
-        private const string k_InvalidInputMsg = "The input you entered is invalid. Please try again.";
-        private const string k_EnterBoardCoordMsg = @"please enter board coordination to place your mark. 
-enter two number in <row> <column> format with space between the number ";
-
-        public enum eMenuOptions
-        {
-            StartGameAgainstPc = 1,
-            StartGameAgainstPlayer,
-            Quit,
-        }
-
         public enum eEndOfGameOptions
         {
             Continue = 1,
             Finish
         }
 
+        public enum eMenuOptions
+        {
+            StartGameAgainstPc = 1,
+            StartGameAgainstPlayer,
+            Quit
+        }
+
+        private const char k_Quit = 'Q';
+        private const string k_InvalidInputMsg = "The input you entered is invalid. Please try again.";
+        private const string k_EnterBoardCoordMsg = @"please enter board coordination to place your mark. 
+enter two number in <row> <column> format with space between the number ";
+
         public void PrintMainMenu()
         {
-            Ex02.ConsoleUtils.Screen.Clear();
-            Console.WriteLine(string.Format(
-@"Revrse X-MIX_DRIX!!
+            Screen.Clear();
+            Console.WriteLine(
+                @"Revrse X-MIX_DRIX!!
 
 1. Start game against PC
 
@@ -36,18 +37,17 @@ enter two number in <row> <column> format with space between the number ";
 
 3. Quit
 
-Select an option by entering its number"));
+Select an option by entering its number");
         }
 
         public void PrintSizeSelect()
         {
-            Console.WriteLine(string.Format(
-@"Please select a board size from 5-9"));
+            Console.WriteLine(@"Please select a board size from 5-9");
         }
 
         public void PrintCurrentPlayerTurn(string i_PlayerName)
         {
-            Console.WriteLine(string.Format("It's {0} turn", i_PlayerName));
+            Console.WriteLine("It's {0} turn", i_PlayerName);
         }
 
         public eMenuOptions GetAndCheckUserInputForMenuItem()
@@ -55,10 +55,10 @@ Select an option by entering its number"));
             bool inputIsInvalid = true;
             int userInput = 0;
 
-            while (inputIsInvalid)
+            while(inputIsInvalid)
             {
                 int.TryParse(Console.ReadLine(), out userInput);
-                if (Enum.IsDefined(typeof(eMenuOptions), userInput))
+                if(Enum.IsDefined(typeof(eMenuOptions), userInput))
                 {
                     inputIsInvalid = false;
                 }
@@ -71,7 +71,9 @@ Select an option by entering its number"));
             return (eMenuOptions)userInput;
         }
 
-        public CellBoardCoordinate GetAndCheckUserInputForTurnDataMove(ref bool i_CurrentPlayerWantsToQuit, eCellError cellError)
+        public CellBoardCoordinate GetAndCheckUserInputForTurnDataMove(
+            ref bool i_CurrentPlayerWantsToQuit,
+            eCellError cellError)
         {
             string[] rowColRawData;
             string inputData;
@@ -80,7 +82,7 @@ Select an option by entering its number"));
             string currentMsgToUser = k_EnterBoardCoordMsg;
             bool inputIsInvalid;
 
-            if (cellError != eCellError.NoError)
+            if(cellError != eCellError.NoError)
             {
                 currentMsgToUser = checkCellError(cellError);
             }
@@ -90,7 +92,7 @@ Select an option by entering its number"));
                 Console.WriteLine(currentMsgToUser);
                 inputData = Console.ReadLine();
                 rowColRawData = inputData.Split();
-                if (rowColRawData.Length == 1)
+                if(rowColRawData.Length == 1)
                 {
                     char.TryParse(rowColRawData[0], out char singleLetterInput);
                     inputIsInvalid = char.ToUpper(singleLetterInput) != k_Quit;
@@ -99,29 +101,31 @@ Select an option by entering its number"));
                 else
                 {
                     inputIsInvalid = rowColRawData.Length != 2 || !ushort.TryParse(rowColRawData[0], out selectRow)
-                                                           || !ushort.TryParse(rowColRawData[1], out selectedColumn);
+                                                               || !ushort.TryParse(
+                                                                   rowColRawData[1],
+                                                                   out selectedColumn);
                 }
 
-                if (inputIsInvalid)
+                if(inputIsInvalid)
                 {
                     currentMsgToUser = k_InvalidInputMsg;
                 }
             }
-            while (inputIsInvalid);
+            while(inputIsInvalid);
 
             return new CellBoardCoordinate(selectRow, selectedColumn);
         }
-    
+
         public int GetAndCheckUserInputForBoardSize(int i_MinSize, int i_MaxSize)
         {
             bool inputIsInvalid = true;
             int userInput = 0;
 
-            Console.WriteLine(string.Format("Please select a board size between {0} and {1}", i_MinSize, i_MaxSize));
-            while (inputIsInvalid)
+            Console.WriteLine("Please select a board size between {0} and {1}", i_MinSize, i_MaxSize);
+            while(inputIsInvalid)
             {
                 int.TryParse(Console.ReadLine(), out userInput);
-                if (userInput >= i_MinSize && userInput <= i_MaxSize)
+                if(userInput >= i_MinSize && userInput <= i_MaxSize)
                 {
                     inputIsInvalid = false;
                 }
@@ -139,15 +143,15 @@ Select an option by entering its number"));
             bool inputIsInvalid = true;
             int userInput = 0;
 
-            Console.WriteLine(string.Format(
-@"1. Start another match
+            Console.WriteLine(
+                @"1. Start another match
 2. Finish game
 
-Select an option by entering its number"));
-            while (inputIsInvalid)
+Select an option by entering its number");
+            while(inputIsInvalid)
             {
                 int.TryParse(Console.ReadLine(), out userInput);
-                if (Enum.IsDefined(typeof(eEndOfGameOptions), userInput))
+                if(Enum.IsDefined(typeof(eEndOfGameOptions), userInput))
                 {
                     inputIsInvalid = false;
                 }
