@@ -1,6 +1,7 @@
 using System;
+using System.Windows.Forms;
 using Engine;
-using Ex02.ConsoleUtils;
+using Screen = Ex02.ConsoleUtils.Screen;
 
 namespace X_Mix_Drix_UI
 {
@@ -14,10 +15,14 @@ namespace X_Mix_Drix_UI
         private readonly Menu r_Menu;
         private BoardPrinter m_BoardPrinter;
 
+        private GameDisplay m_GameBoardDisplay;
+        private GameSetting m_GameSetting;
+
         public GameManager()
         {
             r_Menu = new Menu();
             r_Engine = new GameEngine();
+            m_GameSetting = new GameSetting();
         }
 
         public void RunMenu()
@@ -48,33 +53,69 @@ namespace X_Mix_Drix_UI
                         r_Engine.GetMaxBoardSize());
                     m_BoardPrinter = new BoardPrinter((ushort)size);
                     r_Engine.CreateNewEmptyGameBoard((ushort)size);
-                    runGame();
                 }
             }
         }
 
-        private void runGame()
+        public void RunGame()
+        { 
+            DialogResult gameSettingDialogResult =  m_GameSetting.ShowDialog();
+
+           if (gameSettingDialogResult == DialogResult.OK)
+           {
+               setupGameEngineSetting();
+               startGameSession();
+           }
+
+        
+            //bool isPlayerWantToQuit = false;
+
+            //while(!isPlayerWantToQuit)
+            //{
+            //    clearScreenAndPrintBoard();
+            //    r_Menu.PrintCurrentPlayerTurn(r_Engine.GetCurrentTurnPlayerName().ToString());
+            //    makePlayerMove();
+            //    if(r_Engine.IsSessionOver)
+            //    {
+            //        clearScreenAndPrintBoard();
+            //        printResults(r_Engine.IsSessionHaveWinner);
+            //        isPlayerWantToQuit = r_Menu.GetEndOfGameInput();
+            //        if(!isPlayerWantToQuit)
+            //        {
+            //            r_Engine.StartNewGameSession();
+            //        }
+            //    }
+            //}
+        }
+
+        private void setupGameEngineSetting()
         {
-            bool isPlayerWantToQuit = false;
-
-            while(!isPlayerWantToQuit)
+            if(m_GameSetting.IsPlayingVsComputer)
             {
-                clearScreenAndPrintBoard();
-                r_Menu.PrintCurrentPlayerTurn(r_Engine.GetCurrentTurnPlayerName().ToString());
-                makePlayerMove();
-                if(r_Engine.IsSessionOver)
-                {
-                    clearScreenAndPrintBoard();
-                    printResults(r_Engine.IsSessionHaveWinner);
-                    isPlayerWantToQuit = r_Menu.GetEndOfGameInput();
-                    if(!isPlayerWantToQuit)
-                    {
-                        r_Engine.StartNewGameSession();
-                    }
-                }
+                r_Engine.Create2Players(ePlayerName.Player1, ePlayerName.Computer);
             }
+            else
+            {
+                r_Engine.Create2Players(ePlayerName.Player1, ePlayerName.Player2);
+            }
+            r_Engine.CreateNewEmptyGameBoard(m_GameSetting.BoardSize);
+        }
+        
+        private void startGameSession()
+        {
+            m_GameBoardDisplay = new GameDisplay(
+                m_GameSetting.Player1Name,
+                m_GameSetting.Player2Name,
+                m_GameSetting.BoardSize);
+       m_GameBoardDisplay.RegisterForCellBoardClickedEvent(r_Engine.MakeValidGameMoveForCurrentPlayer);
+            m_GameBoardDisplay.ShowDialog();
         }
 
+        private void makePlayerMove(CellBoardCoordinate i_ChossenCoordinate)
+        {
+
+
+        }
         private void printResults(bool i_IsSessionHasPlayerWon)
         {
             Player[] players = r_Engine.GetPlayers();
@@ -108,11 +149,11 @@ namespace X_Mix_Drix_UI
             }
             else
             {
-                do
-                {
-                    turnData = r_Menu.GetAndCheckUserInputForTurnDataMove(ref currentPlayerWantsToQuit, cellError);
-                }
-                while(!r_Engine.MakeValidGameMoveForCurrentPlayer(turnData, currentPlayerWantsToQuit, out cellError));
+                //do
+                //{
+                //    turnData = r_Menu.GetAndCheckUserInputForTurnDataMove(ref currentPlayerWantsToQuit, cellError);
+                //}
+                //while(!r_Engine.MakeValidGameMoveForCurrentPlayer(turnData, currentPlayerWantsToQuit, out cellError));
             }
         }
 

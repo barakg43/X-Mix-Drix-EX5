@@ -38,7 +38,7 @@ namespace X_Mix_Drix_UI
             // player1NameLabel
             // 
             this.player1NameLabel.AutoSize = true;
-            this.player1NameLabel.Location = new System.Drawing.Point(9, 11);
+            this.player1NameLabel.Location = new System.Drawing.Point(10, 6);
             this.player1NameLabel.Name = "player1NameLabel";
             this.player1NameLabel.Size = new System.Drawing.Size(0, 17);
             this.player1NameLabel.TabIndex = 0;
@@ -46,7 +46,7 @@ namespace X_Mix_Drix_UI
             // player2NameLabel
             // 
             this.player2NameLabel.AutoSize = true;
-            this.player2NameLabel.Location = new System.Drawing.Point(125, 11);
+            this.player2NameLabel.Location = new System.Drawing.Point(20, 6);
             this.player2NameLabel.Name = "player2NameLabel";
             this.player2NameLabel.Size = new System.Drawing.Size(0, 17);
             this.player2NameLabel.TabIndex = 1;
@@ -54,7 +54,7 @@ namespace X_Mix_Drix_UI
             // scorePlayer1Label
             // 
             this.scorePlayer1Label.AutoSize = true;
-            this.scorePlayer1Label.Location = new System.Drawing.Point(61, 11);
+            this.scorePlayer1Label.Location = new System.Drawing.Point(20, 6);
             this.scorePlayer1Label.Name = "scorePlayer1Label";
             this.scorePlayer1Label.Size = new System.Drawing.Size(0, 17);
             this.scorePlayer1Label.TabIndex = 2;
@@ -62,7 +62,7 @@ namespace X_Mix_Drix_UI
             // scorePlayer2Label
             // 
             this.scorePlayer2Label.AutoSize = true;
-            this.scorePlayer2Label.Location = new System.Drawing.Point(177, 11);
+            this.scorePlayer2Label.Location = new System.Drawing.Point(30, 6);
             this.scorePlayer2Label.Name = "scorePlayer2Label";
             this.scorePlayer2Label.Size = new System.Drawing.Size(0, 17);
             this.scorePlayer2Label.TabIndex = 3;
@@ -71,11 +71,14 @@ namespace X_Mix_Drix_UI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Controls.Add(this.scorePlayer2Label);
             this.Controls.Add(this.scorePlayer1Label);
             this.Controls.Add(this.player2NameLabel);
             this.Controls.Add(this.player1NameLabel);
+            this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Name = "ScoreDisplay";
             this.Size = new System.Drawing.Size(228, 33);
             this.ResumeLayout(false);

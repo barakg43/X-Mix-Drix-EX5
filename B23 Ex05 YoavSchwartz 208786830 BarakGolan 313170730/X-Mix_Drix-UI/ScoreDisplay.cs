@@ -16,11 +16,18 @@ namespace X_Mix_Drix_UI
         public ScoreDisplay(string i_Player1Name,string i_Player2Name)
         {
             InitializeComponent();
-            player1NameLabel.Text = i_Player1Name;
-            player2NameLabel.Text = i_Player2Name;
-          
+            initializeProperties(i_Player1Name, i_Player2Name);
+            ResetScoreDisplay();
         }
-
+        private void initializeProperties(string i_Player1Name, string i_Player2Name)
+        {
+            player1NameLabel.Text = i_Player1Name + @":";
+            player2NameLabel.Text = i_Player2Name + @":";
+            scorePlayer1Label.Left = player1NameLabel.Left + player1NameLabel.Width + 1;
+            player2NameLabel.Left = scorePlayer1Label.Left + scorePlayer1Label.Width + 15;
+            scorePlayer2Label.Left = player2NameLabel.Left + player2NameLabel.Width + 1;
+            Width = scorePlayer2Label.Left+ scorePlayer2Label.Width + 30;
+        }
         public void ResetScoreDisplay()
         {
             m_ScorePlayer1 = 0;

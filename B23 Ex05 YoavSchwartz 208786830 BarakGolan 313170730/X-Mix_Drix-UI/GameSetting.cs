@@ -36,12 +36,41 @@ namespace X_Mix_Drix_UI
             textBoxPlayer2Name.Enabled = checkBoxPlayer2.Checked;
         }
 
+        public string Player1Name
+        {
+            get
+            {
+                return textBoxPlayer1Name.Text;
+            }
+        }
+        public string Player2Name
+        {
+            get
+            {
+                return textBoxPlayer2Name.Text;
+            }
+        }
+        public ushort BoardSize
+        {
+            get
+            {
+                return (ushort)numericUpDownRows.Value;
+            }
+        }
         private bool isValidPlayerNames()
         {
             bool isValidPlayer1Name = !string.IsNullOrEmpty(textBoxPlayer1Name.Text);
             bool isValidPlayer2Name = !string.IsNullOrEmpty(textBoxPlayer2Name.Text);
 
            return isValidPlayer1Name && isValidPlayer2Name;
+        }
+
+        public bool IsPlayingVsComputer
+        {
+            get
+            {
+                return !checkBoxPlayer2.Checked;
+            }
         }
 
         private void startButton_Click(object sender, EventArgs e)
@@ -56,5 +85,6 @@ namespace X_Mix_Drix_UI
                 MessageBox.Show( k_ErrorMassagePlayerNames, "Error", MessageBoxButtons.OK);
             }
         }
+
     }
 }

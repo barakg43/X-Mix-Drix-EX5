@@ -106,12 +106,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="CellBoardButton.resx">
-      <DependentUpon>CellBoardButton.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GameBoardPanel.resx">
-      <DependentUpon>GameBoardPanel.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="GameDisplay.resx">
       <DependentUpon>GameDisplay.cs</DependentUpon>
     </EmbeddedResource>

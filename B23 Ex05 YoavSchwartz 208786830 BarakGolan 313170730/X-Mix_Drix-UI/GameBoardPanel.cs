@@ -11,13 +11,13 @@ namespace X_Mix_Drix_UI
    {
        public event Action<CellBoardCoordinate> CellBoardClicked;
        private readonly ushort r_BoardSize;
-        private List<CellBoardButton> CellBoardButtons;
+       private readonly List<CellBoardButton> r_CellBoardButtons;
         public GameBoardPanel(ushort i_BoardSize)
         {
             r_BoardSize = i_BoardSize;
             initializeEmptyBoard();
             initializeProperties();
-            CellBoardButtons = new List<CellBoardButton>(i_BoardSize * i_BoardSize);
+            r_CellBoardButtons = new List<CellBoardButton>(i_BoardSize * i_BoardSize);
         }
 
         private void initializeEmptyBoard()
@@ -39,11 +39,13 @@ namespace X_Mix_Drix_UI
 
             Height = buttonSize * r_BoardSize;
             Width = buttonSize * r_BoardSize;
+            Cursor = Cursors.Hand;
+
         }
 
         public void ClearAllBoardCell()
         {
-            foreach(CellBoardButton cellBoardButton in CellBoardButtons)
+            foreach(CellBoardButton cellBoardButton in r_CellBoardButtons)
             {
                 cellBoardButton.ChangeCellValue(eBoardCellValue.Empty);
             }
@@ -51,6 +53,7 @@ namespace X_Mix_Drix_UI
         protected virtual void OnCellBoardClicked(CellBoardCoordinate i_CellCoordinate)
         {
             CellBoardClicked?.Invoke(i_CellCoordinate);
+          
         }
 
 
