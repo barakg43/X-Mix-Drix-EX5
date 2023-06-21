@@ -107,19 +107,23 @@ namespace Engine
             return m_FilledCellAmount == r_BoardSize * r_BoardSize;
         }
 
-        public bool ChangeValueIfEmptyCell(MoveData i_MoveData)
+        public void ChangeValueIfEmptyCell(MoveData i_MoveData)
         {
+            int row = i_MoveData.CellCoordinate.SelectedRow - 1;
+            int col = i_MoveData.CellCoordinate.SelectedColumn - 1;
             bool cellIsEmpty =
-                m_BoardMatrixCells[i_MoveData.CellCoordinate.SelectedRow - 1,
-                    i_MoveData.CellCoordinate.SelectedColumn - 1].Value == eBoardCellValue.Empty;
+                m_BoardMatrixCells[row, col].Value == eBoardCellValue.Empty;
 
             if(cellIsEmpty)
             {
-                m_BoardMatrixCells[i_MoveData.CellCoordinate.SelectedRow - 1, i_MoveData.CellCoordinate.SelectedColumn - 1].Value = i_MoveData.CellValue;
+                m_BoardMatrixCells[row, col].Value = i_MoveData.CellValue;
                 m_FilledCellAmount++;
             }
-
-            return cellIsEmpty;
+            else
+            {
+                throw new InvalidOperationException($"Cell({row+1},{col+1}) is not empty");
+            }
+          
         }
 
         public void CheckIfValidAndEmptyCell(MoveData i_Data)

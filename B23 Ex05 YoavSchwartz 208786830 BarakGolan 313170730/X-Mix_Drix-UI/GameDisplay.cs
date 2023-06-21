@@ -14,6 +14,9 @@ namespace X_Mix_Drix_UI
     {
         private ScoreDisplay m_ScoreDisplay;
         private GameBoardPanel m_GameBoardPanel;
+        private const string k_WinnerSessionStringFormat = @"The winner is {0}!";
+        private const string k_TieMessage = "Tie!";
+        private const string k_PlayAgainMessage = "Would you like to play another round?";
         public GameDisplay(string i_Player1Name,string i_Player2Name,ushort i_BoardSize)
         {
             InitializeComponent();
@@ -31,7 +34,6 @@ namespace X_Mix_Drix_UI
                 m_GameBoardPanel.Height + m_ScoreDisplay.Height+60);
 
        
-           // this.flowLayoutPanel1.Visible = false;
            m_GameBoardPanel.Location = caluateCenterPositionInForm(
                m_GameBoardPanel,
                5);
@@ -44,7 +46,28 @@ namespace X_Mix_Drix_UI
            
 
         }
+        public DialogResult AnnounceSessionWinnerAndAskForNewSession(string i_WinnerName)
+        {
+            StringBuilder massage = new StringBuilder(2);
+            DialogResult dialogResult;
 
+            massage.AppendLine(String.Format(k_WinnerSessionStringFormat, i_WinnerName));
+            massage.AppendLine(k_PlayAgainMessage);
+
+            return MessageBox.Show(massage.ToString(), "A Win!", MessageBoxButtons.YesNo);
+            
+        }
+        public DialogResult AnnounceSessionTieAndAskForNewSession()
+        {
+            StringBuilder massage = new StringBuilder(2);
+
+            massage.AppendLine(k_TieMessage);
+            massage.AppendLine(k_PlayAgainMessage);
+
+            return MessageBox.Show(massage.ToString(), "A Tie!", MessageBoxButtons.YesNo);
+
+        }
+      
         public void ChangeCellBoardValue(MoveData i_CellToChangeData)
         {
             m_GameBoardPanel.ChangeCellBoardValue(i_CellToChangeData);
@@ -70,14 +93,13 @@ namespace X_Mix_Drix_UI
             m_ScoreDisplay.IncrementScoreForPlayer(i_IsPlayer1);
         }
 
-        private void GameDisplay_Load(object sender, EventArgs e)
+        public void StartNewGameSession()
         {
-
+            m_GameBoardPanel.ClearAllBoardCell();
         }
-
-        public void UpdateScore(ushort i_ScorePlayer1, ushort i_ScorePlayer2)
+        public void UpdateScore(eSessionWinner i_PlayerName, int i_ScorePlayer)
         {
-            m_ScoreDisplay.UpdateScore(i_ScorePlayer1, i_ScorePlayer2);
+            m_ScoreDisplay.SetScorePlayer(i_PlayerName, i_ScorePlayer);
         }
     }
 }

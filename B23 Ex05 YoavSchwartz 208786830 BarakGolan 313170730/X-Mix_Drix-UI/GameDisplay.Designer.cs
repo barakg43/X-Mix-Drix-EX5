@@ -37,9 +37,8 @@ namespace X_Mix_Drix_UI
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(334, 209);
             this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.Name = "GameDisplay";
+            this.Name = "Game Display";
             this.Text = "X-Mix Drix";
-            this.Load += new System.EventHandler(this.GameDisplay_Load);
             this.ResumeLayout(false);
 
         }

@@ -60,6 +60,7 @@ namespace X_Mix_Drix_UI
             foreach(CellBoardButton cellBoardButton in r_CellBoardButtons)
             {
                 cellBoardButton.ChangeCellValue(eBoardCellValue.Empty);
+                cellBoardButton.Enabled = true;
             }
         }
         protected virtual void OnCellBoardClicked(CellBoardCoordinate i_CellCoordinate)

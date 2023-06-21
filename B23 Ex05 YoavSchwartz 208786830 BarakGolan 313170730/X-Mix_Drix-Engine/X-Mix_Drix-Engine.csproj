@@ -41,11 +41,11 @@
     <Compile Include="eBoardSizeError.cs" />
     <Compile Include="eCellError.cs" />
     <Compile Include="ePlayerName.cs" />
+    <Compile Include="eSessionWinner.cs" />
     <Compile Include="GameBoard.cs" />
     <Compile Include="GameEngine.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="MoveData.cs" />
-    <Compile Include="eStartingGameStatus.cs" />
     <Compile Include="PlayerNew.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

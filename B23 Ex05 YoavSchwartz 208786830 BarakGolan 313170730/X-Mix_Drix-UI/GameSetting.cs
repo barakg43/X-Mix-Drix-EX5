@@ -5,8 +5,8 @@ namespace X_Mix_Drix_UI
 {
     public partial class GameSetting : Form
     {
-        private const string k_DefaultPlayer2Name = "[Computer]";
-        private const string k_ErrorMassagePlayerNames = "Player1 or Player2 names cannot be emtpy!";
+        private const string k_DefaultPlayer2Name = "Computer";
+        private const string k_ErrorMassagePlayerNames = "FirstPlayer or SecondPlayer names cannot be emtpy!";
         public GameSetting()
         {
             InitializeComponent();

@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using System.Windows.Forms;
 using Engine;
 using Screen = Ex02.ConsoleUtils.Screen;
@@ -7,10 +8,7 @@ namespace X_Mix_Drix_UI
 {
     public class GameManager
     {
-        private const string k_WinnerSessionStringFormat = @"The winner is {0}!";
-        private const string k_ScoreDisplayStringFormat = @"Score Balance: {0} - {1}
-              {2} - {3}";
-        private const string k_TieMsg = "Its a tie";
+
         private readonly GameEngine r_Engine;
         private readonly Menu r_Menu;
         private BoardPrinter m_BoardPrinter;
@@ -63,8 +61,7 @@ namespace X_Mix_Drix_UI
 
            if (gameSettingDialogResult == DialogResult.OK)
            {
-               setupGameEngineSetting();
-               startGameSession();
+               createGameDisplay();
            }
 
         
@@ -101,54 +98,70 @@ namespace X_Mix_Drix_UI
                 r_Engine.Create2PlayersGame(r_GameSetting.Player1Name, r_GameSetting.Player2Name);//new
             }
             r_Engine.CreateNewEmptyGameBoard(r_GameSetting.BoardSize);
-            r_Engine.GameOverNotifier += gameOver;
-            r_Engine.ValidMoveTurnNotifer += markPlayerMoveInGameBoard;
+            r_Engine.SessionOverNotifier += sessionOver;
+            r_Engine.PlayerScoreUpdater += m_GameBoardDisplay.UpdateScore;
+            r_Engine.ValidMoveTurnNotifier += markPlayerMoveInGameBoard;
         }
         
-        private void startGameSession()
+        private void createGameDisplay()
         {
+            m_BoardPrinter = new BoardPrinter(r_GameSetting.BoardSize);
+
             m_GameBoardDisplay = new GameDisplay(
                 r_GameSetting.Player1Name,
                 r_GameSetting.Player2Name,
                 r_GameSetting.BoardSize);
             m_GameBoardDisplay.RegisterForCellBoardClickedEvent(r_Engine.MakeValidGameMoveForCurrentPlayer);
+            setupGameEngineSetting();
             m_GameBoardDisplay.ShowDialog();
         }
 
-        private void gameOver()
+        private void sessionOver(eSessionWinner i_SessionWinner)
         {
-            m_GameBoardDisplay.UpdateScore(r_Engine.FirstPlayerScore, r_Engine.SecondPlayerScore);
-            if(r_Engine.IsSessionHaveWinner)
+    
+            switch (i_SessionWinner)
             {
-                //TODO: Winner dialogue
+                case eSessionWinner.FirstPlayer:
+                    checkIfWantPlayingAnotherSession(
+                        m_GameBoardDisplay.AnnounceSessionWinnerAndAskForNewSession(r_GameSetting.Player1Name));
+                    break;
+                case eSessionWinner.SecondPlayer:
+                    checkIfWantPlayingAnotherSession(
+                        m_GameBoardDisplay.AnnounceSessionWinnerAndAskForNewSession(r_GameSetting.Player2Name));
+                    break;
+                case eSessionWinner.Tie:
+                    checkIfWantPlayingAnotherSession(
+                        m_GameBoardDisplay.AnnounceSessionTieAndAskForNewSession());
+                    break;
             }
-            //TODO: Tie dialogue
+
+            //m_GameBoardDisplay.UpdateScore(r_Engine.FirstPlayerScore, r_Engine.SecondPlayerScore);
+            //if(r_Engine.IsSessionHaveWinner)
+            //{
+            //    //TODO: Winner dialogue
+            //}
+            ////TODO: Tie dialogue
+        }
+
+        private void checkIfWantPlayingAnotherSession(DialogResult i_DialogResult)
+        {
+            if(i_DialogResult == DialogResult.Yes)
+            {
+                m_GameBoardDisplay.StartNewGameSession();
+                r_Engine.StartNewGameSession();
+            }
+            else if(i_DialogResult ==DialogResult.No)
+            {
+                m_GameBoardDisplay.Close();
+            }
         }
 
         private void markPlayerMoveInGameBoard(MoveData i_TurnData)
         {
+            clearScreenAndPrintBoard();
             m_GameBoardDisplay.ChangeCellBoardValue(i_TurnData);
         }
-        private void printResults(bool i_IsSessionHasPlayerWon)
-        {
-            Player[] players = r_Engine.GetPlayers();
-
-            if(i_IsSessionHasPlayerWon)
-            {
-                Console.WriteLine(k_WinnerSessionStringFormat, r_Engine.GetCurrentTurnPlayerName());
-            }
-            else
-            {
-                Console.WriteLine(k_TieMsg);
-            }
-
-            Console.WriteLine(
-                k_ScoreDisplayStringFormat,
-                players[0].Name,
-                players[0].Score,
-                players[1].Name,
-                players[1].Score);
-        }
+      
 
         private void markPlayerMoveInGameBoard()
         {
@@ -158,7 +171,7 @@ namespace X_Mix_Drix_UI
 
             if(r_Engine.GetCurrentTurnPlayerName() == ePlayerName.Computer)
             {
-                r_Engine.MakeComputerMoveInHisTurn();
+              //  r_Engine.MakeComputerMoveInHisTurn();
             }
             else
             {

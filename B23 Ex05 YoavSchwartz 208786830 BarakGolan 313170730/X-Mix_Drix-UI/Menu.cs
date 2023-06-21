@@ -71,50 +71,50 @@ Select an option by entering its number");
             return (eMenuOptions)userInput;
         }
 
-        public CellBoardCoordinate GetAndCheckUserInputForTurnDataMove(
-            ref bool i_CurrentPlayerWantsToQuit,
-            eCellError cellError)
-        {
-            string[] rowColRawData;
-            string inputData;
-            ushort selectRow = 0;
-            ushort selectedColumn = 0;
-            string currentMsgToUser = k_EnterBoardCoordMsg;
-            bool inputIsInvalid;
+        //public CellBoardCoordinate GetAndCheckUserInputForTurnDataMove(
+        //    ref bool i_CurrentPlayerWantsToQuit,
+        //    eCellError cellError)
+        //{
+        //    string[] rowColRawData;
+        //    string inputData;
+        //    ushort selectRow = 0;
+        //    ushort selectedColumn = 0;
+        //    string currentMsgToUser = k_EnterBoardCoordMsg;
+        //    bool inputIsInvalid;
 
-            if(cellError != eCellError.NoError)
-            {
-                currentMsgToUser = checkCellError(cellError);
-            }
+        //    if(cellError != eCellError.NoError)
+        //    {
+        //        currentMsgToUser = checkCellError(cellError);
+        //    }
 
-            do
-            {
-                Console.WriteLine(currentMsgToUser);
-                inputData = Console.ReadLine();
-                rowColRawData = inputData.Split();
-                if(rowColRawData.Length == 1)
-                {
-                    char.TryParse(rowColRawData[0], out char singleLetterInput);
-                    inputIsInvalid = char.ToUpper(singleLetterInput) != k_Quit;
-                    i_CurrentPlayerWantsToQuit = !inputIsInvalid;
-                }
-                else
-                {
-                    inputIsInvalid = rowColRawData.Length != 2 || !ushort.TryParse(rowColRawData[0], out selectRow)
-                                                               || !ushort.TryParse(
-                                                                   rowColRawData[1],
-                                                                   out selectedColumn);
-                }
+        //    do
+        //    {
+        //        Console.WriteLine(currentMsgToUser);
+        //        inputData = Console.ReadLine();
+        //        rowColRawData = inputData.Split();
+        //        if(rowColRawData.Length == 1)
+        //        {
+        //            char.TryParse(rowColRawData[0], out char singleLetterInput);
+        //            inputIsInvalid = char.ToUpper(singleLetterInput) != k_Quit;
+        //            i_CurrentPlayerWantsToQuit = !inputIsInvalid;
+        //        }
+        //        else
+        //        {
+        //            inputIsInvalid = rowColRawData.Length != 2 || !ushort.TryParse(rowColRawData[0], out selectRow)
+        //                                                       || !ushort.TryParse(
+        //                                                           rowColRawData[1],
+        //                                                           out selectedColumn);
+        //        }
 
-                if(inputIsInvalid)
-                {
-                    currentMsgToUser = k_InvalidInputMsg;
-                }
-            }
-            while(inputIsInvalid);
+        //        if(inputIsInvalid)
+        //        {
+        //            currentMsgToUser = k_InvalidInputMsg;
+        //        }
+        //    }
+        //    while(inputIsInvalid);
 
-            return new CellBoardCoordinate(selectRow, selectedColumn);
-        }
+        //    return new CellBoardCoordinate(selectRow, selectedColumn);
+        //}
 
         public int GetAndCheckUserInputForBoardSize(int i_MinSize, int i_MaxSize)
         {

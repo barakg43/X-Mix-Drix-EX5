@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.Eventing.Reader;
 
 namespace Engine
 {
@@ -13,9 +14,11 @@ namespace Engine
         private PlayerNew m_CurrentPlayerNew;
         private ComputerPlayer m_ComputerPlayer = null;
 
-        public event Action<MoveData> ValidMoveTurnNotifer;
+        public event Action<MoveData> ValidMoveTurnNotifier;
 
-        public event Action GameOverNotifier;
+        public event Action<eSessionWinner> SessionOverNotifier;
+
+        public event Action<eSessionWinner, int> PlayerScoreUpdater;
 
         public ushort FirstPlayerScore => m_FirstPlayerNew.Score;
 
@@ -83,10 +86,10 @@ namespace Engine
             {
                 m_GameBoard = new GameBoard(i_BoardSize);
                 IsSessionHaveWinner = false;
-                /*if (m_FirstPlayer.Name == ePlayerName.Computer || m_SecondPlayer.Name == ePlayerName.Computer)
+                if (m_FirstPlayer.Name == ePlayerName.Computer || m_SecondPlayer.Name == ePlayerName.Computer)
                 {
-                    m_ComputerPlayer = new ComputerPlayer(i_BoardSize);
-                }*/
+                    m_ComputerPlayer = new ComputerPlayer(i_BoardSize, eBoardCellValue.O);
+                }
             }
         }
 
@@ -127,16 +130,19 @@ namespace Engine
 
         private void switchCurrentPlayerToOtherPlayer()
         {
-            if(m_CurrentTurnPlayer == m_FirstPlayer)
-            {
-                m_CurrentTurnPlayer = m_SecondPlayer;
-            }
-            else
-            {
-                m_CurrentTurnPlayer = m_FirstPlayer;
-            }
+            m_CurrentTurnPlayer = m_CurrentTurnPlayer == m_FirstPlayer ?
+                                      m_SecondPlayer : m_FirstPlayer;
+
+            //if (m_CurrentTurnPlayer == m_FirstPlayer)
+            //{
+            //    m_CurrentTurnPlayer = m_SecondPlayer;
+            //}
+            //else
+            //{
+            //    m_CurrentTurnPlayer = m_FirstPlayer;
+            //}
             //new
-            m_CurrentPlayerNew = m_CurrentPlayerNew == m_FirstPlayerNew ? m_SecondPlayerNew : m_FirstPlayerNew;
+            //m_CurrentPlayerNew = m_CurrentPlayerNew == m_FirstPlayerNew ? m_SecondPlayerNew : m_FirstPlayerNew;
         }
 
         private void checkIfCurrentPlayerLoseInSession()
@@ -147,6 +153,11 @@ namespace Engine
             if(isPreviousPlayerLoseSession)
             {
                 currentPlayerWonInTheGameSession();
+            }
+
+            if(IsSessionFinishInTie)
+            {
+                SessionOverNotifier?.Invoke(eSessionWinner.Tie);
             }
         }
 
@@ -196,42 +207,60 @@ namespace Engine
                 m_ComputerPlayer.RemoveCoordinateFromAvailableList(currentMoveData.CellCoordinate);
             }
 
-            if(m_SecondPlayerNew is ComputerPlayer computer)//new
-            {
-                computer.RemoveCoordinateFromAvailableList(currentMoveData.CellCoordinate);
-            }
-            ValidMoveTurnNotifer?.Invoke(currentMoveData);
+            //if(m_SecondPlayerNew is ComputerPlayer computer)//new
+            //{
+            //    computer.RemoveCoordinateFromAvailableList(currentMoveData.CellCoordinate);
+            //}
+            ValidMoveTurnNotifier?.Invoke(currentMoveData);
             checkIfCurrentPlayerLoseInSession();
+            makeComputerMoveInHisTurn();
         }
     
-        public void MakeComputerMoveInHisTurn()
+        private void makeComputerMoveInHisTurn()
         {
             CellBoardCoordinate? selectedComputerPlayerCell;
-            
+            MoveData computerTurnData;
+
             if (m_CurrentTurnPlayer.Name == ePlayerName.Computer && !IsSessionOver)
             {
                 selectedComputerPlayerCell = m_ComputerPlayer.GetValidRandomEmptyCellBoardCoordinate();
                 if (selectedComputerPlayerCell.HasValue)
                 {
-                    m_GameBoard.ChangeValueIfEmptyCell(
-                        new MoveData(selectedComputerPlayerCell.Value, m_CurrentTurnPlayer.GameSymbol));
-                }
+                    computerTurnData = new MoveData(selectedComputerPlayerCell.Value, m_CurrentTurnPlayer.GameSymbol);
 
+                   m_GameBoard.ChangeValueIfEmptyCell(computerTurnData);
+                   ValidMoveTurnNotifier?.Invoke(computerTurnData);
+                }
                 checkIfCurrentPlayerLoseInSession();
             }
         }
 
         private void currentPlayerWonInTheGameSession()
         {
+            eSessionWinner sessionWinner;
+
             m_CurrentTurnPlayer.IncrementGameSessionsScore();
-            m_CurrentPlayerNew.IncrementGameSessionsScore();//new
+
+        //    m_CurrentPlayerNew.IncrementGameSessionsScore();//new
             IsSessionHaveWinner = true;
-            onGameOver();
+
+            if(m_CurrentTurnPlayer == m_FirstPlayer)
+            {
+                sessionWinner = eSessionWinner.FirstPlayer;
+                PlayerScoreUpdater?.Invoke(sessionWinner, m_FirstPlayer.Score);
+            }
+            else
+            {
+                sessionWinner = eSessionWinner.SecondPlayer;
+                PlayerScoreUpdater?.Invoke(sessionWinner, m_SecondPlayer.Score);
+            }
+
+            onSessionOver(sessionWinner);
         }
 
-        private void onGameOver()
+        private void onSessionOver(eSessionWinner i_SessionWinner)
         {
-            GameOverNotifier?.Invoke();
+            SessionOverNotifier?.Invoke(i_SessionWinner);
         }
 
         public void StartNewGameSession()

@@ -43,13 +43,14 @@ namespace Engine
         {
             CellBoardCoordinate? boardCoordinate = null;
             int randomIndex;
-
-            if(r_EmptyCellsList.Count > 0)
+            printCoordinateList();
+            if (r_EmptyCellsList.Count > 0)
             {
                 randomIndex = r_RandomIndexGenerator.Next(r_EmptyCellsList.Count);
                 boardCoordinate = r_EmptyCellsList[randomIndex];
                 RemoveCoordinateFromAvailableList(boardCoordinate.Value);
             }
+
 
             return boardCoordinate;
         }

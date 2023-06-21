@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Drawing.Text;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -16,7 +17,8 @@ namespace X_Mix_Drix_UI
         public event Action<CellBoardCoordinate> CellClicked;
         private const ushort k_ButtonSize = 40;
         private const ushort k_MarginSize = 3;
-
+        private readonly Color r_ColorX = Color.DarkSeaGreen;
+        private readonly Color r_ColorO = Color.Orange;
         public CellBoardButton(CellBoardCoordinate i_ButtonBoardCoordinate)
         {
             r_ButtonBoardCoordinate = i_ButtonBoardCoordinate;
@@ -38,9 +40,26 @@ namespace X_Mix_Drix_UI
         public void ChangeCellValue(eBoardCellValue i_CellValue)
         {
             this.Text = readCellValue(i_CellValue);
+            changeCellColorAcrodingValue(i_CellValue);
             this.Enabled = false;
         }
 
+        private void changeCellColorAcrodingValue(eBoardCellValue i_CellValue)
+        {
+            switch(i_CellValue)
+            {
+                case eBoardCellValue.X:
+                    BackColor = r_ColorX;
+                    break;
+                case eBoardCellValue.O:
+                    BackColor = r_ColorO;
+                    break;
+                case eBoardCellValue.Empty:
+                    BackColor = Button.DefaultBackColor;
+                    break;
+
+            }
+        }
         private string readCellValue(eBoardCellValue i_Value)
         {
             string value;
@@ -52,7 +71,7 @@ namespace X_Mix_Drix_UI
             {
                 value = i_Value.ToString();
             }
-
+      
             return value;
         }
 
