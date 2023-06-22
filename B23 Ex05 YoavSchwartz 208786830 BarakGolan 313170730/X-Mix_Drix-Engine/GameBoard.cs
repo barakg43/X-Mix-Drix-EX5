@@ -123,7 +123,6 @@ namespace Engine
             {
                 throw new InvalidOperationException($"Cell({row + 1},{col + 1}) is not empty");
             }
-
         }
 
         public void CheckIfValidAndEmptyCell(MoveData i_Data)

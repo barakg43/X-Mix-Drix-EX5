@@ -38,33 +38,37 @@ namespace X_Mix_Drix_UI
             // player1NameLabel
             // 
             this.player1NameLabel.AutoSize = true;
+            this.player1NameLabel.Font = new System.Drawing.Font("Nirmala UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.player1NameLabel.Location = new System.Drawing.Point(10, 6);
             this.player1NameLabel.Name = "player1NameLabel";
-            this.player1NameLabel.Size = new System.Drawing.Size(0, 17);
+            this.player1NameLabel.Size = new System.Drawing.Size(0, 20);
             this.player1NameLabel.TabIndex = 0;
             // 
             // player2NameLabel
             // 
             this.player2NameLabel.AutoSize = true;
+            this.player2NameLabel.Font = new System.Drawing.Font("Nirmala UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.player2NameLabel.Location = new System.Drawing.Point(20, 6);
             this.player2NameLabel.Name = "player2NameLabel";
-            this.player2NameLabel.Size = new System.Drawing.Size(0, 17);
+            this.player2NameLabel.Size = new System.Drawing.Size(0, 20);
             this.player2NameLabel.TabIndex = 1;
             // 
             // scorePlayer1Label
             // 
             this.scorePlayer1Label.AutoSize = true;
+            this.scorePlayer1Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.scorePlayer1Label.Location = new System.Drawing.Point(20, 6);
             this.scorePlayer1Label.Name = "scorePlayer1Label";
-            this.scorePlayer1Label.Size = new System.Drawing.Size(0, 17);
+            this.scorePlayer1Label.Size = new System.Drawing.Size(0, 20);
             this.scorePlayer1Label.TabIndex = 2;
             // 
             // scorePlayer2Label
             // 
             this.scorePlayer2Label.AutoSize = true;
+            this.scorePlayer2Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.scorePlayer2Label.Location = new System.Drawing.Point(30, 6);
             this.scorePlayer2Label.Name = "scorePlayer2Label";
-            this.scorePlayer2Label.Size = new System.Drawing.Size(0, 17);
+            this.scorePlayer2Label.Size = new System.Drawing.Size(0, 20);
             this.scorePlayer2Label.TabIndex = 3;
             // 
             // ScoreDisplay
