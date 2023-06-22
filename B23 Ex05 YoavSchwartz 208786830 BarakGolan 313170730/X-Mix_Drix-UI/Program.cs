@@ -8,9 +8,8 @@ namespace X_Mix_Drix_UI
         {
             Application.EnableVisualStyles();
             GameManager gameManager = new GameManager();
+
             gameManager.RunGame();
-            //GameManager gameManager = new GameManager();
-            //gameManager.RunMenu();
         }
     }
 }

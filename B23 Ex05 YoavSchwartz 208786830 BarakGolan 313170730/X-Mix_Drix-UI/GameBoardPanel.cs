@@ -1,23 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Engine;
+using System;
 using System.Windows.Forms;
-using Engine;
 
 namespace X_Mix_Drix_UI
 {
-   internal class GameBoardPanel:FlowLayoutPanel
-   {
-       public event Action<CellBoardCoordinate> CellBoardClicked;
-       private readonly ushort r_BoardSize;
-       private readonly List<CellBoardButton> r_CellBoardButtons;
+    internal class GameBoardPanel : FlowLayoutPanel
+    {
+        public event Action<CellBoardCoordinate> CellBoardClicked;
+
+        private readonly ushort r_BoardSize;
+
+        private readonly CellBoardButton[,] r_CellBoardButtons;
         public GameBoardPanel(ushort i_BoardSize)
         {
             r_BoardSize = i_BoardSize;
+            r_CellBoardButtons = new CellBoardButton[i_BoardSize, i_BoardSize];
             initializeEmptyBoard();
             initializeProperties();
-            r_CellBoardButtons = new List<CellBoardButton>(i_BoardSize * i_BoardSize);
+
         }
 
         private void initializeEmptyBoard()
@@ -29,9 +29,18 @@ namespace X_Mix_Drix_UI
                 {
                     currentCellBoardButton = new CellBoardButton(new CellBoardCoordinate(row, col));
                     currentCellBoardButton.CellClicked += OnCellBoardClicked;
+                    r_CellBoardButtons[row - 1, col - 1] = currentCellBoardButton;
                     this.Controls.Add(currentCellBoardButton);
                 }
             }
+        }
+
+        public void ChangeCellBoardValue(MoveData i_CellData)
+        {
+            int row = i_CellData.CellCoordinate.SelectedRow - 1;
+            int col = i_CellData.CellCoordinate.SelectedColumn - 1;
+
+            r_CellBoardButtons[row, col].ChangeCellValue(i_CellData.CellValue);
         }
         private void initializeProperties()
         {
@@ -45,15 +54,16 @@ namespace X_Mix_Drix_UI
 
         public void ClearAllBoardCell()
         {
-            foreach(CellBoardButton cellBoardButton in r_CellBoardButtons)
+            foreach (CellBoardButton cellBoardButton in r_CellBoardButtons)
             {
                 cellBoardButton.ChangeCellValue(eBoardCellValue.Empty);
+                cellBoardButton.Enabled = true;
             }
         }
         protected virtual void OnCellBoardClicked(CellBoardCoordinate i_CellCoordinate)
         {
             CellBoardClicked?.Invoke(i_CellCoordinate);
-          
+
         }
 
 
