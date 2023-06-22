@@ -23,38 +23,6 @@ namespace X_Mix_Drix_UI
             r_GameSetting = new GameSetting();
         }
 
-        public void RunMenu()
-        {
-            int size;
-            bool isUsersWantToPlay = true;
-
-            while(isUsersWantToPlay)
-            {
-                r_Menu.PrintMainMenu();
-                switch(r_Menu.GetAndCheckUserInputForMenuItem())
-                {
-                    case Menu.eMenuOptions.StartGameAgainstPc:
-                        r_Engine.Create2Players(ePlayerName.Player1, ePlayerName.Computer);
-                        break;
-                    case Menu.eMenuOptions.StartGameAgainstPlayer:
-                        r_Engine.Create2Players(ePlayerName.Player1, ePlayerName.Player2);
-                        break;
-                    case Menu.eMenuOptions.Quit:
-                        isUsersWantToPlay = false;
-                        break;
-                }
-
-                if(isUsersWantToPlay)
-                {
-                    size = r_Menu.GetAndCheckUserInputForBoardSize(
-                        r_Engine.GetMinBoardSize(),
-                        r_Engine.GetMaxBoardSize());
-                    m_BoardPrinter = new BoardPrinter((ushort)size);
-                    r_Engine.CreateNewEmptyGameBoard((ushort)size);
-                }
-            }
-        }
-
         public void RunGame()
         { 
             DialogResult gameSettingDialogResult =  r_GameSetting.ShowDialog();
@@ -90,12 +58,10 @@ namespace X_Mix_Drix_UI
             if(r_GameSetting.IsPlayingVsComputer)
             {
                 r_Engine.Create2Players(ePlayerName.Player1, ePlayerName.Computer);
-                r_Engine.Create1PlayerGame(r_GameSetting.Player1Name, r_GameSetting.BoardSize);//new
             }
             else
             {
                 r_Engine.Create2Players(ePlayerName.Player1, ePlayerName.Player2);
-                r_Engine.Create2PlayersGame(r_GameSetting.Player1Name, r_GameSetting.Player2Name);//new
             }
             r_Engine.CreateNewEmptyGameBoard(r_GameSetting.BoardSize);
             r_Engine.SessionOverNotifier += sessionOver;
@@ -134,7 +100,7 @@ namespace X_Mix_Drix_UI
                         m_GameBoardDisplay.AnnounceSessionTieAndAskForNewSession());
                     break;
             }
-
+            Screen.Clear();
             //m_GameBoardDisplay.UpdateScore(r_Engine.FirstPlayerScore, r_Engine.SecondPlayerScore);
             //if(r_Engine.IsSessionHaveWinner)
             //{
@@ -185,7 +151,7 @@ namespace X_Mix_Drix_UI
 
         private void clearScreenAndPrintBoard()
         {
-            Screen.Clear();
+   //         Screen.Clear();
             m_BoardPrinter.PrintGameBoard(r_Engine.GetBoard());
         }
     }

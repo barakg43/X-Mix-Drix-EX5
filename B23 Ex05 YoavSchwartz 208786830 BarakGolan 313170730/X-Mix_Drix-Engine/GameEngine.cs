@@ -70,29 +70,7 @@ namespace Engine
             m_CurrentTurnPlayer = m_FirstPlayer;
         }
 
-        public void CreateNewEmptyGameBoard(ushort i_BoardSize)
-        {
-            eBoardSizeError sizeStatus;
-
-            if(i_BoardSize < (ushort)eBoardSizeError.MinSize)
-            {
-                throw new ArgumentOutOfRangeException("i_BoardSize", $"board size is too small,min allow is {(ushort)eBoardSizeError.MinSize}");
-            }
-            else if(i_BoardSize > (ushort)eBoardSizeError.MaxSize)
-            {
-                throw new ArgumentOutOfRangeException("i_BoardSize", $"board size is too big,max allow is {(ushort)eBoardSizeError.MaxSize}");
-            }
-            else
-            {
-                m_GameBoard = new GameBoard(i_BoardSize);
-                IsSessionHaveWinner = false;
-                if (m_FirstPlayer.Name == ePlayerName.Computer || m_SecondPlayer.Name == ePlayerName.Computer)
-                {
-                    m_ComputerPlayer = new ComputerPlayer(i_BoardSize, eBoardCellValue.O);
-                }
-            }
-        }
-
+ 
         public GameBoard.Cell[,] GetBoard()
         {
             return m_GameBoard.GetBoard();
@@ -204,6 +182,7 @@ namespace Engine
             m_GameBoard.ChangeValueIfEmptyCell(currentMoveData);
             if (m_ComputerPlayer != null)
             {
+                Console.WriteLine(string.Format("player-removing ({0},{1}) #", currentMoveData.CellCoordinate.SelectedRow, currentMoveData.CellCoordinate.SelectedColumn));//TODO:REMOVE it
                 m_ComputerPlayer.RemoveCoordinateFromAvailableList(currentMoveData.CellCoordinate);
             }
 
@@ -240,8 +219,6 @@ namespace Engine
             eSessionWinner sessionWinner;
 
             m_CurrentTurnPlayer.IncrementGameSessionsScore();
-
-        //    m_CurrentPlayerNew.IncrementGameSessionsScore();//new
             IsSessionHaveWinner = true;
 
             if(m_CurrentTurnPlayer == m_FirstPlayer)
@@ -272,10 +249,24 @@ namespace Engine
                 m_ComputerPlayer.MakeAllCellBoardUnselected();
             }
         }
-
-        public Player[] GetPlayers()
+        public void CreateNewEmptyGameBoard(ushort i_BoardSize)
         {
-            return new Player[2] { m_FirstPlayer, m_SecondPlayer };
+            if (i_BoardSize < (ushort)eBoardSizeError.MinSize)
+            {
+                throw new ArgumentOutOfRangeException("i_BoardSize", $"board size is too small,min allow is {(ushort)eBoardSizeError.MinSize}");
+            }
+
+            if (i_BoardSize > (ushort)eBoardSizeError.MaxSize)
+            {
+                throw new ArgumentOutOfRangeException("i_BoardSize", $"board size is too big,max allow is {(ushort)eBoardSizeError.MaxSize}");
+            }
+
+            m_GameBoard = new GameBoard(i_BoardSize);
+            IsSessionHaveWinner = false;
+            if (m_FirstPlayer.Name == ePlayerName.Computer || m_SecondPlayer.Name == ePlayerName.Computer)
+            {
+                m_ComputerPlayer = new ComputerPlayer(i_BoardSize, eBoardCellValue.O);
+            }
         }
     }
 }

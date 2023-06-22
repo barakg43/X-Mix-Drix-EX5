@@ -24,6 +24,7 @@ namespace Engine
         {
             CellBoardCoordinate currentBoardCoordinate;
 
+            r_EmptyCellsList.Clear();
             for (ushort row = 1; row <= r_BoardSize; row++)
             {
                 for (ushort col = 1; col <= r_BoardSize; col++)
@@ -48,10 +49,11 @@ namespace Engine
             {
                 randomIndex = r_RandomIndexGenerator.Next(r_EmptyCellsList.Count);
                 boardCoordinate = r_EmptyCellsList[randomIndex];
+                Console.WriteLine(string.Format("removing ({0},{1}) #", boardCoordinate.Value.SelectedRow, boardCoordinate.Value.SelectedColumn));//TODO:REMOVE it
                 RemoveCoordinateFromAvailableList(boardCoordinate.Value);
             }
 
-
+            printCoordinateList();
             return boardCoordinate;
         }
 

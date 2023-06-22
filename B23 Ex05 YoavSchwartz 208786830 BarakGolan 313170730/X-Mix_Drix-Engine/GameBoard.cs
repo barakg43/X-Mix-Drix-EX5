@@ -130,7 +130,7 @@ namespace Engine
         {
             if (!(i_Data.CellCoordinate.SelectedRow <= r_BoardSize && i_Data.CellCoordinate.SelectedColumn <= r_BoardSize && i_Data.CellCoordinate.SelectedRow > 0 && i_Data.CellCoordinate.SelectedColumn > 0))
             {
-                throw new IndexOutOfRangeException("Selected coordidate is out of board range");
+                throw new IndexOutOfRangeException("Selected coordinate is out of board range");
             }
 
             if(m_BoardMatrixCells[i_Data.CellCoordinate.SelectedRow - 1, i_Data.CellCoordinate.SelectedColumn - 1].Value != eBoardCellValue.Empty)
