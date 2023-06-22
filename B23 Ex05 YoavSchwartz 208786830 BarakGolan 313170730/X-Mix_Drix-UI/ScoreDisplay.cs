@@ -50,12 +50,12 @@ namespace X_Mix_Drix_UI
         {
             if (i_IsPlayer1)
             {
-                m_ScorePlayer1++;
+             //   m_ScorePlayer1++;
                 scorePlayer1Label.Text = m_ScorePlayer1.ToString();
             }
             else
             {
-                m_ScorePlayer2++;
+              //  m_ScorePlayer2++;
                 scorePlayer2Label.Text = m_ScorePlayer2.ToString();
             }
         }

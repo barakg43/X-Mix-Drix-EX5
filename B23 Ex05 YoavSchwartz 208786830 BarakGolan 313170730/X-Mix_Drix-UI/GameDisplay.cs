@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
+
 namespace X_Mix_Drix_UI
 {
     public partial class GameDisplay : Form
@@ -45,7 +46,6 @@ namespace X_Mix_Drix_UI
         public DialogResult AnnounceSessionWinnerAndAskForNewSession(string i_WinnerName)
         {
             StringBuilder massage = new StringBuilder(2);
-            DialogResult dialogResult;
 
             massage.AppendLine(String.Format(k_WinnerSessionStringFormat, i_WinnerName));
             massage.AppendLine(k_PlayAgainMessage);
@@ -86,7 +86,7 @@ namespace X_Mix_Drix_UI
         }
         public void IncrementScoreForPlayer(bool i_IsPlayer1)
         {
-            m_ScoreDisplay.IncrementScoreForPlayer(i_IsPlayer1);
+           // m_ScoreDisplay.IncrementScoreForPlayer(i_IsPlayer1);
         }
 
         public void StartNewGameSession()

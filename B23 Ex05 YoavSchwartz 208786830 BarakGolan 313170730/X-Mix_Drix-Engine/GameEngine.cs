@@ -88,17 +88,6 @@ namespace Engine
         {
             m_CurrentTurnPlayer = m_CurrentTurnPlayer == m_FirstPlayer ?
                                       m_SecondPlayer : m_FirstPlayer;
-
-            //if (m_CurrentTurnPlayer == m_FirstPlayer)
-            //{
-            //    m_CurrentTurnPlayer = m_SecondPlayer;
-            //}
-            //else
-            //{
-            //    m_CurrentTurnPlayer = m_FirstPlayer;
-            //}
-            //new
-            //m_CurrentPlayerNew = m_CurrentPlayerNew == m_FirstPlayerNew ? m_SecondPlayerNew : m_FirstPlayerNew;
         }
 
         private void checkIfCurrentPlayerLoseInSession()
