@@ -11,11 +11,8 @@ namespace Engine
         private Player m_SecondPlayer = null;
         private Player m_CurrentTurnPlayer;
         private ComputerPlayer m_ComputerPlayer = null;
-
         public event Action<MoveData> ValidMoveTurnNotifier;
-
         public event Action<eSessionWinner> SessionOverNotifier;
-
         public event Action<eSessionWinner, int> PlayerScoreUpdater;
 
         public bool IsSessionFinishInTie
@@ -47,7 +44,6 @@ namespace Engine
             m_SecondPlayer = new Player(i_SecondPlayerType, eBoardCellValue.O);
             m_CurrentTurnPlayer = m_FirstPlayer;
         }
-
 
         public GameBoard.Cell[,] GetBoard()
         {
@@ -106,42 +102,7 @@ namespace Engine
             }
         }
 
-        //public bool MakeValidGameMoveForCurrentPlayer(
-        //    CellBoardCoordinate i_BoardCoordinate,
-        //    bool i_CurrentPlayerWantsToQuit,
-        //    out eCellError i_CellError)
-        //{
-        //    MoveData currentMoveData = new MoveData(i_BoardCoordinate, m_CurrentTurnPlayer.GameSymbol);
-        //    bool isValidMove = true;
-        //    i_CellError = eCellError.NoError;
-        //    try
-        //    {
-        //        checkIfValidMoveInTurn(currentMoveData);
-        //    }
-        //    catch(Exception e)
-        //    {
-        //        isValidMove = false;
-        //        i_CellError = eCellError.CellNotEmpty;
-        //    }
-
-        //    if (isValidMove)
-        //    {
-        //        m_GameBoard.ChangeValueIfEmptyCell(currentMoveData);
-        //        if(m_ComputerPlayer != null)
-        //        {
-        //            m_ComputerPlayer.RemoveCoordinateFromAvailableList(currentMoveData.CellCoordinate);
-        //        }
-
-        //        checkIfCurrentPlayerLoseInSession();
-        //    }
-        //    else if(i_CurrentPlayerWantsToQuit)
-        //    {
-        //        switchCurrentPlayerToOtherPlayer();
-        //        currentPlayerWonInTheGameSession();
-        //    }
-
-        //    return i_CurrentPlayerWantsToQuit || isValidMove;
-        //}
+       
         public void MakeValidGameMoveForCurrentPlayer(CellBoardCoordinate i_BoardCoordinate)
         {
             MoveData currentMoveData = new MoveData(i_BoardCoordinate, m_CurrentTurnPlayer.GameSymbol);
@@ -244,18 +205,8 @@ namespace Engine
             m_GameBoard = new GameBoard(i_BoardSize);
             createGamePlayer(i_BoardSize,i_FirstPlayerType,out m_FirstPlayer);
             createGamePlayer(i_BoardSize, i_SecondPlayerType, out m_SecondPlayer);
-            //m_FirstPlayer = new Player(i_FirstPlayerType, eBoardCellValue.X);
-            //m_SecondPlayer = new Player(i_SecondPlayerType, eBoardCellValue.O);
             m_CurrentTurnPlayer = m_FirstPlayer;
             IsSessionHaveWinner = false;
-            //if (m_FirstPlayer.Type == ePlayerType.Computer)
-            //{
-            //    m_ComputerPlayer = new ComputerPlayer(i_BoardSize, eBoardCellValue.O, m_FirstPlayer.Type);
-            //}
-            //else
-            //{
-
-            //}
         }
     }
 }
