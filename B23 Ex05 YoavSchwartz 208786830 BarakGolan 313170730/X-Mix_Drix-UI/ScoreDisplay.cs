@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+﻿using Engine;
+using System;
 using System.Windows.Forms;
-using Engine;
 
 namespace X_Mix_Drix_UI
 {
@@ -14,7 +8,7 @@ namespace X_Mix_Drix_UI
     {
         private ushort m_ScorePlayer1;
         private ushort m_ScorePlayer2;
-        public ScoreDisplay(string i_Player1Name,string i_Player2Name)
+        public ScoreDisplay(string i_Player1Name, string i_Player2Name)
         {
             InitializeComponent();
             initializeProperties(i_Player1Name, i_Player2Name);
@@ -27,7 +21,7 @@ namespace X_Mix_Drix_UI
             scorePlayer1Label.Left = player1NameLabel.Left + player1NameLabel.Width + 1;
             player2NameLabel.Left = scorePlayer1Label.Left + scorePlayer1Label.Width + 15;
             scorePlayer2Label.Left = player2NameLabel.Left + player2NameLabel.Width + 1;
-            Width = scorePlayer2Label.Left+ scorePlayer2Label.Width + 30;
+            Width = scorePlayer2Label.Left + scorePlayer2Label.Width + 30;
         }
         private void initializeScoreDisplay()
         {
@@ -39,11 +33,11 @@ namespace X_Mix_Drix_UI
 
         public void SetScorePlayer(eSessionWinner i_SessionWinnerPlayer, int i_Score)
         {
-            if(i_SessionWinnerPlayer == eSessionWinner.FirstPlayer)
+            if (i_SessionWinnerPlayer == eSessionWinner.FirstPlayer)
             {
                 scorePlayer1Label.Text = i_Score.ToString();
             }
-            else if(i_SessionWinnerPlayer == eSessionWinner.SecondPlayer)
+            else if (i_SessionWinnerPlayer == eSessionWinner.SecondPlayer)
             {
                 scorePlayer2Label.Text = i_Score.ToString();
             }
@@ -54,7 +48,7 @@ namespace X_Mix_Drix_UI
         }
         public void IncrementScoreForPlayer(bool i_IsPlayer1)
         {
-            if(i_IsPlayer1)
+            if (i_IsPlayer1)
             {
                 m_ScorePlayer1++;
                 scorePlayer1Label.Text = m_ScorePlayer1.ToString();

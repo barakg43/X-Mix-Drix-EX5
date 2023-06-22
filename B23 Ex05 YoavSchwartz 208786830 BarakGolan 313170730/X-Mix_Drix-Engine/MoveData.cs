@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Engine
+﻿namespace Engine
 {
     public readonly struct MoveData
     {
@@ -27,7 +25,7 @@ namespace Engine
             }
         }
 
-        public eBoardCellValue CellValue 
+        public eBoardCellValue CellValue
         {
             get
             {

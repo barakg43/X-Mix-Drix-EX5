@@ -55,7 +55,7 @@ namespace X_Mix_Drix_UI
             bool isValidPlayer1Name = !string.IsNullOrEmpty(textBoxPlayer1Name.Text);
             bool isValidPlayer2Name = !string.IsNullOrEmpty(textBoxPlayer2Name.Text);
 
-           return isValidPlayer1Name && isValidPlayer2Name;
+            return isValidPlayer1Name && isValidPlayer2Name;
         }
 
         public bool IsPlayingVsComputer
@@ -68,14 +68,14 @@ namespace X_Mix_Drix_UI
 
         private void startButton_Click(object sender, EventArgs e)
         {
-            if(isValidPlayerNames())
+            if (isValidPlayerNames())
             {
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             else
             {
-                MessageBox.Show( k_ErrorMassagePlayerNames, "Error", MessageBoxButtons.OK);
+                MessageBox.Show(k_ErrorMassagePlayerNames, "Error", MessageBoxButtons.OK);
             }
         }
 

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Engine;
+using System;
 using System.Windows.Forms;
-using Engine;
 
 namespace X_Mix_Drix_UI
 {
@@ -20,7 +17,7 @@ namespace X_Mix_Drix_UI
             r_CellBoardButtons = new CellBoardButton[i_BoardSize, i_BoardSize];
             initializeEmptyBoard();
             initializeProperties();
-          
+
         }
 
         private void initializeEmptyBoard()
@@ -42,8 +39,8 @@ namespace X_Mix_Drix_UI
         {
             int row = i_CellData.CellCoordinate.SelectedRow - 1;
             int col = i_CellData.CellCoordinate.SelectedColumn - 1;
-            
-            r_CellBoardButtons[row,col].ChangeCellValue(i_CellData.CellValue);
+
+            r_CellBoardButtons[row, col].ChangeCellValue(i_CellData.CellValue);
         }
         private void initializeProperties()
         {
@@ -57,7 +54,7 @@ namespace X_Mix_Drix_UI
 
         public void ClearAllBoardCell()
         {
-            foreach(CellBoardButton cellBoardButton in r_CellBoardButtons)
+            foreach (CellBoardButton cellBoardButton in r_CellBoardButtons)
             {
                 cellBoardButton.ChangeCellValue(eBoardCellValue.Empty);
                 cellBoardButton.Enabled = true;
@@ -66,7 +63,7 @@ namespace X_Mix_Drix_UI
         protected virtual void OnCellBoardClicked(CellBoardCoordinate i_CellCoordinate)
         {
             CellBoardClicked?.Invoke(i_CellCoordinate);
-          
+
         }
 
 

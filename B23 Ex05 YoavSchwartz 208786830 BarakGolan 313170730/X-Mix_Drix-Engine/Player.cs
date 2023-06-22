@@ -4,16 +4,14 @@
     {
         private int m_Score;
 
-        private bool m_IsComputer = false;
-
-        public Player(ePlayerName i_Name, eBoardCellValue i_GameSymbol)
+        public Player(ePlayerType i_Type, eBoardCellValue i_GameSymbol)
         {
-            Name = i_Name;
+            Type = i_Type;
             GameSymbol = i_GameSymbol;
             m_Score = 0;
         }
 
-        public ePlayerName Name
+        public ePlayerType Type
         {
             get;
         }

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Engine;
+using System;
 using System.Drawing;
-using System.Drawing.Text;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Windows.Forms;
-using Engine;
 
 namespace X_Mix_Drix_UI
 {
@@ -46,7 +41,7 @@ namespace X_Mix_Drix_UI
 
         private void changeCellColorAcrodingValue(eBoardCellValue i_CellValue)
         {
-            switch(i_CellValue)
+            switch (i_CellValue)
             {
                 case eBoardCellValue.X:
                     BackColor = r_ColorX;
@@ -71,7 +66,7 @@ namespace X_Mix_Drix_UI
             {
                 value = i_Value.ToString();
             }
-      
+
             return value;
         }
 
@@ -81,6 +76,6 @@ namespace X_Mix_Drix_UI
             CellClicked?.Invoke(r_ButtonBoardCoordinate);
         }
 
-     
+
     }
 }

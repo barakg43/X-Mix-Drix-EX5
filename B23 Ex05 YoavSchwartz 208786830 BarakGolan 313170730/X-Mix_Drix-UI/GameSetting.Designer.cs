@@ -206,6 +206,7 @@ namespace X_Mix_Drix_UI
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "GameSetting";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Game Setting";
             this.Load += new System.EventHandler(this.GameSetting_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRows)).EndInit();

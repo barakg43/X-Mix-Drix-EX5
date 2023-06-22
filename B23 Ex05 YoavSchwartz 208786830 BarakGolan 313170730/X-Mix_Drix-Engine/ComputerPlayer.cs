@@ -1,18 +1,16 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Remoting.Metadata;
-using System.Text;
 
 namespace Engine
 {
-    public class ComputerPlayer : PlayerNew
+    public class ComputerPlayer : Player
     {
         private readonly ushort r_BoardSize;
         private readonly List<CellBoardCoordinate> r_EmptyCellsList;
         private readonly Random r_RandomIndexGenerator;
 
-        public ComputerPlayer(ushort i_BoardSize, eBoardCellValue i_GameSymbol) : base(i_GameSymbol)
+        public ComputerPlayer(ushort i_BoardSize, eBoardCellValue i_GameSymbol, ePlayerType i_Type)
+            : base(i_Type ,i_GameSymbol)
         {
             r_BoardSize = i_BoardSize;
             r_EmptyCellsList = new List<CellBoardCoordinate>(r_BoardSize * r_BoardSize);
@@ -44,16 +42,14 @@ namespace Engine
         {
             CellBoardCoordinate? boardCoordinate = null;
             int randomIndex;
-            printCoordinateList();
+
             if (r_EmptyCellsList.Count > 0)
             {
                 randomIndex = r_RandomIndexGenerator.Next(r_EmptyCellsList.Count);
                 boardCoordinate = r_EmptyCellsList[randomIndex];
-                Console.WriteLine(string.Format("removing ({0},{1}) #", boardCoordinate.Value.SelectedRow, boardCoordinate.Value.SelectedColumn));//TODO:REMOVE it
                 RemoveCoordinateFromAvailableList(boardCoordinate.Value);
             }
 
-            printCoordinateList();
             return boardCoordinate;
         }
 
