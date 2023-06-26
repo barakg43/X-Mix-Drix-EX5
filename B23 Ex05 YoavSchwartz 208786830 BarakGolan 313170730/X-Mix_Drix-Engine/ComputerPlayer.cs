@@ -9,8 +9,8 @@ namespace Engine
         private readonly List<CellBoardCoordinate> r_EmptyCellsList;
         private readonly Random r_RandomIndexGenerator;
 
-        public ComputerPlayer(ushort i_BoardSize, eBoardCellValue i_GameSymbol, ePlayerType i_Type) 
-            : base(i_Type ,i_GameSymbol)
+        public ComputerPlayer(ushort i_BoardSize, eBoardCellValue i_GameSymbol) 
+            : base(ePlayerType.Computer, i_GameSymbol)
         {
             r_BoardSize = i_BoardSize;
             r_EmptyCellsList = new List<CellBoardCoordinate>(r_BoardSize * r_BoardSize);

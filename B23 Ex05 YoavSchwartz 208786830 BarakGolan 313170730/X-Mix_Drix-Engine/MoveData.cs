@@ -1,6 +1,6 @@
 ﻿namespace Engine
 {
-    public readonly struct MoveData
+    public struct MoveData
     {
         private readonly CellBoardCoordinate r_CellBoardCoordinate;
         private readonly eBoardCellValue r_CellValue;
