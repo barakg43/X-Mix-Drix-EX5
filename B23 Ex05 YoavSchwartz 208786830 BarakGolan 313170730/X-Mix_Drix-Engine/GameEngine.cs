@@ -11,8 +11,11 @@ namespace Engine
         private Player m_SecondPlayer = null;
         private Player m_CurrentTurnPlayer;
         private ComputerPlayer m_ComputerPlayer = null;
+
         public event Action<MoveData> ValidMoveTurnNotifier;
+
         public event Action<eSessionWinner> SessionOverNotifier;
+
         public event Action<eSessionWinner, int> PlayerScoreUpdater;
 
         public bool IsSessionFinishInTie
@@ -102,7 +105,6 @@ namespace Engine
             }
         }
 
-       
         public void MakeValidGameMoveForCurrentPlayer(CellBoardCoordinate i_BoardCoordinate)
         {
             MoveData currentMoveData = new MoveData(i_BoardCoordinate, m_CurrentTurnPlayer.GameSymbol);
@@ -134,6 +136,7 @@ namespace Engine
                     m_GameBoard.ChangeValueIfEmptyCell(computerTurnData);
                     ValidMoveTurnNotifier?.Invoke(computerTurnData);
                 }
+
                 checkIfCurrentPlayerLoseInSession();
             }
         }
@@ -173,12 +176,11 @@ namespace Engine
             }
         }
 
-        private void createGamePlayer(ushort i_BoardSize, ePlayerType i_PlayerType,out Player i_PlayerRef)
+        private void createGamePlayer(ushort i_BoardSize, ePlayerType i_PlayerType, out Player i_PlayerRef)
         {
-
             if (i_PlayerType == ePlayerType.Computer)
             {
-                m_ComputerPlayer = new ComputerPlayer(i_BoardSize, eBoardCellValue.O, i_PlayerType);
+                m_ComputerPlayer = new ComputerPlayer(i_BoardSize, eBoardCellValue.O);
                 i_PlayerRef = m_ComputerPlayer;
             }
             else
@@ -203,7 +205,7 @@ namespace Engine
             }
 
             m_GameBoard = new GameBoard(i_BoardSize);
-            createGamePlayer(i_BoardSize,i_FirstPlayerType,out m_FirstPlayer);
+            createGamePlayer(i_BoardSize, i_FirstPlayerType, out m_FirstPlayer);
             createGamePlayer(i_BoardSize, i_SecondPlayerType, out m_SecondPlayer);
             m_CurrentTurnPlayer = m_FirstPlayer;
             IsSessionHaveWinner = false;

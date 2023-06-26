@@ -1,8 +1,7 @@
 ﻿// Ignore Spelling: Drix
-
-using Engine;
 using System;
 using System.Text;
+using Engine;
 
 namespace X_Mix_Drix_UI
 {
@@ -37,7 +36,7 @@ namespace X_Mix_Drix_UI
         private string getRowSeparator()
         {
             string res = " ";
-            for (int i = 0; i < 4 * m_BoardSize + 1; i++)
+            for (int i = 0; i < (4 * m_BoardSize) + 1; i++)
             {
                 res += "=";
             }

@@ -1,19 +1,20 @@
-﻿using Engine;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Engine;
 
 namespace X_Mix_Drix_UI
 {
-
     internal class CellBoardButton : Button
     {
-        private readonly CellBoardCoordinate r_ButtonBoardCoordinate;
-        public event Action<CellBoardCoordinate> CellClicked;
         private const ushort k_ButtonSize = 40;
         private const ushort k_MarginSize = 3;
         private readonly Color r_ColorX = Color.DarkSeaGreen;
         private readonly Color r_ColorO = Color.Orange;
+        private readonly CellBoardCoordinate r_ButtonBoardCoordinate;
+
+        public event Action<CellBoardCoordinate> CellClicked;
+
         public CellBoardButton(CellBoardCoordinate i_ButtonBoardCoordinate)
         {
             r_ButtonBoardCoordinate = i_ButtonBoardCoordinate;
@@ -22,8 +23,9 @@ namespace X_Mix_Drix_UI
 
         public static ushort GetButtonSize()
         {
-            return k_ButtonSize + k_MarginSize * 2;
+            return k_ButtonSize + (k_MarginSize * 2);
         }
+
         private void initializeProperties()
         {
             Height = k_ButtonSize;
@@ -32,6 +34,7 @@ namespace X_Mix_Drix_UI
             Text = readCellValue(eBoardCellValue.Empty);
             SetStyle(ControlStyles.Selectable, false);
         }
+
         public void ChangeCellValue(eBoardCellValue i_CellValue)
         {
             this.Text = readCellValue(i_CellValue);
@@ -52,9 +55,9 @@ namespace X_Mix_Drix_UI
                 case eBoardCellValue.Empty:
                     BackColor = Button.DefaultBackColor;
                     break;
-
             }
         }
+
         private string readCellValue(eBoardCellValue i_Value)
         {
             string value;
@@ -75,7 +78,5 @@ namespace X_Mix_Drix_UI
             base.OnClick(e);
             CellClicked?.Invoke(r_ButtonBoardCoordinate);
         }
-
-
     }
 }

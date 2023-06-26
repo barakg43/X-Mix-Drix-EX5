@@ -5,9 +5,7 @@ namespace X_Mix_Drix_UI
 {
     public class GameManager
     {
-
         private readonly GameEngine r_Engine;
-
         private GameDisplay m_GameBoardDisplay;
         private readonly GameSetting r_GameSetting;
 
@@ -38,10 +36,25 @@ namespace X_Mix_Drix_UI
             {
                 r_Engine.SetInitialGameSettings(r_GameSetting.BoardSize, ePlayerType.Human, ePlayerType.Human);
             }
-         
-            r_Engine.SessionOverNotifier += sessionOver;
-            r_Engine.PlayerScoreUpdater += m_GameBoardDisplay.UpdateScore;
-            r_Engine.ValidMoveTurnNotifier += markPlayerMoveInGameBoard;
+
+            r_Engine.SessionOverNotifier += r_Engine_SessionOverNotifier; ;
+            r_Engine.PlayerScoreUpdater += r_Engine_PlayerScoreUpdater;
+            r_Engine.ValidMoveTurnNotifier += r_Engine_ValidMoveTurnNotifier; ;
+        }
+
+        private void r_Engine_ValidMoveTurnNotifier(MoveData i_TurnDataForPlayer)
+        {
+            markPlayerMoveInGameBoard(i_TurnDataForPlayer);
+        }
+
+        private void r_Engine_PlayerScoreUpdater(eSessionWinner i_PlayerName, int i_Score)
+        {
+            m_GameBoardDisplay.UpdateScore(i_PlayerName, i_Score);
+        }
+
+        private void r_Engine_SessionOverNotifier(eSessionWinner i_SessionWinner)
+        {
+            sessionOverHandler(i_SessionWinner);
         }
 
         private void createGameDisplay()
@@ -56,7 +69,7 @@ namespace X_Mix_Drix_UI
             m_GameBoardDisplay.ShowDialog();
         }
 
-        private void sessionOver(eSessionWinner i_SessionWinner)
+        private void sessionOverHandler(eSessionWinner i_SessionWinner)
         {
             switch (i_SessionWinner)
             {
