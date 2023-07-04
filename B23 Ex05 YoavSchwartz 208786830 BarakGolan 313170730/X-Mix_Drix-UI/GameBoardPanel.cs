@@ -9,8 +9,6 @@ namespace X_Mix_Drix_UI
         private readonly ushort r_BoardSize;
         private readonly CellBoardButton[,] r_CellBoardButtons;
 
-        public event Action<CellBoardCoordinate> CellBoardClicked;
-
         public GameBoardPanel(ushort i_BoardSize)
         {
             r_BoardSize = i_BoardSize;
@@ -19,18 +17,20 @@ namespace X_Mix_Drix_UI
             initializeProperties();
         }
 
+        public event Action<CellBoardCoordinate> CellBoardClicked;
+
         private void initializeEmptyBoard()
         {
             CellBoardButton currentCellBoardButton;
 
-            for (ushort row = 1; row <= r_BoardSize; row++)
+            for(ushort row = 1; row <= r_BoardSize; row++)
             {
-                for (ushort col = 1; col <= r_BoardSize; col++)
+                for(ushort col = 1; col <= r_BoardSize; col++)
                 {
                     currentCellBoardButton = new CellBoardButton(new CellBoardCoordinate(row, col));
-                    currentCellBoardButton.CellClicked += CurrentCellBoardButton_CellClicked; ;
+                    currentCellBoardButton.CellClicked += CurrentCellBoardButton_CellClicked;
                     r_CellBoardButtons[row - 1, col - 1] = currentCellBoardButton;
-                    this.Controls.Add(currentCellBoardButton);
+                    Controls.Add(currentCellBoardButton);
                 }
             }
         }
@@ -59,7 +59,7 @@ namespace X_Mix_Drix_UI
 
         public void ClearAllBoardCell()
         {
-            foreach (CellBoardButton cellBoardButton in r_CellBoardButtons)
+            foreach(CellBoardButton cellBoardButton in r_CellBoardButtons)
             {
                 cellBoardButton.ChangeCellValue(eBoardCellValue.Empty);
                 cellBoardButton.Enabled = true;

@@ -1,16 +1,21 @@
 using System;
-using System.Dynamic;
-using System.Runtime;
 
 namespace Engine
 {
     public class GameEngine
     {
-        private GameBoard m_GameBoard = null;
-        private Player m_FirstPlayer = null;
-        private Player m_SecondPlayer = null;
+        private ComputerPlayer m_ComputerPlayer;
         private Player m_CurrentTurnPlayer;
-        private ComputerPlayer m_ComputerPlayer = null;
+        private Player m_FirstPlayer;
+        private GameBoard m_GameBoard;
+        private Player m_SecondPlayer;
+
+        public bool IsSessionFinishInTie =>
+            !IsSessionHaveWinner && m_GameBoard != null && m_GameBoard.IsAllBoardFilled();
+
+        public bool IsSessionOver => IsSessionFinishInTie || IsSessionHaveWinner;
+
+        public bool IsSessionHaveWinner { get; private set; }
 
         public event Action<MoveData> ValidMoveTurnNotifier;
 
@@ -18,38 +23,10 @@ namespace Engine
 
         public event Action<eSessionWinner, int> PlayerScoreUpdater;
 
-        public bool IsSessionFinishInTie
-        {
-            get
-            {
-                return !IsSessionHaveWinner
-                       && m_GameBoard != null
-                       && m_GameBoard.IsAllBoardFilled();
-            }
-        }
-
-        public bool IsSessionOver
-        {
-            get
-            {
-                return IsSessionFinishInTie || IsSessionHaveWinner;
-            }
-        }
-
-        public bool IsSessionHaveWinner
-        {
-            get; private set;
-        }
-
-        private void create2Players(ePlayerType i_FirstPlayerType, ePlayerType i_SecondPlayerType,ushort i_BoardSize)
+        private void create2Players(ePlayerType i_FirstPlayerType, ePlayerType i_SecondPlayerType, ushort i_BoardSize)
         {
             m_FirstPlayer = createGamePlayer(i_FirstPlayerType, eBoardCellValue.X, i_BoardSize);
             m_SecondPlayer = createGamePlayer(i_SecondPlayerType, eBoardCellValue.O, i_BoardSize);
-        }
-
-        public GameBoard.Cell[,] GetBoard()
-        {
-            return m_GameBoard.GetBoard();
         }
 
         public ePlayerType GetCurrentTurnPlayerName()
@@ -84,21 +61,21 @@ namespace Engine
 
         private void switchCurrentPlayerToOtherPlayer()
         {
-            m_CurrentTurnPlayer = m_CurrentTurnPlayer == m_FirstPlayer ?
-                                      m_SecondPlayer : m_FirstPlayer;
+            m_CurrentTurnPlayer = m_CurrentTurnPlayer == m_FirstPlayer ? m_SecondPlayer : m_FirstPlayer;
         }
 
         private void checkIfCurrentPlayerLoseInSession()
         {
-            bool isPreviousPlayerLoseSession = m_GameBoard.IsBoardHaveAnyRowColumnDiagonalFilled(m_CurrentTurnPlayer.GameSymbol);
+            bool isPreviousPlayerLoseSession =
+                m_GameBoard.IsBoardHaveAnyRowColumnDiagonalFilled(m_CurrentTurnPlayer.GameSymbol);
 
             switchCurrentPlayerToOtherPlayer();
-            if (isPreviousPlayerLoseSession)
+            if(isPreviousPlayerLoseSession)
             {
                 currentPlayerWonInTheGameSession();
             }
 
-            if (IsSessionFinishInTie)
+            if(IsSessionFinishInTie)
             {
                 SessionOverNotifier?.Invoke(eSessionWinner.Tie);
             }
@@ -110,7 +87,7 @@ namespace Engine
 
             checkIfValidMoveInTurn(currentMoveData);
             m_GameBoard.ChangeValueIfEmptyCell(currentMoveData);
-            if (m_ComputerPlayer != null)
+            if(m_ComputerPlayer != null)
             {
                 m_ComputerPlayer.RemoveCoordinateFromAvailableList(currentMoveData.CellCoordinate);
             }
@@ -125,10 +102,10 @@ namespace Engine
             CellBoardCoordinate? selectedComputerPlayerCell;
             MoveData computerTurnData;
 
-            if (m_CurrentTurnPlayer.Type == ePlayerType.Computer && !IsSessionOver)
+            if(m_CurrentTurnPlayer.Type == ePlayerType.Computer && !IsSessionOver)
             {
                 selectedComputerPlayerCell = m_ComputerPlayer.GetValidRandomEmptyCellBoardCoordinate();
-                if (selectedComputerPlayerCell.HasValue)
+                if(selectedComputerPlayerCell.HasValue)
                 {
                     computerTurnData = new MoveData(selectedComputerPlayerCell.Value, m_CurrentTurnPlayer.GameSymbol);
 
@@ -146,7 +123,7 @@ namespace Engine
 
             m_CurrentTurnPlayer.IncrementGameSessionsScore();
             IsSessionHaveWinner = true;
-            if (m_CurrentTurnPlayer == m_FirstPlayer)
+            if(m_CurrentTurnPlayer == m_FirstPlayer)
             {
                 sessionWinner = eSessionWinner.FirstPlayer;
                 PlayerScoreUpdater?.Invoke(sessionWinner, m_FirstPlayer.Score);
@@ -169,13 +146,13 @@ namespace Engine
         {
             IsSessionHaveWinner = false;
             m_GameBoard.InitializeEmptyBoard();
-            if (m_FirstPlayer.Type == ePlayerType.Computer || m_SecondPlayer.Type == ePlayerType.Computer)
+            if(m_FirstPlayer.Type == ePlayerType.Computer || m_SecondPlayer.Type == ePlayerType.Computer)
             {
                 m_ComputerPlayer.MakeAllCellBoardUnselected();
             }
         }
 
-        private Player createGamePlayer(ePlayerType i_PlayerType,eBoardCellValue i_GameSymbol, ushort i_BoardSize)
+        private Player createGamePlayer(ePlayerType i_PlayerType, eBoardCellValue i_GameSymbol, ushort i_BoardSize)
         {
             Player gamePlayer;
 
@@ -184,9 +161,9 @@ namespace Engine
                 throw new ArgumentException("Cannot play with 2 computer players!");
             }
 
-            if (i_PlayerType == ePlayerType.Computer)
+            if(i_PlayerType == ePlayerType.Computer)
             {
-                m_ComputerPlayer= new ComputerPlayer(i_BoardSize, i_GameSymbol);
+                m_ComputerPlayer = new ComputerPlayer(i_BoardSize, i_GameSymbol);
                 gamePlayer = m_ComputerPlayer;
             }
             else
@@ -196,20 +173,24 @@ namespace Engine
 
             return gamePlayer;
         }
-     
+
         public void SetInitialGameSettings(
             ushort i_BoardSize,
             ePlayerType i_FirstPlayerType,
             ePlayerType i_SecondPlayerType)
         {
-            if (i_BoardSize < (ushort)eBoardSizeError.MinSize)
+            if(i_BoardSize < (ushort)eBoardSizeError.MinSize)
             {
-                throw new ArgumentOutOfRangeException("i_BoardSize", $"board size is too small,min allow is {(ushort)eBoardSizeError.MinSize}");
+                throw new ArgumentOutOfRangeException(
+                    "i_BoardSize",
+                    $"board size is too small,min allow is {(ushort)eBoardSizeError.MinSize}");
             }
 
-            if (i_BoardSize > (ushort)eBoardSizeError.MaxSize)
+            if(i_BoardSize > (ushort)eBoardSizeError.MaxSize)
             {
-                throw new ArgumentOutOfRangeException("i_BoardSize", $"board size is too big,max allow is {(ushort)eBoardSizeError.MaxSize}");
+                throw new ArgumentOutOfRangeException(
+                    "i_BoardSize",
+                    $"board size is too big,max allow is {(ushort)eBoardSizeError.MaxSize}");
             }
 
             m_GameBoard = new GameBoard(i_BoardSize);

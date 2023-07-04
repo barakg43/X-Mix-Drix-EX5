@@ -9,17 +9,17 @@ namespace X_Mix_Drix_UI
     {
         private const ushort k_ButtonSize = 40;
         private const ushort k_MarginSize = 3;
-        private readonly Color r_ColorX = Color.DarkSeaGreen;
-        private readonly Color r_ColorO = Color.Orange;
         private readonly CellBoardCoordinate r_ButtonBoardCoordinate;
-
-        public event Action<CellBoardCoordinate> CellClicked;
+        private readonly Color r_ColorO = Color.Orange;
+        private readonly Color r_ColorX = Color.DarkSeaGreen;
 
         public CellBoardButton(CellBoardCoordinate i_ButtonBoardCoordinate)
         {
             r_ButtonBoardCoordinate = i_ButtonBoardCoordinate;
             initializeProperties();
         }
+
+        public event Action<CellBoardCoordinate> CellClicked;
 
         public static ushort GetButtonSize()
         {
@@ -37,14 +37,14 @@ namespace X_Mix_Drix_UI
 
         public void ChangeCellValue(eBoardCellValue i_CellValue)
         {
-            this.Text = readCellValue(i_CellValue);
+            Text = readCellValue(i_CellValue);
             changeCellColorAcrodingValue(i_CellValue);
-            this.Enabled = false;
+            Enabled = false;
         }
 
         private void changeCellColorAcrodingValue(eBoardCellValue i_CellValue)
         {
-            switch (i_CellValue)
+            switch(i_CellValue)
             {
                 case eBoardCellValue.X:
                     BackColor = r_ColorX;
@@ -53,29 +53,21 @@ namespace X_Mix_Drix_UI
                     BackColor = r_ColorO;
                     break;
                 case eBoardCellValue.Empty:
-                    BackColor = Button.DefaultBackColor;
+                    BackColor = DefaultBackColor;
                     break;
             }
         }
 
         private string readCellValue(eBoardCellValue i_Value)
         {
-            string value;
-            if (i_Value == eBoardCellValue.Empty)
-            {
-                value = " ";
-            }
-            else
-            {
-                value = i_Value.ToString();
-            }
+            string value = i_Value == eBoardCellValue.Empty ? " " : i_Value.ToString();
 
             return value;
         }
 
-        protected override void OnClick(EventArgs e)
+        protected override void OnClick(EventArgs i_EventArgs)
         {
-            base.OnClick(e);
+            base.OnClick(i_EventArgs);
             CellClicked?.Invoke(r_ButtonBoardCoordinate);
         }
     }
