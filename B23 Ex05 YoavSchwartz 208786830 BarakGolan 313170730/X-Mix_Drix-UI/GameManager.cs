@@ -1,13 +1,13 @@
-using Engine;
 using System.Windows.Forms;
+using Engine;
 
 namespace X_Mix_Drix_UI
 {
     public class GameManager
     {
         private readonly GameEngine r_Engine;
-        private GameDisplay m_GameBoardDisplay;
         private readonly GameSetting r_GameSetting;
+        private GameDisplay m_GameBoardDisplay;
 
         public GameManager()
         {
@@ -19,7 +19,7 @@ namespace X_Mix_Drix_UI
         {
             DialogResult gameSettingDialogResult = r_GameSetting.ShowDialog();
 
-            if (gameSettingDialogResult == DialogResult.OK)
+            if(gameSettingDialogResult == DialogResult.OK)
             {
                 createGameDisplay();
             }
@@ -27,19 +27,18 @@ namespace X_Mix_Drix_UI
 
         private void setupGameEngineSetting()
         {
-            if (r_GameSetting.IsPlayingVsComputer)
+            if(r_GameSetting.IsPlayingVsComputer)
             {
                 r_Engine.SetInitialGameSettings(r_GameSetting.BoardSize, ePlayerType.Human, ePlayerType.Computer);
-              
             }
             else
             {
                 r_Engine.SetInitialGameSettings(r_GameSetting.BoardSize, ePlayerType.Human, ePlayerType.Human);
             }
 
-            r_Engine.SessionOverNotifier += r_Engine_SessionOverNotifier; ;
+            r_Engine.SessionOverNotifier += r_Engine_SessionOverNotifier;
             r_Engine.PlayerScoreUpdater += r_Engine_PlayerScoreUpdater;
-            r_Engine.ValidMoveTurnNotifier += r_Engine_ValidMoveTurnNotifier; ;
+            r_Engine.ValidMoveTurnNotifier += r_Engine_ValidMoveTurnNotifier;
         }
 
         private void r_Engine_ValidMoveTurnNotifier(MoveData i_TurnDataForPlayer)
@@ -59,7 +58,6 @@ namespace X_Mix_Drix_UI
 
         private void createGameDisplay()
         {
-            //new BoardPrinter(r_GameSetting.BoardSize);
             m_GameBoardDisplay = new GameDisplay(
                 r_GameSetting.Player1Name,
                 r_GameSetting.Player2Name,
@@ -71,7 +69,7 @@ namespace X_Mix_Drix_UI
 
         private void sessionOverHandler(eSessionWinner i_SessionWinner)
         {
-            switch (i_SessionWinner)
+            switch(i_SessionWinner)
             {
                 case eSessionWinner.FirstPlayer:
                     checkIfWantPlayingAnotherSession(
@@ -82,20 +80,19 @@ namespace X_Mix_Drix_UI
                         m_GameBoardDisplay.AnnounceSessionWinnerAndAskForNewSession(r_GameSetting.Player2Name));
                     break;
                 case eSessionWinner.Tie:
-                    checkIfWantPlayingAnotherSession(
-                        m_GameBoardDisplay.AnnounceSessionTieAndAskForNewSession());
+                    checkIfWantPlayingAnotherSession(m_GameBoardDisplay.AnnounceSessionTieAndAskForNewSession());
                     break;
             }
         }
 
         private void checkIfWantPlayingAnotherSession(DialogResult i_DialogResult)
         {
-            if (i_DialogResult == DialogResult.Yes)
+            if(i_DialogResult == DialogResult.Yes)
             {
                 m_GameBoardDisplay.StartNewGameSession();
                 r_Engine.StartNewGameSession();
             }
-            else if (i_DialogResult == DialogResult.No)
+            else if(i_DialogResult == DialogResult.No)
             {
                 m_GameBoardDisplay.Close();
             }

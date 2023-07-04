@@ -1,5 +1,4 @@
-﻿
-namespace X_Mix_Drix_UI
+﻿namespace X_Mix_Drix_UI
 {
     partial class GameDisplay
     {

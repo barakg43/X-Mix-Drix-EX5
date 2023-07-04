@@ -11,12 +11,11 @@ namespace X_Mix_Drix_UI
         private const string k_WinnerSessionStringFormat = @"The winner is {0}!";
         private const string k_TieMessage = "Tie!";
         private const string k_PlayAgainMessage = "Would you like to play another round?";
-        private const int k_GameDisplaySizeOffset = 120;
-        private const int k_GamePanelTopOffset = 5;
-        private const int k_ScoreDisplayTopOffset = 10;
-
-        private ScoreDisplay m_ScoreDisplay;
+        private const int k_GameDisplaySizeOffset = 60;
+        private const int k_GamePanelTopOffset = 10;
+        private const int k_ScoreDisplayTopOffsetFromBoard = 10;
         private GameBoardPanel m_GameBoardPanel;
+        private ScoreDisplay m_ScoreDisplay;
 
         public GameDisplay(string i_Player1Name, string i_Player2Name, ushort i_BoardSize)
         {
@@ -24,18 +23,23 @@ namespace X_Mix_Drix_UI
             initializeGameSetting(i_Player1Name, i_Player2Name, i_BoardSize);
         }
 
-        //// TODO :need to be fix the arrage on the board and score location
         private void initializeGameSetting(string i_Player1Name, string i_Player2Name, ushort i_BoardSize)
         {
+            int scoreTopPostion;
+            int fromClientWidth;
+
             m_ScoreDisplay = new ScoreDisplay(i_Player1Name, i_Player2Name);
             m_GameBoardPanel = new GameBoardPanel(i_BoardSize);
-            ClientSize = new Size(
-                Math.Max(m_GameBoardPanel.Width, m_ScoreDisplay.Width + k_GameDisplaySizeOffset),
-                m_GameBoardPanel.Height + m_ScoreDisplay.Height + k_GameDisplaySizeOffset);
+            fromClientWidth = Math.Max(m_GameBoardPanel.Width, m_ScoreDisplay.Width) + k_GameDisplaySizeOffset;
             m_GameBoardPanel.Location = calculateCenterPositionInForm(
                 m_GameBoardPanel,
+                fromClientWidth,
                 k_GamePanelTopOffset);
-            m_ScoreDisplay.Location = calculateScoreDisplayLocation();
+            scoreTopPostion = m_GameBoardPanel.Height + m_GameBoardPanel.Top + k_ScoreDisplayTopOffsetFromBoard;
+            m_ScoreDisplay.Location = calculateCenterPositionInForm(m_ScoreDisplay, fromClientWidth, scoreTopPostion);
+            ClientSize = new Size(
+                fromClientWidth,
+                m_ScoreDisplay.Height + m_ScoreDisplay.Top + k_ScoreDisplayTopOffsetFromBoard);
             Controls.Add(m_GameBoardPanel);
             Controls.Add(m_ScoreDisplay);
         }
@@ -44,11 +48,10 @@ namespace X_Mix_Drix_UI
         {
             StringBuilder massage = new StringBuilder(2);
 
-            massage.AppendLine(String.Format(k_WinnerSessionStringFormat, i_WinnerName));
+            massage.AppendLine(string.Format(k_WinnerSessionStringFormat, i_WinnerName));
             massage.AppendLine(k_PlayAgainMessage);
 
             return MessageBox.Show(massage.ToString(), "A Win!", MessageBoxButtons.YesNo);
-
         }
 
         public DialogResult AnnounceSessionTieAndAskForNewSession()
@@ -59,7 +62,6 @@ namespace X_Mix_Drix_UI
             massage.AppendLine(k_PlayAgainMessage);
 
             return MessageBox.Show(massage.ToString(), "A Tie!", MessageBoxButtons.YesNo);
-
         }
 
         public void ChangeCellBoardValue(MoveData i_CellToChangeData)
@@ -67,19 +69,11 @@ namespace X_Mix_Drix_UI
             m_GameBoardPanel.ChangeCellBoardValue(i_CellToChangeData);
         }
 
-        private Point calculateCenterPositionInForm(Control i_Control, int i_TopOffset)
+        private Point calculateCenterPositionInForm(Control i_Control, int i_FormWidth, int i_TopPosition)
         {
-            int topPosition = i_TopOffset + (ClientSize.Height - i_Control.Height) / 2;
-            int leftPosition = (ClientSize.Width - i_Control.Width) / 2;
+            int leftPosition = (i_FormWidth - i_Control.Width) / 2;
 
-            return new Point(leftPosition, topPosition);
-        }
-
-        private Point calculateScoreDisplayLocation()
-        {
-            int leftPosition = (ClientSize.Width - m_ScoreDisplay.Width) / 2;
-            int topPosition = ClientSize.Height - m_ScoreDisplay.Height - k_ScoreDisplayTopOffset;
-            return new Point(leftPosition, topPosition);
+            return new Point(leftPosition, i_TopPosition);
         }
 
         public void RegisterForCellBoardClickedEvent(Action<CellBoardCoordinate> i_EventHandlerOnClicked)

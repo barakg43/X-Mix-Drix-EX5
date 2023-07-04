@@ -55,7 +55,6 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BoardPrinter.cs" />
     <Compile Include="GameBoardPanel.cs">
       <SubType>Component</SubType>
     </Compile>

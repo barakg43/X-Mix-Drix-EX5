@@ -9,7 +9,7 @@ namespace Engine
         private readonly List<CellBoardCoordinate> r_EmptyCellsList;
         private readonly Random r_RandomIndexGenerator;
 
-        public ComputerPlayer(ushort i_BoardSize, eBoardCellValue i_GameSymbol) 
+        public ComputerPlayer(ushort i_BoardSize, eBoardCellValue i_GameSymbol)
             : base(ePlayerType.Computer, i_GameSymbol)
         {
             r_BoardSize = i_BoardSize;
@@ -23,9 +23,9 @@ namespace Engine
             CellBoardCoordinate currentBoardCoordinate;
 
             r_EmptyCellsList.Clear();
-            for (ushort row = 1; row <= r_BoardSize; row++)
+            for(ushort row = 1; row <= r_BoardSize; row++)
             {
-                for (ushort col = 1; col <= r_BoardSize; col++)
+                for(ushort col = 1; col <= r_BoardSize; col++)
                 {
                     currentBoardCoordinate = new CellBoardCoordinate(row, col);
                     r_EmptyCellsList.Add(currentBoardCoordinate);
@@ -43,7 +43,7 @@ namespace Engine
             CellBoardCoordinate? boardCoordinate = null;
             int randomIndex;
 
-            if (r_EmptyCellsList.Count > 0)
+            if(r_EmptyCellsList.Count > 0)
             {
                 randomIndex = r_RandomIndexGenerator.Next(r_EmptyCellsList.Count);
                 boardCoordinate = r_EmptyCellsList[randomIndex];
@@ -55,9 +55,9 @@ namespace Engine
 
         private void printCoordinateList()
         {
-            foreach (CellBoardCoordinate coordinate in r_EmptyCellsList)
+            foreach(CellBoardCoordinate coordinate in r_EmptyCellsList)
             {
-                Console.Write(string.Format("({0},{1}) #", coordinate.SelectedRow, coordinate.SelectedColumn));
+                Console.Write("({0},{1}) #", coordinate.SelectedRow, coordinate.SelectedColumn);
             }
 
             Console.WriteLine();

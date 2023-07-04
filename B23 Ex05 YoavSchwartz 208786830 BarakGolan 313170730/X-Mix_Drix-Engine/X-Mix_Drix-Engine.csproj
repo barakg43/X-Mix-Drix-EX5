@@ -39,7 +39,6 @@
     <Compile Include="ComputerPlayer.cs" />
     <Compile Include="eBoardCellValue.cs" />
     <Compile Include="eBoardSizeError.cs" />
-    <Compile Include="eCellError.cs" />
     <Compile Include="ePlayerType.cs" />
     <Compile Include="eSessionWinner.cs" />
     <Compile Include="GameBoard.cs" />
