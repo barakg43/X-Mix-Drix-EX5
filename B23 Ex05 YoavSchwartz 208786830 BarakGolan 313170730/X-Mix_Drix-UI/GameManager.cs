@@ -59,7 +59,7 @@ namespace X_Mix_Drix_UI
 
         private void createGameDisplay()
         {
-            new BoardPrinter(r_GameSetting.BoardSize);
+            //new BoardPrinter(r_GameSetting.BoardSize);
             m_GameBoardDisplay = new GameDisplay(
                 r_GameSetting.Player1Name,
                 r_GameSetting.Player2Name,
