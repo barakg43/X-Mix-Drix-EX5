@@ -41,11 +41,10 @@ namespace Engine
             get; private set;
         }
 
-        public void Create2Players(ePlayerType i_FirstPlayerType, ePlayerType i_SecondPlayerType)
+        private void create2Players(ePlayerType i_FirstPlayerType, ePlayerType i_SecondPlayerType,ushort i_BoardSize)
         {
-            m_FirstPlayer = new Player(i_FirstPlayerType, eBoardCellValue.X);
-            m_SecondPlayer = new Player(i_SecondPlayerType, eBoardCellValue.O);
-            m_CurrentTurnPlayer = m_FirstPlayer;
+            m_FirstPlayer = createGamePlayer(i_FirstPlayerType, eBoardCellValue.X, i_BoardSize);
+            m_SecondPlayer = createGamePlayer(i_SecondPlayerType, eBoardCellValue.O, i_BoardSize);
         }
 
         public GameBoard.Cell[,] GetBoard()
@@ -176,17 +175,26 @@ namespace Engine
             }
         }
 
-        private void createGamePlayer(ushort i_BoardSize, ePlayerType i_PlayerType, out Player i_PlayerRef)
+        private Player createGamePlayer(ePlayerType i_PlayerType,eBoardCellValue i_GameSymbol, ushort i_BoardSize)
         {
+            Player gamePlayer;
+
+            if(i_PlayerType == ePlayerType.Computer && m_ComputerPlayer != null)
+            {
+                throw new ArgumentException("Cannot play with 2 computer players!");
+            }
+
             if (i_PlayerType == ePlayerType.Computer)
             {
-                m_ComputerPlayer = new ComputerPlayer(i_BoardSize, eBoardCellValue.O);
-                i_PlayerRef = m_ComputerPlayer;
+                m_ComputerPlayer= new ComputerPlayer(i_BoardSize, i_GameSymbol);
+                gamePlayer = m_ComputerPlayer;
             }
             else
             {
-                i_PlayerRef = new Player(i_PlayerType, eBoardCellValue.X);
+                gamePlayer = new Player(i_PlayerType, i_GameSymbol);
             }
+
+            return gamePlayer;
         }
      
         public void SetInitialGameSettings(
@@ -205,8 +213,7 @@ namespace Engine
             }
 
             m_GameBoard = new GameBoard(i_BoardSize);
-            createGamePlayer(i_BoardSize, i_FirstPlayerType, out m_FirstPlayer);
-            createGamePlayer(i_BoardSize, i_SecondPlayerType, out m_SecondPlayer);
+            create2Players(i_FirstPlayerType, i_SecondPlayerType, i_BoardSize);
             m_CurrentTurnPlayer = m_FirstPlayer;
             IsSessionHaveWinner = false;
         }
