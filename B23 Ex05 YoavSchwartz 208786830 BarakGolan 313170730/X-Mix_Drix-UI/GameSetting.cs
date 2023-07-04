@@ -43,7 +43,6 @@ namespace X_Mix_Drix_UI
         private void checkBoxPlayer2_CheckedChanged(object i_Sender, EventArgs i_EventArgs)
         {
             textBoxPlayer2Name.Text = textBoxPlayer2Name.Enabled ? k_DefaultPlayer2Name : string.Empty;
-
             textBoxPlayer2Name.Enabled = checkBoxPlayer2.Checked;
         }
 

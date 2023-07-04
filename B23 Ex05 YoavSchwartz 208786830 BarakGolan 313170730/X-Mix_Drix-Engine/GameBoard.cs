@@ -4,30 +4,26 @@ namespace Engine
 {
     public class GameBoard
     {
-        private readonly ushort r_BoardSize;
-        private Cell[,] m_BoardMatrixCells;
+        private readonly Cell[,] r_BoardMatrixCells;
         private int m_FilledCellAmount;
 
         public GameBoard(ushort i_BoardSize)
         {
-            r_BoardSize = i_BoardSize;
+            BoardSize = i_BoardSize;
+            r_BoardMatrixCells = new Cell[BoardSize, BoardSize];
             InitializeEmptyBoard();
         }
 
-        public struct Cell
-        {
-            public eBoardCellValue Value { get; set; }
-        }
+        public ushort BoardSize { get; }
 
         public void InitializeEmptyBoard()
         {
-            m_BoardMatrixCells = new Cell[r_BoardSize, r_BoardSize];
             m_FilledCellAmount = 0;
-            for (int row = 0; row < r_BoardSize; row++)
+            for(int row = 0; row < BoardSize; row++)
             {
-                for (int col = 0; col < r_BoardSize; col++)
+                for(int col = 0; col < BoardSize; col++)
                 {
-                    m_BoardMatrixCells[row, col].Value = eBoardCellValue.Empty;
+                    r_BoardMatrixCells[row, col].Value = eBoardCellValue.Empty;
                 }
             }
         }
@@ -37,15 +33,15 @@ namespace Engine
             ushort countValueInRow;
             bool isOneRowFilledWithSingleValue = false;
 
-            for (ushort col = 0; col < r_BoardSize && !isOneRowFilledWithSingleValue; col++)
+            for(ushort col = 0; col < BoardSize && !isOneRowFilledWithSingleValue; col++)
             {
                 countValueInRow = 0;
-                for (ushort row = 0; row < r_BoardSize; row++)
+                for(ushort row = 0; row < BoardSize; row++)
                 {
                     increaseCounterIfCellContainValue(row, col, i_ValueToCheck, ref countValueInRow);
                 }
 
-                isOneRowFilledWithSingleValue = countValueInRow == r_BoardSize;
+                isOneRowFilledWithSingleValue = countValueInRow == BoardSize;
             }
 
             return isOneRowFilledWithSingleValue;
@@ -56,15 +52,15 @@ namespace Engine
             ushort countValueInColumn;
             bool isOneColFilledWithSingleValue = false;
 
-            for (ushort row = 0; row < r_BoardSize && !isOneColFilledWithSingleValue; row++)
+            for(ushort row = 0; row < BoardSize && !isOneColFilledWithSingleValue; row++)
             {
                 countValueInColumn = 0;
-                for (ushort col = 0; col < r_BoardSize; col++)
+                for(ushort col = 0; col < BoardSize; col++)
                 {
                     increaseCounterIfCellContainValue(row, col, i_ValueToCheck, ref countValueInColumn);
                 }
 
-                isOneColFilledWithSingleValue = countValueInColumn == r_BoardSize;
+                isOneColFilledWithSingleValue = countValueInColumn == BoardSize;
             }
 
             return isOneColFilledWithSingleValue;
@@ -72,20 +68,25 @@ namespace Engine
 
         private bool isBoardHaveDiagonalFilledWithValue(eBoardCellValue i_ValueToCheck)
         {
-            ushort countValueInDiagonal = 0, countValueInAntiDiagonal = 0;
+            ushort countValueInDiagonal = 0;
+            ushort countValueInAntiDiagonal = 0;
 
-            for (ushort i = 0; i < r_BoardSize; i++)
+            for(ushort i = 0; i < BoardSize; i++)
             {
                 increaseCounterIfCellContainValue(i, i, i_ValueToCheck, ref countValueInDiagonal);
-                increaseCounterIfCellContainValue(i, (ushort)(r_BoardSize - i - 1), i_ValueToCheck, ref countValueInAntiDiagonal);
+                increaseCounterIfCellContainValue(
+                    i,
+                    (ushort)(BoardSize - i - 1),
+                    i_ValueToCheck,
+                    ref countValueInAntiDiagonal);
             }
 
-            return countValueInDiagonal == r_BoardSize || countValueInAntiDiagonal == r_BoardSize;
+            return countValueInDiagonal == BoardSize || countValueInAntiDiagonal == BoardSize;
         }
 
         public bool IsBoardHaveAnyRowColumnDiagonalFilled(eBoardCellValue i_ValueToCheck)
         {
-            return isBoardHaveRowFilledWithValue(i_ValueToCheck)
+            return isBoardHaveRowFilledWithValue(i_ValueToCheck) 
                    || isBoardHaveColumnFilledWithValue(i_ValueToCheck)
                    || isBoardHaveDiagonalFilledWithValue(i_ValueToCheck);
         }
@@ -96,7 +97,7 @@ namespace Engine
             eBoardCellValue i_ValueToCheck,
             ref ushort i_ValueCounter)
         {
-            if (m_BoardMatrixCells[i_Row, i_Column].Value == i_ValueToCheck)
+            if(r_BoardMatrixCells[i_Row, i_Column].Value == i_ValueToCheck)
             {
                 i_ValueCounter++;
             }
@@ -104,19 +105,18 @@ namespace Engine
 
         public bool IsAllBoardFilled()
         {
-            return m_FilledCellAmount == r_BoardSize * r_BoardSize;
+            return m_FilledCellAmount == BoardSize * BoardSize;
         }
 
         public void ChangeValueIfEmptyCell(MoveData i_MoveData)
         {
             int row = i_MoveData.CellCoordinate.SelectedRow - 1;
             int col = i_MoveData.CellCoordinate.SelectedColumn - 1;
-            bool cellIsEmpty =
-                m_BoardMatrixCells[row, col].Value == eBoardCellValue.Empty;
+            bool cellIsEmpty = r_BoardMatrixCells[row, col].Value == eBoardCellValue.Empty;
 
-            if (cellIsEmpty)
+            if(cellIsEmpty)
             {
-                m_BoardMatrixCells[row, col].Value = i_MoveData.CellValue;
+                r_BoardMatrixCells[row, col].Value = i_MoveData.CellValue;
                 m_FilledCellAmount++;
             }
             else
@@ -127,17 +127,20 @@ namespace Engine
 
         public void CheckIfValidAndEmptyCell(MoveData i_Data)
         {
-            if (!(i_Data.CellCoordinate.SelectedRow <= r_BoardSize && i_Data.CellCoordinate.SelectedColumn <= r_BoardSize && i_Data.CellCoordinate.SelectedRow > 0 && i_Data.CellCoordinate.SelectedColumn > 0))
+            if(!(i_Data.CellCoordinate.SelectedRow <= BoardSize && i_Data.CellCoordinate.SelectedColumn <= BoardSize
+                                                                && i_Data.CellCoordinate.SelectedRow > 0
+                                                                && i_Data.CellCoordinate.SelectedColumn > 0))
             {
                 throw new IndexOutOfRangeException("Selected coordinate is out of board range");
             }
 
-            if (m_BoardMatrixCells[i_Data.CellCoordinate.SelectedRow - 1, i_Data.CellCoordinate.SelectedColumn - 1].Value != eBoardCellValue.Empty)
+            if(r_BoardMatrixCells[i_Data.CellCoordinate.SelectedRow - 1, i_Data.CellCoordinate.SelectedColumn - 1].Value
+               != eBoardCellValue.Empty)
             {
                 throw new InvalidOperationException("Cell is not empty");
             }
 
-            if (i_Data.CellValue == eBoardCellValue.Empty)
+            if(i_Data.CellValue == eBoardCellValue.Empty)
             {
                 throw new InvalidOperationException("cannot erase not empty Cell");
             }
@@ -145,13 +148,13 @@ namespace Engine
 
         public eBoardCellValue[,] GetCurrentBoardState()
         {
-            eBoardCellValue[,] currentBoard = new eBoardCellValue[r_BoardSize, r_BoardSize];
+            eBoardCellValue[,] currentBoard = new eBoardCellValue[BoardSize, BoardSize];
 
-            for (int row = 0; row < r_BoardSize; row++)
+            for(int row = 0; row < BoardSize; row++)
             {
-                for (int col = 0; col < r_BoardSize; col++)
+                for(int col = 0; col < BoardSize; col++)
                 {
-                    currentBoard[row, col] = m_BoardMatrixCells[row, col].Value;
+                    currentBoard[row, col] = r_BoardMatrixCells[row, col].Value;
                 }
             }
 
@@ -160,15 +163,12 @@ namespace Engine
 
         public Cell[,] GetBoard()
         {
-            return m_BoardMatrixCells;
+            return r_BoardMatrixCells;
         }
 
-        public ushort BoardSize
+        public struct Cell
         {
-            get
-            {
-                return r_BoardSize;
-            }
+            public eBoardCellValue Value { get; set; }
         }
     }
 }

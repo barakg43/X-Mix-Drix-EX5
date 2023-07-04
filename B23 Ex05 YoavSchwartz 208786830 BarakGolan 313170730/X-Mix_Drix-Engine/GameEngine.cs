@@ -108,7 +108,6 @@ namespace Engine
                 if(selectedComputerPlayerCell.HasValue)
                 {
                     computerTurnData = new MoveData(selectedComputerPlayerCell.Value, m_CurrentTurnPlayer.GameSymbol);
-
                     m_GameBoard.ChangeValueIfEmptyCell(computerTurnData);
                     ValidMoveTurnNotifier?.Invoke(computerTurnData);
                 }

@@ -15,7 +15,6 @@ namespace X_Mix_Drix_UI
         private const int k_GamePanelTopOffset = 10;
         private const int k_ScoreDisplayTopOffsetFromBoard = 10;
         private GameBoardPanel m_GameBoardPanel;
-
         private ScoreDisplay m_ScoreDisplay;
 
         public GameDisplay(string i_Player1Name, string i_Player2Name, ushort i_BoardSize)
