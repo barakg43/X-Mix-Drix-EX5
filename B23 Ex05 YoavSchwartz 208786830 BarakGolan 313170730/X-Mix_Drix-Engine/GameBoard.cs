@@ -7,6 +7,11 @@ namespace Engine
         private readonly Cell[,] r_BoardMatrixCells;
         private int m_FilledCellAmount;
 
+        public struct Cell
+        {
+            public eBoardCellValue Value { get; set; }
+        }
+
         public GameBoard(ushort i_BoardSize)
         {
             BoardSize = i_BoardSize;
@@ -127,9 +132,10 @@ namespace Engine
 
         public void CheckIfValidAndEmptyCell(MoveData i_Data)
         {
-            if(!(i_Data.CellCoordinate.SelectedRow <= BoardSize && i_Data.CellCoordinate.SelectedColumn <= BoardSize
-                                                                && i_Data.CellCoordinate.SelectedRow > 0
-                                                                && i_Data.CellCoordinate.SelectedColumn > 0))
+            if(!(i_Data.CellCoordinate.SelectedRow <= BoardSize 
+                 && i_Data.CellCoordinate.SelectedColumn <= BoardSize
+                 && i_Data.CellCoordinate.SelectedRow > 0
+                 && i_Data.CellCoordinate.SelectedColumn > 0))
             {
                 throw new IndexOutOfRangeException("Selected coordinate is out of board range");
             }
@@ -164,11 +170,6 @@ namespace Engine
         public Cell[,] GetBoard()
         {
             return r_BoardMatrixCells;
-        }
-
-        public struct Cell
-        {
-            public eBoardCellValue Value { get; set; }
         }
     }
 }
