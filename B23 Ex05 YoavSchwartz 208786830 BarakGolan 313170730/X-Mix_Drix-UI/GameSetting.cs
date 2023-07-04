@@ -14,10 +14,11 @@ namespace X_Mix_Drix_UI
             InitializeComponent();
             initializeProperties();
         }
+
         private void initializeProperties()
         {
             textBoxPlayer2Name.Text = k_DefaultPlayer2Name;
-            numericUpDownCols.Minimum= (decimal)eBoardSizeError.MinSize;
+            numericUpDownCols.Minimum = (decimal)eBoardSizeError.MinSize;
             numericUpDownCols.Maximum = (decimal)eBoardSizeError.MaxSize;
             numericUpDownRows.Minimum = (decimal)eBoardSizeError.MinSize;
             numericUpDownRows.Maximum = (decimal)eBoardSizeError.MaxSize;
