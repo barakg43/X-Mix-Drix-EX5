@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace Engine
+﻿namespace Engine
 {
-    public readonly struct MoveData
+    public struct MoveData
     {
         private readonly CellBoardCoordinate r_CellBoardCoordinate;
         private readonly eBoardCellValue r_CellValue;
@@ -27,7 +25,7 @@ namespace Engine
             }
         }
 
-        public eBoardCellValue CellValue 
+        public eBoardCellValue CellValue
         {
             get
             {

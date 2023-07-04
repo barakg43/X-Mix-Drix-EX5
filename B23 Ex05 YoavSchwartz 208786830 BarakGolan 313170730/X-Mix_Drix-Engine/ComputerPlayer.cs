@@ -1,18 +1,16 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Remoting.Metadata;
-using System.Text;
 
 namespace Engine
 {
-    public class ComputerPlayer
+    public class ComputerPlayer : Player
     {
         private readonly ushort r_BoardSize;
         private readonly List<CellBoardCoordinate> r_EmptyCellsList;
         private readonly Random r_RandomIndexGenerator;
 
-        public ComputerPlayer(ushort i_BoardSize)
+        public ComputerPlayer(ushort i_BoardSize, eBoardCellValue i_GameSymbol) 
+            : base(ePlayerType.Computer, i_GameSymbol)
         {
             r_BoardSize = i_BoardSize;
             r_EmptyCellsList = new List<CellBoardCoordinate>(r_BoardSize * r_BoardSize);
@@ -24,6 +22,7 @@ namespace Engine
         {
             CellBoardCoordinate currentBoardCoordinate;
 
+            r_EmptyCellsList.Clear();
             for (ushort row = 1; row <= r_BoardSize; row++)
             {
                 for (ushort col = 1; col <= r_BoardSize; col++)
@@ -44,7 +43,7 @@ namespace Engine
             CellBoardCoordinate? boardCoordinate = null;
             int randomIndex;
 
-            if(r_EmptyCellsList.Count > 0)
+            if (r_EmptyCellsList.Count > 0)
             {
                 randomIndex = r_RandomIndexGenerator.Next(r_EmptyCellsList.Count);
                 boardCoordinate = r_EmptyCellsList[randomIndex];

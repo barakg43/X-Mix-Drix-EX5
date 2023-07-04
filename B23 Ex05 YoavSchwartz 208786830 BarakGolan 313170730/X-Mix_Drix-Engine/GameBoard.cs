@@ -25,7 +25,7 @@ namespace Engine
             m_FilledCellAmount = 0;
             for (int row = 0; row < r_BoardSize; row++)
             {
-                for(int col = 0; col < r_BoardSize; col++)
+                for (int col = 0; col < r_BoardSize; col++)
                 {
                     m_BoardMatrixCells[row, col].Value = eBoardCellValue.Empty;
                 }
@@ -73,7 +73,7 @@ namespace Engine
         private bool isBoardHaveDiagonalFilledWithValue(eBoardCellValue i_ValueToCheck)
         {
             ushort countValueInDiagonal = 0, countValueInAntiDiagonal = 0;
-             
+
             for (ushort i = 0; i < r_BoardSize; i++)
             {
                 increaseCounterIfCellContainValue(i, i, i_ValueToCheck, ref countValueInDiagonal);
@@ -86,14 +86,14 @@ namespace Engine
         public bool IsBoardHaveAnyRowColumnDiagonalFilled(eBoardCellValue i_ValueToCheck)
         {
             return isBoardHaveRowFilledWithValue(i_ValueToCheck)
-                   || isBoardHaveColumnFilledWithValue(i_ValueToCheck) 
+                   || isBoardHaveColumnFilledWithValue(i_ValueToCheck)
                    || isBoardHaveDiagonalFilledWithValue(i_ValueToCheck);
         }
 
         private void increaseCounterIfCellContainValue(
-            ushort i_Row, 
-            ushort i_Column, 
-            eBoardCellValue i_ValueToCheck, 
+            ushort i_Row,
+            ushort i_Column,
+            eBoardCellValue i_ValueToCheck,
             ref ushort i_ValueCounter)
         {
             if (m_BoardMatrixCells[i_Row, i_Column].Value == i_ValueToCheck)
@@ -107,34 +107,37 @@ namespace Engine
             return m_FilledCellAmount == r_BoardSize * r_BoardSize;
         }
 
-        public bool ChangeValueIfEmptyCell(MoveData i_MoveData)
+        public void ChangeValueIfEmptyCell(MoveData i_MoveData)
         {
+            int row = i_MoveData.CellCoordinate.SelectedRow - 1;
+            int col = i_MoveData.CellCoordinate.SelectedColumn - 1;
             bool cellIsEmpty =
-                m_BoardMatrixCells[i_MoveData.CellCoordinate.SelectedRow - 1,
-                    i_MoveData.CellCoordinate.SelectedColumn - 1].Value == eBoardCellValue.Empty;
+                m_BoardMatrixCells[row, col].Value == eBoardCellValue.Empty;
 
-            if(cellIsEmpty)
+            if (cellIsEmpty)
             {
-                m_BoardMatrixCells[i_MoveData.CellCoordinate.SelectedRow - 1, i_MoveData.CellCoordinate.SelectedColumn - 1].Value = i_MoveData.CellValue;
+                m_BoardMatrixCells[row, col].Value = i_MoveData.CellValue;
                 m_FilledCellAmount++;
             }
-
-            return cellIsEmpty;
+            else
+            {
+                throw new InvalidOperationException($"Cell({row + 1},{col + 1}) is not empty");
+            }
         }
 
         public void CheckIfValidAndEmptyCell(MoveData i_Data)
         {
             if (!(i_Data.CellCoordinate.SelectedRow <= r_BoardSize && i_Data.CellCoordinate.SelectedColumn <= r_BoardSize && i_Data.CellCoordinate.SelectedRow > 0 && i_Data.CellCoordinate.SelectedColumn > 0))
             {
-                throw new IndexOutOfRangeException("Selected coordidate is out of board range");
+                throw new IndexOutOfRangeException("Selected coordinate is out of board range");
             }
 
-            if(m_BoardMatrixCells[i_Data.CellCoordinate.SelectedRow - 1, i_Data.CellCoordinate.SelectedColumn - 1].Value != eBoardCellValue.Empty)
+            if (m_BoardMatrixCells[i_Data.CellCoordinate.SelectedRow - 1, i_Data.CellCoordinate.SelectedColumn - 1].Value != eBoardCellValue.Empty)
             {
                 throw new InvalidOperationException("Cell is not empty");
             }
 
-            if(i_Data.CellValue == eBoardCellValue.Empty)
+            if (i_Data.CellValue == eBoardCellValue.Empty)
             {
                 throw new InvalidOperationException("cannot erase not empty Cell");
             }
@@ -144,9 +147,9 @@ namespace Engine
         {
             eBoardCellValue[,] currentBoard = new eBoardCellValue[r_BoardSize, r_BoardSize];
 
-            for(int row = 0; row < r_BoardSize; row++)
+            for (int row = 0; row < r_BoardSize; row++)
             {
-                for(int col = 0; col < r_BoardSize; col++)
+                for (int col = 0; col < r_BoardSize; col++)
                 {
                     currentBoard[row, col] = m_BoardMatrixCells[row, col].Value;
                 }

@@ -1,5 +1,4 @@
 ﻿// Ignore Spelling: Drix
-
 using System;
 using System.Text;
 using Engine;
@@ -19,10 +18,10 @@ namespace X_Mix_Drix_UI
         {
             StringBuilder boardAsString = new StringBuilder(getFirstRow());
 
-            for(int i = 0; i < m_BoardSize; i++)
+            for (int i = 0; i < m_BoardSize; i++)
             {
                 boardAsString.Append(i + 1).Append('|');
-                for(int j = 0; j < m_BoardSize; j++)
+                for (int j = 0; j < m_BoardSize; j++)
                 {
                     boardAsString.Append(string.Format(" {0} |", readCellValue(i_Board[i, j].Value)));
                 }
@@ -37,7 +36,7 @@ namespace X_Mix_Drix_UI
         private string getRowSeparator()
         {
             string res = " ";
-            for(int i = 0; i < 4 * m_BoardSize + 1; i++)
+            for (int i = 0; i < (4 * m_BoardSize) + 1; i++)
             {
                 res += "=";
             }
@@ -48,7 +47,7 @@ namespace X_Mix_Drix_UI
         private string getFirstRow()
         {
             string res = "  ";
-            for(int i = 0; i < m_BoardSize; i++)
+            for (int i = 0; i < m_BoardSize; i++)
             {
                 res += i + 1;
                 res += "   ";
@@ -60,7 +59,7 @@ namespace X_Mix_Drix_UI
         private string readCellValue(eBoardCellValue i_Value)
         {
             string value;
-            if(i_Value == eBoardCellValue.Empty)
+            if (i_Value == eBoardCellValue.Empty)
             {
                 value = " ";
             }

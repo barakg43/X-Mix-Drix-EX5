@@ -5,8 +5,8 @@ namespace X_Mix_Drix_UI
 {
     public partial class GameSetting : Form
     {
-        private const string k_DefaultPlayer2Name = "[Computer]";
-        private const string k_ErrorMassagePlayerNames = "Player1 or Player2 names cannot be emtpy!";
+        private const string k_DefaultPlayer2Name = "Computer";
+        private const string k_ErrorMassagePlayerNames = "FirstPlayer or SecondPlayer names cannot be emtpy!";
         public GameSetting()
         {
             InitializeComponent();
@@ -15,7 +15,7 @@ namespace X_Mix_Drix_UI
 
         private void numericUpDownRowsCols_ValueChanged(object sender, EventArgs e)
         {
-            NumericUpDown senderObject=sender as NumericUpDown;
+            NumericUpDown senderObject = sender as NumericUpDown;
 
             numericUpDownRows.Value = senderObject.Value;
             numericUpDownCols.Value = senderObject.Value;
@@ -24,14 +24,7 @@ namespace X_Mix_Drix_UI
 
         private void checkBoxPlayer2_CheckedChanged(object sender, EventArgs e)
         {
-            if (textBoxPlayer2Name.Enabled)
-            {
-                textBoxPlayer2Name.Text = k_DefaultPlayer2Name;
-            }
-            else
-            {
-                textBoxPlayer2Name.Text = "";
-            }
+            textBoxPlayer2Name.Text = textBoxPlayer2Name.Enabled ? k_DefaultPlayer2Name : "";
 
             textBoxPlayer2Name.Enabled = checkBoxPlayer2.Checked;
         }
@@ -62,7 +55,7 @@ namespace X_Mix_Drix_UI
             bool isValidPlayer1Name = !string.IsNullOrEmpty(textBoxPlayer1Name.Text);
             bool isValidPlayer2Name = !string.IsNullOrEmpty(textBoxPlayer2Name.Text);
 
-           return isValidPlayer1Name && isValidPlayer2Name;
+            return isValidPlayer1Name && isValidPlayer2Name;
         }
 
         public bool IsPlayingVsComputer
@@ -75,16 +68,25 @@ namespace X_Mix_Drix_UI
 
         private void startButton_Click(object sender, EventArgs e)
         {
-            if(isValidPlayerNames())
+            if (isValidPlayerNames())
             {
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             else
             {
-                MessageBox.Show( k_ErrorMassagePlayerNames, "Error", MessageBoxButtons.OK);
+                MessageBox.Show(k_ErrorMassagePlayerNames, "Error", MessageBoxButtons.OK);
             }
         }
 
+        private void textBoxPlayer2Name_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void GameSetting_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
