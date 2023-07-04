@@ -11,6 +11,10 @@ namespace X_Mix_Drix_UI
         private const string k_WinnerSessionStringFormat = @"The winner is {0}!";
         private const string k_TieMessage = "Tie!";
         private const string k_PlayAgainMessage = "Would you like to play another round?";
+        private const int k_GameDisplaySizeOffset = 120;
+        private const int k_GamePanelTopOffset = 5;
+        private const int k_ScoreDisplayTopOffset = 10;
+
         private ScoreDisplay m_ScoreDisplay;
         private GameBoardPanel m_GameBoardPanel;
 
@@ -25,17 +29,13 @@ namespace X_Mix_Drix_UI
         {
             m_ScoreDisplay = new ScoreDisplay(i_Player1Name, i_Player2Name);
             m_GameBoardPanel = new GameBoardPanel(i_BoardSize);
-            this.ClientSize = new Size(
-                Math.Max(m_GameBoardPanel.Width, m_ScoreDisplay.Width),
-                m_GameBoardPanel.Height + m_ScoreDisplay.Height + 60);
-
-
-            m_GameBoardPanel.Location = caluateCenterPositionInForm(
+            ClientSize = new Size(
+                Math.Max(m_GameBoardPanel.Width, m_ScoreDisplay.Width + k_GameDisplaySizeOffset),
+                m_GameBoardPanel.Height + m_ScoreDisplay.Height + k_GameDisplaySizeOffset);
+            m_GameBoardPanel.Location = calculateCenterPositionInForm(
                 m_GameBoardPanel,
-                5);
-            m_ScoreDisplay.Location = caluateCenterPositionInForm(
-                m_ScoreDisplay,
-                120);
+                k_GamePanelTopOffset);
+            m_ScoreDisplay.Location = calculateScoreDisplayLocation();
             Controls.Add(m_GameBoardPanel);
             Controls.Add(m_ScoreDisplay);
         }
@@ -67,11 +67,18 @@ namespace X_Mix_Drix_UI
             m_GameBoardPanel.ChangeCellBoardValue(i_CellToChangeData);
         }
 
-        private Point caluateCenterPositionInForm(Control i_Control, int i_TopOffset)
+        private Point calculateCenterPositionInForm(Control i_Control, int i_TopOffset)
         {
             int topPosition = i_TopOffset + (ClientSize.Height - i_Control.Height) / 2;
             int leftPosition = (ClientSize.Width - i_Control.Width) / 2;
 
+            return new Point(leftPosition, topPosition);
+        }
+
+        private Point calculateScoreDisplayLocation()
+        {
+            int leftPosition = (ClientSize.Width - m_ScoreDisplay.Width) / 2;
+            int topPosition = ClientSize.Height - m_ScoreDisplay.Height - k_ScoreDisplayTopOffset;
             return new Point(leftPosition, topPosition);
         }
 
