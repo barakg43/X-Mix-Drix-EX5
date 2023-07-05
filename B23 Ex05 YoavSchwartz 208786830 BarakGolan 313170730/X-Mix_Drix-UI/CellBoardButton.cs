@@ -38,11 +38,11 @@ namespace X_Mix_Drix_UI
         public void ChangeCellValue(eBoardCellValue i_CellValue)
         {
             Text = readCellValue(i_CellValue);
-            changeCellColorAcrodingValue(i_CellValue);
+            changeCellColorAccordingValue(i_CellValue);
             Enabled = false;
         }
 
-        private void changeCellColorAcrodingValue(eBoardCellValue i_CellValue)
+        private void changeCellColorAccordingValue(eBoardCellValue i_CellValue)
         {
             switch(i_CellValue)
             {

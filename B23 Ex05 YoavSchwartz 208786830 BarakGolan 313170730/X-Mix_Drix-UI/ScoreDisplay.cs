@@ -6,6 +6,8 @@ namespace X_Mix_Drix_UI
 {
     public partial class ScoreDisplay : UserControl
     {
+        private const string k_InitialScore = "0";
+
         public ScoreDisplay(string i_Player1Name, string i_Player2Name)
         {
             InitializeComponent();
@@ -15,15 +17,15 @@ namespace X_Mix_Drix_UI
 
         private void initializeProperties(string i_Player1Name, string i_Player2Name)
         {
-            player1NameLabel.Text = i_Player1Name + ":";
-            player2NameLabel.Text = "| " + i_Player2Name + ":";
+            player1NameLabel.Text = $@"{i_Player1Name}:";
+            player2NameLabel.Text = $@"| {i_Player2Name}:";
             updateControlWidth();
         }
 
         private void initializeScoreDisplay()
         {
-            scorePlayer1Label.Text = "0";
-            scorePlayer2Label.Text = "0";
+            scorePlayer1Label.Text = k_InitialScore;
+            scorePlayer2Label.Text = k_InitialScore;
             updateControlWidth();
         }
 

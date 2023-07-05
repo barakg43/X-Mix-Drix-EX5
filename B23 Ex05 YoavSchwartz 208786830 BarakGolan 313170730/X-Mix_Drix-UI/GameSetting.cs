@@ -8,6 +8,7 @@ namespace X_Mix_Drix_UI
     {
         private const string k_DefaultPlayer2Name = "Computer";
         private const string k_ErrorMassagePlayerNames = "Player1 or Player2 names cannot be emtpy!";
+        private const string k_ErrorMessageBoxCaption = "Error";
 
         public GameSetting()
         {
@@ -34,10 +35,11 @@ namespace X_Mix_Drix_UI
 
         private void numericUpDownRowsCols_ValueChanged(object i_Sender, EventArgs i_EventArgs)
         {
-            NumericUpDown senderObject = i_Sender as NumericUpDown;
-
-            numericUpDownRows.Value = senderObject.Value;
-            numericUpDownCols.Value = senderObject.Value;
+            if(i_Sender is NumericUpDown senderObject)
+            {
+                numericUpDownRows.Value = senderObject.Value;
+                numericUpDownCols.Value = senderObject.Value;
+            }
         }
 
         private void checkBoxPlayer2_CheckedChanged(object i_Sender, EventArgs i_EventArgs)
@@ -63,7 +65,7 @@ namespace X_Mix_Drix_UI
             }
             else
             {
-                MessageBox.Show(k_ErrorMassagePlayerNames, "Error", MessageBoxButtons.OK);
+                MessageBox.Show(k_ErrorMassagePlayerNames, k_ErrorMessageBoxCaption, MessageBoxButtons.OK);
             }
         }
     }

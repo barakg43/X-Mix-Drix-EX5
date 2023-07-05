@@ -52,15 +52,5 @@ namespace Engine
 
             return boardCoordinate;
         }
-
-        private void printCoordinateList()
-        {
-            foreach(CellBoardCoordinate coordinate in r_EmptyCellsList)
-            {
-                Console.Write("({0},{1}) #", coordinate.SelectedRow, coordinate.SelectedColumn);
-            }
-
-            Console.WriteLine();
-        }
     }
 }

@@ -9,6 +9,8 @@ namespace X_Mix_Drix_UI
     public partial class GameDisplay : Form
     {
         private const string k_WinnerSessionStringFormat = @"The winner is {0}!";
+        private const string k_WinMessageBoxCaption = "A win!";
+        private const string k_TieMessageBoxCaption = "A tie!";
         private const string k_TieMessage = "Tie!";
         private const string k_PlayAgainMessage = "Would you like to play another round?";
         private const int k_GameDisplaySizeOffset = 60;
@@ -25,7 +27,7 @@ namespace X_Mix_Drix_UI
 
         private void initializeGameSetting(string i_Player1Name, string i_Player2Name, ushort i_BoardSize)
         {
-            int scoreTopPostion;
+            int scoreTopPosition;
             int fromClientWidth;
 
             m_ScoreDisplay = new ScoreDisplay(i_Player1Name, i_Player2Name);
@@ -35,8 +37,8 @@ namespace X_Mix_Drix_UI
                 m_GameBoardPanel,
                 fromClientWidth,
                 k_GamePanelTopOffset);
-            scoreTopPostion = m_GameBoardPanel.Height + m_GameBoardPanel.Top + k_ScoreDisplayTopOffsetFromBoard;
-            m_ScoreDisplay.Location = calculateCenterPositionInForm(m_ScoreDisplay, fromClientWidth, scoreTopPostion);
+            scoreTopPosition = m_GameBoardPanel.Height + m_GameBoardPanel.Top + k_ScoreDisplayTopOffsetFromBoard;
+            m_ScoreDisplay.Location = calculateCenterPositionInForm(m_ScoreDisplay, fromClientWidth, scoreTopPosition);
             ClientSize = new Size(
                 fromClientWidth,
                 m_ScoreDisplay.Height + m_ScoreDisplay.Top + k_ScoreDisplayTopOffsetFromBoard);
@@ -51,7 +53,7 @@ namespace X_Mix_Drix_UI
             massage.AppendLine(string.Format(k_WinnerSessionStringFormat, i_WinnerName));
             massage.AppendLine(k_PlayAgainMessage);
 
-            return MessageBox.Show(massage.ToString(), "A Win!", MessageBoxButtons.YesNo);
+            return MessageBox.Show(massage.ToString(), k_WinMessageBoxCaption, MessageBoxButtons.YesNo);
         }
 
         public DialogResult AnnounceSessionTieAndAskForNewSession()
@@ -61,7 +63,7 @@ namespace X_Mix_Drix_UI
             massage.AppendLine(k_TieMessage);
             massage.AppendLine(k_PlayAgainMessage);
 
-            return MessageBox.Show(massage.ToString(), "A Tie!", MessageBoxButtons.YesNo);
+            return MessageBox.Show(massage.ToString(), k_TieMessageBoxCaption, MessageBoxButtons.YesNo);
         }
 
         public void ChangeCellBoardValue(MoveData i_CellToChangeData)
@@ -79,11 +81,6 @@ namespace X_Mix_Drix_UI
         public void RegisterForCellBoardClickedEvent(Action<CellBoardCoordinate> i_EventHandlerOnClicked)
         {
             m_GameBoardPanel.CellBoardClicked += i_EventHandlerOnClicked;
-        }
-
-        public void UnregisterForCellBoardClickedEvent(Action<CellBoardCoordinate> i_EventHandlerToRemove)
-        {
-            m_GameBoardPanel.CellBoardClicked += i_EventHandlerToRemove;
         }
 
         public void StartNewGameSession()
